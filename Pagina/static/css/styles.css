@@ -1,0 +1,11 @@
+.sidebar-link:hover, .sidebar-link:hover i, .sidebar-link:hover svg{
+    color:rgb(255, 0, 0);
+}
+
+.sidebar-item.active>.sidebar-link{
+    border-left-color: #910000;
+}
+.sidebar-item.active .sidebar-link:hover{
+    border-left-color: #ff0000;
+}
+
