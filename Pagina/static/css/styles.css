@@ -3,9 +3,22 @@
 }
 
 .sidebar-item.active>.sidebar-link{
-    border-left-color: #910000;
+    border-left-color: #915555;
+    background: #880900;
 }
 .sidebar-item.active .sidebar-link:hover{
     border-left-color: #ff0000;
+    background: #29100f;
 }
 
+.sidebar-header {
+    background: #5f0600;
+}
+
+.sidebar-brand{
+    background: #5f0600;
+}
+
+.sidebar-nav{
+    background: #5f0600;
+}
