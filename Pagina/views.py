@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from Pagina.models import Usuarios
+
 # Create your views here.
+
 def login(request):
     if request.method == "GET":
         if request.session.get("nombre_usuario"):
@@ -27,5 +29,9 @@ def index(request):
 
 def salir(request):
     request.session.flush()
-    return redirect("./")    
+    return redirect("./")   
+
+def profile(request):
+    return render (request, "profile.html")
+ 
 

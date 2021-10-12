@@ -4,5 +4,6 @@ from Pagina import views
 urlpatterns = [
     path('index', views.index, name='index'),
     path('', views.login, name='login'),
-    path('salir', views.salir, name='salir')
+    path('salir', views.salir, name='salir'),
+    path('profile', views.profile, name='profile')
 ]
