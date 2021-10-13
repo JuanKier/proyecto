@@ -749,7 +749,7 @@
 					name: "Madrid "
 				}
 			];
-			var map = new JsVectorMap({
+			var map = new jsVectorMap({
 				map: "world",
 				selector: "#world_map",
 				zoomButtons: true,
@@ -765,7 +765,8 @@
 						fill: window.theme.primary,
 						stroke: window.theme.primary
 					}
-				}
+				},
+				zoomOnScroll: false
 			});
 			window.addEventListener("resize", () => {
 				map.updateSize();
@@ -774,10 +775,13 @@
 	</script>
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
+			var date = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
+			var defaultDate = date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1) + "-" + date.getUTCDate();
 			document.getElementById("datetimepicker-dashboard").flatpickr({
 				inline: true,
-				prevArrow: "<span class=\"fas fa-chevron-left\" title=\"Previous month\"></span>",
-				nextArrow: "<span class=\"fas fa-chevron-right\" title=\"Next month\"></span>",
+				prevArrow: "<span title=\"Previous month\">&laquo;</span>",
+				nextArrow: "<span title=\"Next month\">&raquo;</span>",
+				defaultDate: defaultDate
 			});
 		});
 	</script>
