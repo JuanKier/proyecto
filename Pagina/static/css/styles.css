@@ -39,3 +39,8 @@ a{
 .main{
     background: #eeeeee;
 }
+
+.alert-dismissible .close{
+    top: 0px;
+    right: 0px;
+}
