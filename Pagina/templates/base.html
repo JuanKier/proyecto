@@ -2,20 +2,114 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Product Admin - Dashboard HTML Template</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700">
-    <!-- https://fonts.google.com/specimen/Roboto -->
-    <link rel="stylesheet" href="{%static 'css/fontawesome.min.css'%}">
-    <!-- https://fontawesome.com/ -->
-    <link rel="stylesheet" href="{%static 'css/bootstrap.min.css'%}">
-    <!-- https://getbootstrap.com/ -->
-    <link rel="stylesheet" href="{%static 'css/templatemo-style.css'%}">
-    <!--
-	Product Admin CSS Template
-	https://templatemo.com/tm-524-product-admin
-	-->
-</head>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
+		<meta name="author" content="AdminKit">
+		<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+		<link rel="shortcut icon" href="{%static 'img/icons/icon-48x48.png'%}" />
+		<title>EncarPC</title>
+		<link href="{%static 'css/app.css'%}" rel="stylesheet">
+		<link rel="stylesheet" href="{%static 'css/styles.css'%}">
+	</head>
+
+	<body>
+		<div class="wrapper">
+			<nav id="sidebar" class="sidebar">
+				<div class="sidebar-content js-simplebar">
+					<a class="sidebar-brand" href="index">
+			  <span class="align-middle"><img src="{%static 'img/icons/logo_encarpc.png'%}" alt=""></span>
+			</a>
+	
+					<ul class="sidebar-nav">
+						<li class="sidebar-header">
+							Páginas
+						</li>
+	
+						<li class="sidebar-item">
+							<a class="sidebar-link" href="index">
+				  <i class="align-middle" data-feather="home"></i> <span class="align-middle">Inicio</span>
+				</a>
+						</li>
+	
+						<li class="sidebar-item">
+							<a class="sidebar-link" href="profile">
+				  <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+				</a>
+						</li>
+	
+						<li class="sidebar-item">
+							<a class="sidebar-link" href="productos">
+				  <i class="align-middle" data-feather="list"></i> <span class="align-middle">Productos</span>
+				</a>
+						</li>
+	
+	
+						<li class="sidebar-header">
+							Tools & Components
+						</li>
+						
+						<li class="sidebar-header">
+							Plugins & Addons
+						</li>
+	
+						<li class="sidebar-item">
+						
+						</li>
+					</ul>
+	
+					</div>
+			</nav>
+	
+			<div class="main">
+				<nav class="navbar navbar-expand navbar-light navbar-bg">
+					<a class="sidebar-toggle d-flex">
+			  <i class="hamburger align-self-center"></i>
+			</a>
+	
+					<form class="d-none d-sm-inline-block">
+						<div class="input-group input-group-navbar">
+							<input type="text" class="form-control" placeholder="Search…" aria-label="Search">
+							<button class="btn" type="button">
+				  <i class="align-middle" data-feather="search"></i>
+				</button>
+						</div>
+					</form>
+	
+					<div class="navbar-collapse collapse">
+						<ul class="navbar-nav navbar-align">
+							<li class="nav-item dropdown">
+								<a class="nav-icon dropdown-toggle" href="#" id="alertsDropdown" data-toggle="dropdown">
+									
+							</li>
+							<li class="nav-item dropdown">
+									<div class="position-relative">
+										<i class="align-middle"></i>
+							<li class="nav-item dropdown">
+								<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-toggle="dropdown">
+					<i class="align-middle" data-feather="settings"></i>
+				  </a>
+	
+								<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-toggle="dropdown">
+					<img src="{%static 'img/avatars/avatar.jpg'%}" class="avatar img-fluid rounded mr-1"/> <span class="text-dark">{{nombre_usuario}}</span>
+				  </a>
+								<div class="dropdown-menu dropdown-menu-right">
+									<a class="dropdown-item" href="pages-profile.html"><i class="align-middle mr-1" data-feather="user"></i> Perfil</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="pages-settings.html"><i class="align-middle mr-1" data-feather="settings"></i> Administracion</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="./salir">Salir</a>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</nav>
+
+			<main class="content">
+				<div class="container-fluid p-0">
+	{%block barra%}
+	{%endblock%}
+	
+		

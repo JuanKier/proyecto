@@ -25,16 +25,22 @@ def login(request):
             return render(request, 'login.html', {"mensaje_error":"Usuario ingresado no existe."})
 
 def index(request):
-    if request.session.get("nombredelusuario"):
-        return render(request, 'index.html', {"nombre_usuario": request.session.get("nombre_completo_usuario")})
-    else:
-        return render(request, 'login.html')
+    return validar(request, "index.html")
 
 def salir(request):
     request.session.flush()
     return redirect("./")   
 
 def profile(request):
-    return render (request, "profile.html")
+    return validar(request, "profile.html")
+
+def productos(request):
+    return validar(request, "productos.html")    
  
+ 
+def validar (request, pageSuccess):
+    if request.session.get("nombredelusuario"):
+        return render(request, pageSuccess, {"nombre_usuario": request.session.get("nombre_completo_usuario")})
+    else:
+        return render(request, 'login.html')
 

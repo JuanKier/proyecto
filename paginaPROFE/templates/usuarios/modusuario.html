@@ -1,0 +1,34 @@
+{% extends "panel.html" %}
+{% load static %}
+
+{% block formulario %}
+<div class="card">
+    <div class="card-header">
+        <h5>Datos del Usuario</h5>
+    </div>
+    <div class="card-block">
+        <form class="form-material" action="{% url 'modusuario' usu_actual %}" method="POST">
+        {% csrf_token %}
+            <div class="form-group form-default">
+                <input type="text" name="nombre_completo" class="form-control" required value="{{datos_act.nombre_completo}}">
+                <span class="form-bar"></span>
+                <label class="float-label">Nombre Completo</label>
+            </div>
+            <div class="form-group form-default">
+                <input type="text" name="usuario" class="form-control" required value="{{datos_act.usuario}}">
+                <span class="form-bar"></span>
+                <label class="float-label">Usuario</label>
+            </div>
+            <div class="form-group form-default">
+                <input type="password" name="clave" class="form-control" required value="{{datos_act.clave}}">
+                <span class="form-bar"></span>
+                <label class="float-label">Contraseña</label>
+            </div>
+            <div class="form-group form-default">
+                <button type="submit" class="btn btn-success btn-round waves-effect waves-light">Grabar</button>
+                <a href="{% url 'verusuario' %}" class="btn btn-info btn-round waves-effect waves-light">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
