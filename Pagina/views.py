@@ -34,8 +34,14 @@ def salir(request):
 def profile(request):
     return validar(request, "profile.html")
 
-def productos(request):
-    return validar(request, "productos.html")    
+def products(request):
+    return validar(request, "products.html")    
+
+def clients(request):
+    return validar(request, "clients.html") 
+
+def users(request):
+    return validar(request, "users.html") 
  
  
 def validar (request, pageSuccess):
