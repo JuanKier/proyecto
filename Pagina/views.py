@@ -42,6 +42,39 @@ def clients(request):
 
 def users(request):
     return validar(request, "users.html") 
+
+def modusuario(request,usu_actual=0):
+    
+    if request.session.get("nombre_usuario"):
+        if request.method=="GET":
+            usuario_actual=users.objects.filter(cod_usuario=usu_actual).exists()
+            if usuario_actual:
+                datos_usuario=users.objects.filter(cod_usuario=usu_actual).first()
+                return render(request, "users/modusuario.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Modificar Usuario", "subtitulo_f":"Vuleva a escribir los datos que desea modificar", "datos_act":datos_usuario, "usu_actual":usu_actual})
+            else:
+                return render(request, "users/modusuario.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Nuevo Usuario", "subtitulo_f":"Por favor complete todos los datos solicitados", "usu_actual":usu_actual})
+
+        if request.method=="POST":
+            if usu_actual==0:
+                usuario_nuevo=users(usuario=request.POST.get('nombre_usuario'), clave=request.POST.get('contra'), nombre_completo=request.POST.get('nombre_completo_usuario'))
+                usuario_nuevo.save()
+            else:
+                usuario_actual=users.objects.get(cod_usuario=usu_actual)
+                usuario_actual.nombre_completo=request.POST.get('nombre_completo_usuario')
+                usuario_actual.usuario=request.POST.get('nombre_usuario')
+                usuario_actual.clave=request.POST.get('contra')
+                usuario_actual.save()
+
+            return redirect('verusuario')
+    else:
+        return validar(request, "index.html") 
+
+def borusuario(request, usu_actual):
+    if request.session.get("nombre_usuario"):
+        users.objects.filter(cod_usuario=usu_actual).delete()
+        return redirect('verusuario')
+    else:
+        return validar(request, "login.html") 
  
  
 def validar (request, pageSuccess):

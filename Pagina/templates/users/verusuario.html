@@ -1,0 +1,46 @@
+{% extends "panel.html" %}
+{% load static %}
+
+{% block barra %}
+<div class="card">
+    <div class="card-header">
+        <h5>Lista de Usuarios</h5>
+        <a href="{% url 'modusuario' 0 %}" class="btn waves-effect waves-light btn-success" style="color: white;"><i class="icofont icofont-plus"></i>Nuevo Registro</a>
+        <div class="card-header-right">
+            <ul class="list-unstyled card-option">
+                <li><i class="fa fa fa-wrench open-card-option"></i></li>
+                <li><i class="fa fa-window-maximize full-card"></i></li>
+                <li><i class="fa fa-minus minimize-card"></i></li>
+                <li><i class="fa fa-refresh reload-card"></i></li>
+                <li><i class="fa fa-trash close-card"></i></li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-block table-border-style">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Usuario</th>
+                        <th>Nombre Completo</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for lista in listatabla %}
+                    <tr>
+                        <td>{{ lista.usuario }}</td>
+                        <td>{{ lista.nombre_completo }}</td>
+                        <td><div class="icon-btn">
+                          <a href="{% url 'modusuario' lista.cod_usuario %}" class="btn waves-effect waves-light btn-warning btn-icon" style="color: white;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Modificar Registro"><i class="icofont icofont-pencil"></i></a>
+                          <a href="{% url 'borusuario' lista.cod_usuario %}" class="btn waves-effect waves-light btn-danger btn-icon" style="color: white;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eliminar Registro"><i class="icofont icofont-trash"></i></a>
+                        </div></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
