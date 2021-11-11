@@ -1,4 +1,4 @@
-{% extends "panel.html" %}
+{% extends "base.html" %}
 {% load static %}
 
 {% block barra %}
@@ -10,17 +10,18 @@
         <form class="form-material" action="{% url 'modusuario' usu_actual %}" method="POST">
         {% csrf_token %}
             <div class="form-group form-default">
-                <input type="text" name="nombre_completo" class="form-control" required value="{{datos_act.nombre_completo}}">
+                <input type="text" name="nombre_completo_usuario" class="form-control" required value="{{usuario_actual.nombre_completo_usuario}}">
                 <span class="form-bar"></span>
                 <label class="float-label">Nombre Completo</label>
             </div>
             <div class="form-group form-default">
-                <input type="text" name="usuario" class="form-control" required value="{{datos_act.usuario}}">
+                <input type="text" name="nombre_usuario" class="form-control" required value="{{usuario_actual.nombre_usuario}}">
                 <span class="form-bar"></span>
                 <label class="float-label">Usuario</label>
             </div>
+            <br></br>
             <div class="form-group form-default">
-                <input type="password" name="clave" class="form-control" required value="{{datos_act.clave}}">
+                <input type="password" name="password_usuario" class="form-control" required value="{{usuario_actual.password_usuario}}">
                 <span class="form-bar"></span>
                 <label class="float-label">Contraseña</label>
             </div>
@@ -31,4 +32,6 @@
         </form>
     </div>
 </div>
+
+<script src="{%static 'js/app.js'%}"></script>
 {% endblock %}
