@@ -2,28 +2,50 @@
 {% load static %}
 
 {% block barra %}
+<style>
+    .card-header {
+        background: #f2f2f2;
+    }
+
+    .card-block {
+        height: 22em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f2f2f2;
+    }
+
+    .form-material {
+        display: flex;
+        margin: 1em;
+        height: 100%;
+        width: 65%;
+        gap: 2em;
+        flex-direction: column;
+        background: #f2f2f2;
+    }
+</style>
 <div class="card">
     <div class="card-header">
-        <h5>Datos del Usuario</h5>
+        <h5>{{titulo_f}}</h5>
     </div>
     <div class="card-block">
-        <form class="form-material" action="{% url 'modusuario' usu_actual %}" method="POST">
+        <form class="form-material" action="{% url 'modusuario' usu_actual %}" method="POST" style="margin: 1em">
         {% csrf_token %}
             <div class="form-group form-default">
-                <input type="text" name="nombre_completo_usuario" class="form-control" required value="{{usuario_actual.nombre_completo_usuario}}">
-                <span class="form-bar"></span>
                 <label class="float-label">Nombre Completo</label>
+                <span class="form-bar"></span>
+                <input type="text" name="nombre_completo_usuario" class="form-control" required value="{{datos_act.nombre_completo_usuario}}">
             </div>
             <div class="form-group form-default">
-                <input type="text" name="nombre_usuario" class="form-control" required value="{{usuario_actual.nombre_usuario}}">
-                <span class="form-bar"></span>
                 <label class="float-label">Usuario</label>
-            </div>
-            <br></br>
-            <div class="form-group form-default">
-                <input type="password" name="password_usuario" class="form-control" required value="{{usuario_actual.password_usuario}}">
                 <span class="form-bar"></span>
+                <input type="text" name="nombre_usuario" class="form-control" required value="{{datos_act.nombre_usuario}}">
+            </div>
+            <div class="form-group form-default">
                 <label class="float-label">Contraseña</label>
+                <span class="form-bar"></span>
+                <input type="password" name="password_usuario" class="form-control" required value="{{datos_act.password_usuario}}">
             </div>
             <div class="form-group form-default">
                 <button type="submit" class="btn btn-success btn-round waves-effect waves-light">Grabar</button>

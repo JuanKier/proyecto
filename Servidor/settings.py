@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'Servidor.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Encar_PC',
+        'NAME': 'encarpc_pagina',
         'USER' : 'root',
         'PASSWORD': '',
         'HOST' : 'localhost',

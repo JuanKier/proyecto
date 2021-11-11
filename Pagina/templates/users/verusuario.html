@@ -5,7 +5,7 @@
 <div class="card">
     <div class="card-header">
         <h5>Lista de Usuarios</h5>
-        <a href="{% url 'modusuario' '0' %}" class="btn waves-effect waves-light btn-success" style="color: white;"><i class="icofont icofont-plus"></i>Nuevo Registro</a>
+ 
     </div>
     <div class="card-block table-border-style">
         <div class="table-responsive">
@@ -23,13 +23,14 @@
                         <td>{{ lista.nombre_usuario }}</td>
                         <td>{{ lista.nombre_completo_usuario }}</td>
                         <td><div class="icon-btn">
-                          <a href="{% url 'modusuario' lista.nombre_usuario %}" class="btn waves-effect waves-light btn-warning btn-icon" style="color: white;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Modificar Registro"><i data-feather="edit"></i></a>
-                          <a href="{% url 'borusuario' lista.nombre_usuario %}" class="btn waves-effect waves-light btn-danger btn-icon" style="color: white;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eliminar Registro"><i data-feather="trash-2"></i></a>
+                          <a href="{% url 'modusuario' lista.id_usuario %}" class="btn waves-effect waves-light btn-warning btn-icon" style="color: white;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Modificar Registro"><i data-feather="edit"></i></a>
+                          <a href="{% url 'borusuario' lista.id_usuario %}" class="btn waves-effect waves-light btn-danger btn-icon" style="color: white;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eliminar Registro"><i data-feather="trash-2"></i></a>
                         </div></td>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
+            <a href="{% url 'modusuario' 0 %}" class="btn waves-effect waves-light btn-success" style="margin-bottom: 1em; margin-left: 1em;"><i class="icofont icofont-plus"></i>Nuevo Registro</a>
         </div>
     </div>
 </div>
