@@ -1,7 +1,23 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block barra %}
+{% block barra %}<div class="col-md-3 col-xl-2">
+
+    <div class="card">
+        <div class="card-header">
+            <h5 class="card-title mb-0">Profile Settings</h5>
+        </div>
+
+        <div class="list-group list-group-flush" role="tablist">
+            <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#account" role="tab">
+                Cuenta
+            </a>
+            <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="/pagina/verusuario" role="tab">
+                Lista de Usuarios 
+            </a>
+        </div>
+    </div>
+</div>
 <div class="card">
     <div class="card-header">
         <h5>Lista de Usuarios</h5>
@@ -24,7 +40,7 @@
                         <td>{{ lista.nombre_completo_usuario }}</td>
                         <td><div class="icon-btn">
                           <a href="{% url 'modusuario' lista.id_usuario %}" class="btn waves-effect waves-light btn-warning btn-icon" style="color: white;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Modificar Registro"><i data-feather="edit"></i></a>
-                          <a href="{% url 'borusuario' lista.id_usuario %}" class="btn waves-effect waves-light btn-danger btn-icon" style="color: white;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eliminar Registro"><i data-feather="trash-2"></i></a>
+                          <a href="{% url 'borusuario' lista.id_usuario %}" onclick="return confirm('Eliminar el registro?')" class="btn waves-effect waves-light btn-danger btn-icon" style="color: white;" data-toggle="tooltip" data-placement="top" title="" data-original-title="Eliminar Registro"><i data-feather="trash-2"></i></a>
                         </div></td>
                     </tr>
                     {% endfor %}
