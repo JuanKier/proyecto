@@ -24,8 +24,15 @@
  
     </div>
     <div class="card-block table-border-style">
+        <div style="padding:0 1em; margin-bottom: 20px; display: flex; justify-content: space-between; width: 33em;">
+
+            <input type="text" id="filter0" placeholder="Usuario" style=" width: 8em;">
+            <input type="text" id="filter1" placeholder="Nombre Completo" style=" width: 10em;">
+
+        </div>
+
         <div class="table-responsive">
-            <table class="table">
+            <table id="filter" class="table">
                 <thead>
                     <tr>
                         <th>Usuario</th>
@@ -50,6 +57,8 @@
         </div>
     </div>
 </div>
+
+<script src="{%static 'js/TableFilter.min.js'%}" defer></script>
 <script src="{%static 'js/app.js'%}"></script>
 
 {% endblock %}
