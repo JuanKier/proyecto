@@ -22,51 +22,12 @@
 					<a class="sidebar-brand" href="index">
 			  <span class="align-middle"><img src="{%static 'img/icons/logo_encarpc.png'%}" alt=""></span>
 			</a>
-	
-					<ul class="sidebar-nav">
-						<li class="sidebar-header">
-							Páginas
-						</li>
-	
-						<li class="sidebar-item">
-							<a class="sidebar-link" href="index">
-				  <i class="align-middle" data-feather="home"></i> <span class="align-middle">Inicio</span>
-				</a>
-						</li>
-	
-						<li class="sidebar-item">
-							<a class="sidebar-link" href="users">
-				  <i class="align-middle" data-feather="user"></i> <span class="align-middle">Usuarios</span>
-				</a>
-						</li>
-	
-						<li class="sidebar-item">
-							<a class="sidebar-link" href="products">
-				  <i class="align-middle" data-feather="list"></i> <span class="align-middle">Productos</span>
-				</a>
-						</li>
-
-						<li class="sidebar-item">
-							<a class="sidebar-link" href="clients">
-				  <i class="align-middle" data-feather="users"></i> <span class="align-middle">Clientes</span>
-				</a>
-						</li>
-	
-	
-						<li class="sidebar-header">
-							Tools & Components
-						</li>
-						
-						<li class="sidebar-header">
-							Plugins & Addons
-						</li>
-	
-						<li class="sidebar-item">
-						
-						</li>
-					</ul>
-	
-					</div>
+			{%if tipo_usuario == 1%}
+				{%include "./menu/menu_admin.html"%}
+			{%endif%}
+			{%if tipo_usuario == 2%}
+				{%include "./menu/menu_user.html"%}
+			{%endif%}	
 			</nav>
 	
 			<div class="main">

@@ -1,22 +1,8 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block barra %}<div class="col-md-3 col-xl-2">
-
-    <div class="card">
-        <div class="card-header">
-            <h5 class="card-title mb-0">Profile Settings</h5>
-        </div>
-
-        <div class="list-group list-group-flush" role="tablist">
-            <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#account" role="tab">
-                Cuenta
-            </a>
-            <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="/pagina/verusuario" role="tab">
-                Lista de Usuarios 
-            </a>
-        </div>
-    </div>
+{% block barra %}
+<div class="col-md-3 col-xl-2">  
 </div>
 <div class="card">
     <div class="card-header">
@@ -41,7 +27,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    {% for lista in listatabla %}
+                    {% for lista in parameters.listatabla %}
                     <tr>
                         <td>{{ lista.nombre_usuario }}</td>
                         <td>{{ lista.nombre_completo_usuario }}</td>

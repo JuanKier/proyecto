@@ -18,6 +18,7 @@ def login(request):
             if getattr(datos_usuario,"password_usuario")==pusuario:
                 request.session["id_usuario"]=getattr(datos_usuario, "id_usuario")
                 request.session["nombre_completo_usuario"]=getattr(datos_usuario, "nombre_completo_usuario")
+                request.session["tipo_usuario"]=getattr(datos_usuario, "tipo_usuario")
                 return redirect("index")
             else:
                 return render(request, 'login.html', {"mensaje_error":"Contraseña ingresada es incorrecta."})
@@ -26,6 +27,7 @@ def login(request):
 
 def index(request):
     return validar(request, "index.html")
+     
 
 def salir(request):
     request.session.flush()
@@ -38,15 +40,15 @@ def products(request):
     return validar(request, "products.html")    
 
 def clients(request):
-    return validar(request, "clients.html") 
+    return validar(request, "clients.html")
 
 def users(request):
-    return validar(request, "users.html") 
+    return validar(request, "users.html")
 
 def verusuario(request):
     if request.session.get("id_usuario"):
         listatabla=Usuario.objects.all()
-        return render(request, "users/verusuario.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Usuarios", "subtitulo_f":"Listado de Usuarios registrados", "listatabla":listatabla})
+        return validar(request, "users/verusuario.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Usuarios", "subtitulo_f":"Listado de Usuarios registrados", "listatabla":listatabla})
     else:
         return redirect("login")
 
@@ -56,14 +58,14 @@ def modusuario(request,usu_actual=0):
             usuario_actual=Usuario.objects.filter(id_usuario=usu_actual).exists()
             if usuario_actual:
                 datos_usuario=Usuario.objects.filter(id_usuario=usu_actual).first()
-                return render(request, "users/modusuario.html", 
+                return validar(request, "users/modusuario.html", 
                 {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
                 "titulo_f":"Modificar Usuario", 
-                "subtitulo_f":"Vuleva a escribir los datos que desea modificar", 
+                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
                 "datos_act":datos_usuario, 
                 "usu_actual":usu_actual})
             else:
-                return render(request, "users/modusuario.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Nuevo Usuario", "subtitulo_f":"Por favor complete todos los datos solicitados", "usu_actual":usu_actual})
+                return validar(request, "users/modusuario.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Nuevo Usuario", "subtitulo_f":"Por favor complete todos los datos solicitados", "usu_actual":usu_actual})
 
         if request.method=="POST":
             if usu_actual==0:
@@ -85,9 +87,13 @@ def borusuario(request, usu_actual):
         return redirect('verusuario')
  
  
-def validar (request, pageSuccess):
+def validar(request, pageSuccess, parameters={}):
+    print(request.session.get("id_usuario"))
     if request.session.get("id_usuario"):
-        return render(request, pageSuccess, {"nombre_usuario": request.session.get("nombre_completo_usuario")})
+        if (request.session.get("tipo_usuario") == 2) and ((pageSuccess == 'users.html') or (pageSuccess == 'products.html')):
+            return render(request, "index.html", {"nombre_usuario": request.session.get("nombre_completo_usuario"),"tipo_usuario": request.session.get("tipo_usuario"), "mensaje": "Este usuario no cuenta con los privilegios suficientes"})
+        else: 
+            return render(request, pageSuccess, {"nombre_usuario": request.session.get("nombre_completo_usuario"),"tipo_usuario": request.session.get("tipo_usuario"), "parameters": parameters})
     else:
         return render(request, 'login.html')
 
