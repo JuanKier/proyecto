@@ -11,5 +11,6 @@ urlpatterns = [
     path('users', views.users, name='users'),
     path('verusuario', views.verusuario, name='verusuario'),
     path('modusuario/<int:usu_actual>', views.modusuario, name='modusuario'),
-    path('borusuario/<int:usu_actual>', views.borusuario, name='borusuario')
+    path('borusuario/<int:usu_actual>', views.borusuario, name='borusuario'),
+    path('procesadores', views.procesadores, name='procesadores'),
 ]

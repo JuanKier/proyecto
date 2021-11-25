@@ -45,6 +45,9 @@ def clients(request):
 def users(request):
     return validar(request, "users.html")
 
+def procesadores(request):
+    return validar(request, "productos/procesadores.html")
+
 def verusuario(request):
     if request.session.get("id_usuario"):
         listatabla=Usuario.objects.all()
@@ -96,4 +99,6 @@ def validar(request, pageSuccess, parameters={}):
             return render(request, pageSuccess, {"nombre_usuario": request.session.get("nombre_completo_usuario"),"tipo_usuario": request.session.get("tipo_usuario"), "parameters": parameters})
     else:
         return render(request, 'login.html')
+
+
 
