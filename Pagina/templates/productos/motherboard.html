@@ -1,0 +1,86 @@
+{%extends "base.html"%}
+{%block barra%}
+{%load static%}
+
+<body>
+    <script>
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                fixedHeader: true
+            });
+        });
+    </script>
+
+
+    <div class="mb-3">
+        <h1 class="h3 d-inline align-middle">Placas Madres</h1>
+    </div>
+    <div class="py-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    Lista de Placas Madres
+                </div>
+                <div class="card-body">
+                    <table id="example" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Socket</th>
+                                <th>Tamaño</th>
+                                <th>Tipo RAM</th>
+                                <th>TDP</th>
+                                <th>Precio Compra</th>
+                                <th>Precio Venta</th>
+                                <th>Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for lista in parameters.listatabla %}
+                            <tr>
+                                <td>{{ lista.nombre_usuario }}</td>
+                                <td>{{ lista.nombre_completo_usuario }}</td>
+                                <td>
+                                    <div class="icon-btn">
+                                        <a href="{% url 'modusuario' lista.id_usuario %}"
+                                            class="btn waves-effect waves-light btn-warning btn-icon"
+                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
+                                            data-original-title="Modificar Registro"><i data-feather="edit"></i></a>
+                                        <a href="{% url 'borusuario' lista.id_usuario %}"
+                                            onclick="return confirm('Eliminar el registro?')"
+                                            class="btn waves-effect waves-light btn-danger btn-icon"
+                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
+                                            data-original-title="Eliminar Registro"><i data-feather="trash-2"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Marca</th>
+                                <th>Modelo</th>
+                                <th>Socket</th>
+                                <th>Tamaño</th>
+                                <th>Tipo RAM</th>
+                                <th>TDP</th>
+                                <th>Precio Compra</th>
+                                <th>Precio Venta</th>
+                                <th>Stock</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{%static 'js/app.js'%}"></script>
+</body>
+
+</html>
+
+
+{%endblock%}

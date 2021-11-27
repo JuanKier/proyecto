@@ -45,9 +45,6 @@ def clients(request):
 def users(request):
     return validar(request, "users.html")
 
-def procesadores(request):
-    return validar(request, "productos/procesadores.html")
-
 def verusuario(request):
     if request.session.get("id_usuario"):
         listatabla=Usuario.objects.all()
@@ -88,8 +85,35 @@ def modusuario(request,usu_actual=0):
 def borusuario(request, usu_actual):
         Usuario.objects.filter(id_usuario=usu_actual).delete()
         return redirect('verusuario')
+
+
+#--=======================================Productos======================================--
+def cpu(request):
+    return validar(request, "productos/cpu.html")
+
+def case(request):
+    return validar(request, "productos/case.html")
+    
+def motherboard(request):
+    return validar(request, "productos/motherboard.html")
+
+def perifericos(request):
+    return validar(request, "productos/perifericos.html")
+
+def psu(request):
+    return validar(request, "productos/psu.html")
+
+def ram(request):
+    return validar(request, "productos/ram.html")
+
+def stg(request):
+    return validar(request, "productos/stg.html")
+
+def vga(request):
+    return validar(request, "productos/vga.html")
+
  
- 
+#--=======================================Validación======================================--
 def validar(request, pageSuccess, parameters={}):
     print(request.session.get("id_usuario"))
     if request.session.get("id_usuario"):

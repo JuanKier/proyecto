@@ -12,5 +12,13 @@ urlpatterns = [
     path('verusuario', views.verusuario, name='verusuario'),
     path('modusuario/<int:usu_actual>', views.modusuario, name='modusuario'),
     path('borusuario/<int:usu_actual>', views.borusuario, name='borusuario'),
-    path('procesadores', views.procesadores, name='procesadores'),
+
+    path('cpu', views.cpu, name='cpu'),
+    path('case', views.case, name='case'),
+    path('motherboard', views.motherboard, name='motherboard'),
+    path('perifericos', views.perifericos, name='perifericos'),
+    path('psu', views.psu, name='psu'),
+    path('ram', views.ram, name='ram'),
+    path('stg', views.stg, name='stg'),
+    path('vga', views.vga, name='vga'),    
 ]
