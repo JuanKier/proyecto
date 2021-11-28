@@ -12,6 +12,8 @@ urlpatterns = [
     path('verusuario', views.verusuario, name='verusuario'),
     path('modusuario/<int:usu_actual>', views.modusuario, name='modusuario'),
     path('borusuario/<int:usu_actual>', views.borusuario, name='borusuario'),
+    path('proveedor', views.proveedor, name='proveedor'),
+    path('inventario', views.inventario, name='inventario'),
 
     path('cpu', views.cpu, name='cpu'),
     path('case', views.case, name='case'),

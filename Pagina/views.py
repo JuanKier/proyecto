@@ -45,6 +45,13 @@ def clients(request):
 def users(request):
     return validar(request, "users.html")
 
+def proveedor(request):
+    return validar(request, "proveedor.html")
+
+def inventario(request):
+    return validar(request, "inventario.html")
+
+
 def verusuario(request):
     if request.session.get("id_usuario"):
         listatabla=Usuario.objects.all()
@@ -69,13 +76,14 @@ def modusuario(request,usu_actual=0):
 
         if request.method=="POST":
             if usu_actual==0:
-                usuario_nuevo=Usuario(nombre_usuario=request.POST.get('nombre_usuario'), password_usuario=request.POST.get('password_usuario'), nombre_completo_usuario=request.POST.get('nombre_completo_usuario'))
+                usuario_nuevo=Usuario(nombre_usuario=request.POST.get('nombre_usuario'), password_usuario=request.POST.get('password_usuario'), nombre_completo_usuario=request.POST.get('nombre_completo_usuario'), tipo_usuario=request.POST.get('tipo_usuario'))
                 usuario_nuevo.save()
             else:
                 usuario_actual=Usuario.objects.get(id_usuario=usu_actual)
                 usuario_actual.nombre_completo_usuario=request.POST.get('nombre_completo_usuario')
                 usuario_actual.nombre_usuario=request.POST.get('nombre_usuario')
                 usuario_actual.password_usuario=request.POST.get('password_usuario')
+                usuario_actual.tipo_usuario=request.POST.get('tipo_usuario')
                 usuario_actual.save()
 
             return redirect('verusuario')
