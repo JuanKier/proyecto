@@ -25,8 +25,8 @@
 
 	<body>
 		<div class="wrapper">
-			<nav id="sidebar" class="sidebar">
-				<div class="sidebar-content js-simplebar">
+			<nav id="sidebar" class="sidebar js-sidebar">
+				<div class="sidebar-content js-simplebar" data-simplebar="init">
 					<a class="sidebar-brand" href="index">
 			  <span class="align-middle"><img src="{%static 'img/icons/logo_encarpc.png'%}" alt=""></span>
 			</a>
@@ -54,7 +54,7 @@
 				  </a>
 
 				  <a href="#" data-bs-toggle="dropdown" aria-expanded="false" class="nav-icon pe-md-0 dropdown-toggle">
-					<img src="{%static 'img/avatars/avatar.jpg'%}" class="avatar img-fluid rounded mr-1"/> <span class="text-dark" style="font-size: 16px;">{{nombre_usuario}}</span>
+					<i class="align-middle me-2 fas fa-fw fa-user-circle"></i> <span class="text-dark" style="font-size: 16px;">{{nombre_usuario}}</span>
 				  </a>
 								<div class="dropdown-menu dropdown-menu-right">
 									<a class="dropdown-item" href="verusuario"><i class="align-middle mr-1" data-feather="users"></i> Usuarios</a>
@@ -70,3 +70,6 @@
 				<div class="container-fluid p-0">
 	{%block barra%}
 	{%endblock%}
+
+
+	
