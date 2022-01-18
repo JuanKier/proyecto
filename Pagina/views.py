@@ -171,7 +171,7 @@ def modproveedor(request,proveedor_actual=0):
                 return validar(request, "proveedor/modproveedor.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Nuevo Proveedor", "subtitulo_f":"Por favor complete todos los datos solicitados", "proveedor_actual":proveedor_actual})
 
         if request.method=="POST":
-            if proveedor_actual==0:
+            # if proveedor_actual==0:
                 proveedor_nuevo=Proveedor(codigo_proveedor=request.POST.get('codigo_proveedor'),
                 nombre_proveedor=request.POST.get('nombre_proveedor'),
                 razon_social_proveedor=request.POST.get('razon_social_proveedor'),
