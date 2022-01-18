@@ -18,7 +18,7 @@
         <div class="card-header">
             
             <div class="form-group form-default" style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="margin: 0">Lista de Usuarios</h3><a href="{% url 'modusuario' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nuevo Usuario</button></a>
+                <h3 style="margin: 0">Lista de Clientes</h3><a href="{% url 'modcliente' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nuevo Cliente</button></a>
             </div>
             <div class="py-4">
                 <div class="col-md-12">
@@ -27,30 +27,33 @@
                             <table id="example" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Usuario</th>
                                         <th>Nombre Completo</th>
-                                        <th>Tipo de Usuario</th>
-                                        <th>Acciones</th>
+                                        <th>C.I.N° o RUC</th>
+                                        <th>Teléfono</th>
+                                        <th>Dirección</th>
+                                        <th>Género</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for lista in parameters.listatabla %}
                                     <tr>
-                                        <td>{{ lista.nombre_usuario }}</td>
-                                        <td>{{ lista.nombre_completo_usuario }}</td>
-                                        {%if lista.tipo_usuario == 1 %}
-                                        <td>Administrador</td>
+                                        <td>{{ lista.nombre_cliente }}</td>
+                                        <td>{{ lista.ruc_cliente }}</td>
+                                        <td>{{ lista.telefono_cliente }}</td>
+                                        <td>{{ lista.direccion_cliente }}</td>
+                                        {%if lista.genero_cliente == 1 %}
+                                        <td>Masculino</td>
                                         {% else %}
-                                        <td>Empleado</td>
+                                        <td>Femenino</td>
                                         {% endif %}
                                         <td>
                                             <div class="icon-btn">
-                                                <a href="{% url 'modusuario' lista.id_usuario %}"
+                                                <a href="{% url 'modcliente' lista.codigo_cliente %}"
                                                     class="btn waves-effect waves-light btn-warning btn-icon"
                                                     style="color: white;" data-toggle="tooltip" data-placement="top"
                                                     title="" data-original-title="Modificar Registro"><i
                                                         data-feather="edit"></i></a>
-                                                <a href="{% url 'borusuario' lista.id_usuario %}"
+                                                <a href="{% url 'borcliente' lista.codigo_cliente %}"
                                                     onclick="return confirm('Eliminar el registro?')"
                                                     class="btn waves-effect waves-light btn-danger btn-icon"
                                                     style="color: white;" data-toggle="tooltip" data-placement="top"

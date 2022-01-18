@@ -9,10 +9,19 @@ urlpatterns = [
     path('products', views.products, name='products'),
     path('clients', views.clients, name='clients'),
     path('users', views.users, name='users'),
+
     path('verusuario', views.verusuario, name='verusuario'),
     path('modusuario/<int:usu_actual>', views.modusuario, name='modusuario'),
     path('borusuario/<int:usu_actual>', views.borusuario, name='borusuario'),
-    path('proveedor', views.proveedor, name='proveedor'),
+    
+    path('vercliente', views.vercliente, name='vercliente'),
+    path('modcliente/<int:cliente_actual>', views.modcliente, name='modcliente'),
+    path('borcliente/<int:cliente_actual>', views.borcliente, name='borcliente'),
+
+    path('verproveedor', views.verproveedor, name='verproveedor'),
+    path('modproveedor/<int:proveedor_actual>', views.modproveedor, name='modproveedor'),
+    path('borproveedor/<int:proveedor_actual>', views.borproveedor, name='borproveedor'),
+    
     path('inventario', views.inventario, name='inventario'),
 
     path('cpu', views.cpu, name='cpu'),
