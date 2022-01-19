@@ -38,7 +38,7 @@
         <h3>{{parameters.titulo_f}}</h3>
     </div>
     <div class="card-block">
-        <form class="form-material" action="{% url 'modproveedor' 0 %}" method="POST"
+        <form class="form-material" action="{% url 'modproveedor' parameters.proveedor_actual %}" method="POST"
             style="margin: 1em">
             {% csrf_token %}
             <div class="form-group form-default">

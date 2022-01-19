@@ -104,11 +104,12 @@ def vercliente(request):
     else:
         return redirect("login")
 
-def modcliente(request,cliente_actual=0):
+def modcliente(request, cliente_actual=0):
+    print(cliente_actual)
     if request.session.get("id_usuario"):
         if request.method=="GET":
-            cliente_actual=Cliente.objects.filter(codigo_cliente=cliente_actual).exists()
-            if cliente_actual:
+            cli_actual=Cliente.objects.filter(codigo_cliente=cliente_actual).exists()
+            if cli_actual:
                 datos_cliente=Cliente.objects.filter(codigo_cliente=cliente_actual).first()
                 return validar(request, "clients/modcliente.html", 
                 {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
@@ -117,7 +118,10 @@ def modcliente(request,cliente_actual=0):
                 "datos_act":datos_cliente, 
                 "cliente_actual":cliente_actual})
             else:
-                return validar(request, "clients/modcliente.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Nuevo Cliente", "subtitulo_f":"Por favor complete todos los datos solicitados", "cliente_actual":cliente_actual})
+                return validar(request, "clients/modcliente.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Nuevo Cliente", "subtitulo_f":"Por favor complete todos los datos solicitados", 
+                "cliente_actual":cliente_actual})
 
         if request.method=="POST":
             if cliente_actual==0:
@@ -158,8 +162,8 @@ def verproveedor(request):
 def modproveedor(request,proveedor_actual=0):
     if request.session.get("id_usuario"):
         if request.method=="GET":
-            proveedor_actual=Proveedor.objects.filter(codigo_proveedor=proveedor_actual).exists()
-            if proveedor_actual:
+            prov_actual=Proveedor.objects.filter(codigo_proveedor=proveedor_actual).exists()
+            if prov_actual:
                 datos_proveedor=Proveedor.objects.filter(codigo_proveedor=proveedor_actual).first()
                 return validar(request, "proveedor/modproveedor.html", 
                 {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
@@ -227,7 +231,6 @@ def vga(request):
  
 #--=======================================Validación======================================--
 def validar(request, pageSuccess, parameters={}):
-    print(request.session.get("id_usuario"))
     if request.session.get("id_usuario"):
         if (request.session.get("tipo_usuario") == 2) and ((pageSuccess == 'users.html') or (pageSuccess == 'products.html')):
             return render(request, "index.html", {"nombre_usuario": request.session.get("nombre_completo_usuario"),"tipo_usuario": request.session.get("tipo_usuario"), "mensaje": "Este usuario no cuenta con los privilegios suficientes"})
