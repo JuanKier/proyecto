@@ -77,7 +77,14 @@ def modusuario(request,usu_actual=0):
 
         if request.method=="POST":
             if usu_actual==0:
-                usuario_nuevo=Usuario(nombre_usuario=request.POST.get('nombre_usuario'), password_usuario=request.POST.get('password_usuario'), nombre_completo_usuario=request.POST.get('nombre_completo_usuario'), tipo_usuario=request.POST.get('tipo_usuario'))
+                usuario_nuevo=Usuario(nombre_usuario=request.POST.get('nombre_usuario'), 
+                password_usuario=request.POST.get('password_usuario'), 
+                nombre_completo_usuario=request.POST.get('nombre_completo_usuario'), 
+                tipo_usuario=request.POST.get('tipo_usuario'), 
+                ci_usuario=request.POST.get('ci_usuario'), 
+                telefono_usuario=request.POST.get('telefono_usuario'), 
+                direccion_usuario=request.POST.get('direccion_usuario'))
+                
                 usuario_nuevo.save()
             else:
                 usuario_actual=Usuario.objects.get(id_usuario=usu_actual)
@@ -85,6 +92,9 @@ def modusuario(request,usu_actual=0):
                 usuario_actual.nombre_usuario=request.POST.get('nombre_usuario')
                 usuario_actual.password_usuario=request.POST.get('password_usuario')
                 usuario_actual.tipo_usuario=request.POST.get('tipo_usuario')
+                usuario_actual.ci_usuario=request.POST.get('ci_usuario')
+                usuario_actual.telefono_usuario=request.POST.get('telefono_usuario')
+                usuario_actual.direccion_usuario=request.POST.get('direccion_usuario')
                 usuario_actual.save()
 
             return redirect('verusuario')
@@ -133,7 +143,7 @@ def modcliente(request, cliente_actual=0):
                 genero_cliente=request.POST.get("genero_cliente"))
 
                 cliente_nuevo.save()
-        else:
+            else:
                 cliente_actual=Cliente.objects.get(codigo_cliente=cliente_actual)
                 cliente_actual.nombre_cliente=request.POST.get('nombre_cliente')
                 cliente_actual.ruc_cliente=request.POST.get('ruc_cliente')
@@ -141,6 +151,7 @@ def modcliente(request, cliente_actual=0):
                 cliente_actual.direccion_cliente=request.POST.get("direccion_cliente")
                 cliente_actual.genero_cliente=request.POST.get("genero_cliente")
                 cliente_actual.save() 
+
         return redirect('vercliente')
     
     else:
@@ -175,7 +186,7 @@ def modproveedor(request,proveedor_actual=0):
                 return validar(request, "proveedor/modproveedor.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Nuevo Proveedor", "subtitulo_f":"Por favor complete todos los datos solicitados", "proveedor_actual":proveedor_actual})
 
         if request.method=="POST":
-            # if proveedor_actual==0:
+            if proveedor_actual==0:
                 proveedor_nuevo=Proveedor(codigo_proveedor=request.POST.get('codigo_proveedor'),
                 nombre_proveedor=request.POST.get('nombre_proveedor'),
                 razon_social_proveedor=request.POST.get('razon_social_proveedor'),
@@ -184,7 +195,7 @@ def modproveedor(request,proveedor_actual=0):
                 direccion_proveedor=request.POST.get("direccion_proveedor"))
 
                 proveedor_nuevo.save()
-        else:
+            else:
                 proveedor_actual=Proveedor.objects.get(codigo_proveedor=proveedor_actual)
                 proveedor_actual.nombre_proveedor=request.POST.get('nombre_proveedor')
                 proveedor_actual.razon_social_proveedor=request.POST.get('razon_social_proveedor')
@@ -192,6 +203,7 @@ def modproveedor(request,proveedor_actual=0):
                 proveedor_actual.telefono_proveedor=request.POST.get('telefono_proveedor')
                 proveedor_actual.direccion_proveedor=request.POST.get("direccion_proveedor")
                 proveedor_actual.save() 
+
         return redirect('verproveedor')
     
     else:
@@ -200,8 +212,6 @@ def modproveedor(request,proveedor_actual=0):
 def borproveedor(request, proveedor_actual):
         Proveedor.objects.filter(codigo_proveedor = proveedor_actual).delete()
         return redirect('verproveedor')
-
-
 
 #--=======================================Productos======================================--
 def cpu(request):

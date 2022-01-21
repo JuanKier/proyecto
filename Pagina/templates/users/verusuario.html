@@ -50,7 +50,7 @@
                                                     style="color: white;" data-toggle="tooltip" data-placement="top"
                                                     title="" data-original-title="Modificar Registro"><i
                                                         data-feather="edit"></i></a>
-                                                <a href="{% url 'borusuario' lista.id_usuario %}"
+                                                <a onclick="checker()" href="{% url 'borusuario' lista.id_usuario %}"
                                                     onclick="return confirm('Eliminar el registro?')"
                                                     class="btn waves-effect waves-light btn-danger btn-icon"
                                                     style="color: white;" data-toggle="tooltip" data-placement="top"
@@ -70,7 +70,22 @@
         </div>
     </div>
     <script src="{%static 'js/app.js'%}"></script>
+    <script>
+        function alerta() {
+            if (sessionStorage.getItem('1') == 1) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Aviso',
+                    text: 'Registro guardado existosamente.',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                })
+                sessionStorage.setItem('1', 0)
+            }
+        }
+        window.onload = alerta()
+    </script>
     </main>
-
 
     {% endblock %}
