@@ -85,7 +85,7 @@
                 </div>
 
                 <div class="form-group form-default">
-                    <button type="submit" class="btn btn-success btn-round waves-effect waves-light">Grabar</button>
+                    <button type="submit" class="btn btn-success btn-round waves-effect waves-light" onclick="return confirm('Estás seguro de añadir este cliente?')">Grabar</button>
                     <a href="{% url 'vercliente' %}" class="btn btn-info btn-round waves-effect waves-light">Cancelar</a>
                 </div>
             </div>
@@ -94,4 +94,5 @@
 </div>
 
 <script src="{%static 'js/app.js'%}"></script>
+
 {% endblock %}

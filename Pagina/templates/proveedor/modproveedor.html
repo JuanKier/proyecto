@@ -77,7 +77,7 @@
                 </div>        
                 <div class="input-confirmar">
                     <div class="form-group form-default input-confirmar">
-                        <button type="submit" class="btn btn-success btn-round waves-effect waves-light">Grabar</button>
+                        <button type="submit" class="btn btn-success btn-round waves-effect waves-light" onclick="return confirm('Estás seguro de añadir este proveedor?')">Grabar</button>
                         <a href="{% url 'verproveedor' %}" class="btn btn-info btn-round waves-effect waves-light">Cancelar</a>
                     </div>
                 </div>

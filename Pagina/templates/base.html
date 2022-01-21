@@ -29,7 +29,7 @@
 		<div class="wrapper">
 			<nav id="sidebar" class="sidebar js-sidebar">
 				<div class="sidebar-content js-simplebar" data-simplebar="init">
-					<a class="sidebar-brand" href="index">
+					<a class="sidebar-brand" href="{%url 'index'%}">
 			  <span class="align-middle"><img src="{%static 'img/icons/logo_encarpc.png'%}" alt=""></span>
 			</a>
 			{%if tipo_usuario == 1%}
@@ -59,9 +59,9 @@
 					<i class="align-middle me-2 fas fa-fw fa-user-circle"></i> <span class="text-dark" style="font-size: 16px;">{{nombre_usuario}}</span>
 				  </a>
 								<div class="dropdown-menu dropdown-menu-right">
-									<a class="dropdown-item" href="verusuario"><i class="align-middle mr-1" data-feather="users"></i> Usuarios</a>
+									<a class="dropdown-item" href="{%url 'verusuario'%}"><i class="align-middle mr-1" data-feather="users"></i> Usuarios</a>
 									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="./salir">Salir</a>
+									<a class="dropdown-item" href="{%url 'salir'%}">Salir</a>
 								</div>
 							</li>
 						</ul>
