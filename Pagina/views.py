@@ -242,7 +242,7 @@ def vga(request):
 #--=======================================Validación======================================--
 def validar(request, pageSuccess, parameters={}):
     if request.session.get("id_usuario"):
-        if (request.session.get("tipo_usuario") == 2) and ((pageSuccess == 'users.html') or (pageSuccess == 'products.html')):
+        if (request.session.get("tipo_usuario") == 2) and ((pageSuccess == 'users/verusuario.html') or (pageSuccess == 'products.html') or (pageSuccess == 'profile.html')):
             return render(request, "index.html", {"nombre_usuario": request.session.get("nombre_completo_usuario"),"tipo_usuario": request.session.get("tipo_usuario"), "mensaje": "Este usuario no cuenta con los privilegios suficientes"})
         else: 
             return render(request, pageSuccess, {"nombre_usuario": request.session.get("nombre_completo_usuario"),"tipo_usuario": request.session.get("tipo_usuario"), "parameters": parameters})
