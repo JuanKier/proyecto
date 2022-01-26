@@ -22,6 +22,14 @@ urlpatterns = [
     path('modproveedor/<int:proveedor_actual>', views.modproveedor, name='modproveedor'),
     path('borproveedor/<int:proveedor_actual>', views.borproveedor, name='borproveedor'),
     
+    path('verdepartamento', views.verdepartamento, name='verdepartamento'),
+    path('moddepartamento/<int:departamento_actual>', views.moddepartamento, name='moddepartamento'),
+    path('bordepartamento/<int:departamento_actual>', views.bordepartamento, name='bordepartamento'),
+
+    path('verciudad', views.verciudad, name='verciudad'),
+    path('modciudad/<int:ciudad_actual>', views.modciudad, name='modciudad'),
+    path('borciudad/<int:ciudad_actual>', views.borciudad, name='borciudad'),
+
     path('inventario', views.inventario, name='inventario'),
 
     path('cpu', views.cpu, name='cpu'),

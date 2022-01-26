@@ -110,6 +110,9 @@ def borusuario(request, usu_actual):
 def vercliente(request):
     if request.session.get("id_usuario"):
         listatabla=Cliente.objects.all()
+        listadepartamento = Departamento.objects.all()
+        listaciudad = Ciudad.objects.all()
+        listanacionalidad = Nacionalidad.objects.all()
         return validar(request, "clients/vercliente.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Clientes", "subtitulo_f":"Listado de Clientes registrados", "listatabla":listatabla})
     else:
         return redirect("login")
@@ -119,6 +122,7 @@ def modcliente(request, cliente_actual=0):
     if request.session.get("id_usuario"):
         if request.method=="GET":
             cli_actual=Cliente.objects.filter(codigo_cliente=cliente_actual).exists()
+            
             if cli_actual:
                 datos_cliente=Cliente.objects.filter(codigo_cliente=cliente_actual).first()
                 return validar(request, "clients/modcliente.html", 
@@ -212,6 +216,103 @@ def modproveedor(request,proveedor_actual=0):
 def borproveedor(request, proveedor_actual):
         Proveedor.objects.filter(codigo_proveedor = proveedor_actual).delete()
         return redirect('verproveedor')
+
+#--=======================================Departamentos======================================--
+
+def verdepartamento(request):
+    if request.session.get("id_usuario"):
+        listatabla = Departamento.objects.all()
+        return validar(request, "departamentos/verdepartamento.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Departamentos", "subtitulo_f":"Listado de Departamentos registrados", "listatabla":listatabla})
+    else:
+        return redirect("login")
+
+def moddepartamento(request,departamento_actual=0):
+    if request.session.get("id_usuario"):
+        if request.method=="GET":
+            dept_actual=Departamento.objects.filter(codigo_departamento=departamento_actual).exists()
+            if dept_actual:
+                datos_departamento=Departamento.objects.filter(codigo_departamento=departamento_actual).first()
+                return validar(request, "departamentos/moddepartamento.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Modificar Departamento", 
+                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                "datos_act":datos_departamento, 
+                "departamento_actual":departamento_actual})
+            else:
+                return validar(request, "departamentos/moddepartamento.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Nuevo Proveedor", "subtitulo_f":"Por favor complete todos los datos solicitados", "departamento_actual":departamento_actual})
+
+        if request.method=="POST":
+            if departamento_actual==0:
+                departamento_nuevo=Departamento(codigo_departamento=request.POST.get('codigo_departamento'),
+                nombre_departamento=request.POST.get('nombre_departamento'))
+                departamento_nuevo.save()
+
+            else:
+                departamento_actual=Departamento.objects.get(codigo_departamento=departamento_actual)
+                departamento_actual.nombre_departamento=request.POST.get('nombre_departamento')
+                departamento_actual.save() 
+
+        return redirect('verdepartamento')
+    
+    else:
+        return redirect("login")
+
+def bordepartamento(request, departamento_actual):
+        Departamento.objects.filter(codigo_departamento = departamento_actual).delete()
+        return redirect('verdepartamento')
+
+#--=======================================Ciudades======================================--
+
+def verciudad(request):
+    if request.session.get("id_usuario"):
+        listatabla = Ciudad.objects.all()
+        listadepartamento = Departamento.objects.all()
+        return validar(request, "ciudad/verciudad.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Ciudades", "subtitulo_f":"Listado de Ciudades registrados", "listatabla":listatabla, "listadepartamento": listadepartamento})
+    else:
+        return redirect("login")
+
+def modciudad(request,ciudad_actual=0):
+    if request.session.get("id_usuario"):
+        if request.method=="GET":
+            listadepartamento = Departamento.objects.all()
+            ciu_actual=Ciudad.objects.filter(codigo_ciudad=ciudad_actual).exists()
+            if ciu_actual:
+                datos_ciudad=Ciudad.objects.filter(codigo_ciudad=ciudad_actual).first()
+                return validar(request, "ciudad/modciudad.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Modificar Ciudad", 
+                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                "datos_act":datos_ciudad, 
+                "ciudad_actual":ciudad_actual})
+            else:
+                return validar(request, "ciudad/modciudad.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Nueva Ciudad", "subtitulo_f":"Por favor complete todos los datos solicitados", 
+                "ciudad_actual":ciudad_actual, 
+                "listadepartamento":listadepartamento})
+
+        if request.method=="POST":
+            if ciudad_actual==0:
+                ciudad_nuevo=Ciudad(codigo_ciudad=request.POST.get('codigo_ciudad'),
+                nombre_ciudad=request.POST.get('nombre_ciudad'),
+                nombre_departamento_id=request.POST.get('departamento'))
+                ciudad_nuevo.save()
+                listadepartamento = Departamento.objects.all()
+
+            else:
+                ciudad_actual=Ciudad.objects.get(codigo_ciudad=ciudad_actual)
+                listadepartamento = Departamento.objects.all()
+                ciudad_actual.nombre_ciudad=request.POST.get('nombre_ciudad')
+                ciudad_actual.nombre_departamento_id=request.get("departamento")
+                ciudad_actual.save() 
+
+        return redirect('verciudad')
+    
+    else:
+        return redirect("login")
+
+def borciudad(request, ciudad_actual):
+        Ciudad.objects.filter(codigo_ciudad = ciudad_actual).delete()
+        return redirect('verciudad')
 
 #--=======================================Productos======================================--
 def cpu(request):

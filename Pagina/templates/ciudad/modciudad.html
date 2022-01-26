@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block barra %}
+<style>
+    .card-header {
+        background: #f2f2f2;
+    }
+
+    .card-block {
+        height: 40em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f2f2f2;
+    }
+
+    .form-material {
+        display: flex;
+        margin: 1em;
+        height: 100%;
+        width: 65%;
+        gap: 2em;
+        flex-direction: column;
+        background: #f2f2f2;
+    }
+
+    .input-confirmar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: auto;
+    }
+</style>
+<div class="card">
+    <div class="card-header">
+        <h3>{{parameters.titulo_f}}</h3>
+    </div>
+    <div class="card-block">
+        <form class="form-material" action="{% url 'modciudad' parameters.ciudad_actual %}" method="POST" onsubmit="sessionStorage.setItem('1', 1);"
+            style="margin: 1em">
+            {% csrf_token %}
+            <div class="form-group form-default">
+                <label class="float-label">Departamento</label>
+                    <select class= "form-select mb-3" name="departamento">
+                        {% for lista in listadepartamento %}
+                        <option value="{{lista.codigo_departamento}}" {% if lista.codigo_departamento == datos_act.nombre_departamento_id %} selected {% endif %}>
+                            {{lista.nombre_departamento}}
+                        </option>
+                        {% endfor %}
+                    </select>
+            </div>
+            <div>
+                <label class="float-label">Nombre Ciudad</label>
+                <span class="form-bar"></span>
+                <input type="text" name="nombre_ciudad" class="form-control" required
+                    value="{{parameters.datos_act.nombre_ciudad}}">
+            </div>
+            <div class="input-confirmar">
+
+                <div class="form-group form-default">
+                    <button type="submit" class="btn btn-success btn-round waves-effect waves-light" onclick="return confirm('Estás seguro de añadir esta Ciudad?')">Grabar</button>
+                    <a href="{% url 'verciudad' %}" class="btn btn-info btn-round waves-effect waves-light">Cancelar</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="{%static 'js/app.js'%}"></script>
+
+{% endblock %}
