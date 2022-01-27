@@ -76,14 +76,53 @@
                 </div>
                 
             </div>
+
             <div class="input-confirmar">
                
+                <div class="form-group form-default">
+                    <label class="float-label">Departamento</label>
+                        <select class= "form-select mb-3" name="departamento">
+                            {% for lista in parameters.listadepartamento %}
+                            <option value="{{lista.codigo_departamento}}" {% if lista.codigo_departamento == parameters.datos_act.nombre_departamento_id %} selected {% endif %}>
+                                {{lista.nombre_departamento}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                </div>
+
+                <div class="form-group form-default">
+                    <label class="float-label">Ciudad</label>
+                        <select class= "form-select mb-3" name="ciudad">
+                            {% for lista in parameters.listaciudad %}
+                            <option value="{{lista.codigo_ciudad}}" {% if lista.codigo_ciudad == parameters.datos_act.nombre_ciudad_id %} selected {% endif %}>
+                                {{lista.nombre_ciudad}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                </div>
+                
                 <div class="form-group form-default">
                     <label class="float-label">Dirección</label>
                     <span class="form-bar"></span>
                     <input type="text" name="direccion_cliente" class="form-control" value="{{parameters.datos_act.direccion_cliente}}">
                 </div>
-
+                
+            </div>
+            
+            
+            <div class="input-confirmar">
+                
+                <div class="form-group form-default">
+                    <label class="float-label">Nacionalidad</label>
+                        <select class= "form-select mb-3" name="nacionalidad">
+                            {% for lista in parameters.listanacionalidad %}
+                            <option value="{{lista.codigo_nacionalidad}}" {% if lista.codigo_nacionalidad == parameters.datos_act.descripcion_nacionalidad_id %} selected {% endif %}>
+                                {{lista.descripcion_nacionalidad}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                </div>
+                
                 <div class="form-group form-default">
                     <button type="submit" class="btn btn-success btn-round waves-effect waves-light" onclick="return confirm('Estás seguro de añadir este cliente?')">Grabar</button>
                     <a href="{% url 'vercliente' %}" class="btn btn-info btn-round waves-effect waves-light">Cancelar</a>

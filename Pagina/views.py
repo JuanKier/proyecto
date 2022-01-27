@@ -113,7 +113,13 @@ def vercliente(request):
         listadepartamento = Departamento.objects.all()
         listaciudad = Ciudad.objects.all()
         listanacionalidad = Nacionalidad.objects.all()
-        return validar(request, "clients/vercliente.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Clientes", "subtitulo_f":"Listado de Clientes registrados", "listatabla":listatabla})
+        return validar(request, "clients/vercliente.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Clientes", "subtitulo_f":"Listado de Clientes registrados", 
+        "listatabla":listatabla, 
+        "listadepartamento": listadepartamento,
+        "listaciudad": listaciudad,
+        "listanacionalidad": listanacionalidad})
     else:
         return redirect("login")
 
@@ -121,8 +127,10 @@ def modcliente(request, cliente_actual=0):
     print(cliente_actual)
     if request.session.get("id_usuario"):
         if request.method=="GET":
+            listadepartamento = Departamento.objects.all()
+            listaciudad = Ciudad.objects.all()
+            listanacionalidad = Nacionalidad.objects.all()
             cli_actual=Cliente.objects.filter(codigo_cliente=cliente_actual).exists()
-            
             if cli_actual:
                 datos_cliente=Cliente.objects.filter(codigo_cliente=cliente_actual).first()
                 return validar(request, "clients/modcliente.html", 
@@ -130,12 +138,18 @@ def modcliente(request, cliente_actual=0):
                 "titulo_f":"Modificar Cliente", 
                 "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
                 "datos_act":datos_cliente, 
-                "cliente_actual":cliente_actual})
+                "cliente_actual":cliente_actual,
+                "listadepartamento": listadepartamento,
+                "listaciudad": listaciudad,
+                "listanacionalidad": listanacionalidad})
             else:
                 return validar(request, "clients/modcliente.html", 
                 {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
                 "titulo_f":"Nuevo Cliente", "subtitulo_f":"Por favor complete todos los datos solicitados", 
-                "cliente_actual":cliente_actual})
+                "cliente_actual":cliente_actual,
+                "listadepartamento": listadepartamento,
+                "listaciudad": listaciudad,
+                "listanacionalidad": listanacionalidad})
 
         if request.method=="POST":
             if cliente_actual==0:
@@ -144,7 +158,10 @@ def modcliente(request, cliente_actual=0):
                 ruc_cliente=request.POST.get('ruc_cliente'),
                 telefono_cliente=request.POST.get('telefono_cliente'),
                 direccion_cliente=request.POST.get("direccion_cliente"),
-                genero_cliente=request.POST.get("genero_cliente"))
+                genero_cliente=request.POST.get("genero_cliente"),
+                nombre_departamento_id=request.POST.get('departamento'),
+                nombre_ciudad_id=request.POST.get('ciudad'),
+                descripcion_nacionalidad_id=request.POST.get('nacionalidad'))
 
                 cliente_nuevo.save()
             else:
@@ -152,8 +169,11 @@ def modcliente(request, cliente_actual=0):
                 cliente_actual.nombre_cliente=request.POST.get('nombre_cliente')
                 cliente_actual.ruc_cliente=request.POST.get('ruc_cliente')
                 cliente_actual.telefono_cliente=request.POST.get('telefono_cliente')
-                cliente_actual.direccion_cliente=request.POST.get("direccion_cliente")
-                cliente_actual.genero_cliente=request.POST.get("genero_cliente")
+                cliente_actual.direccion_cliente=request.POST.get('direccion_cliente')
+                cliente_actual.genero_cliente=request.POST.get('genero_cliente')
+                cliente_actual.nombre_departamento_id = request.POST.get('departamento')
+                cliente_actual.nombre_ciudad_id = request.POST.get('ciudad')
+                cliente_actual.descripcion_nacionalidad_id = request.POST.get('nacionalidad')
                 cliente_actual.save() 
 
         return redirect('vercliente')

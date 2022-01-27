@@ -34,9 +34,9 @@ class Cliente(models.Model):
     telefono_cliente= models.IntegerField()
     direccion_cliente=models.CharField(max_length=200)
     genero_cliente=models.IntegerField(null=True)
-    # nombre_departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, null=True)
-    # nombre_ciudad = models.ForeignKey(Ciudad, on_delete=models.CASCADE, null=True)
-    # descripcion_nacionalidad = models.ForeignKey(Nacionalidad, on_delete=models.CASCADE, null=True)
+    nombre_departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, null=True)
+    nombre_ciudad = models.ForeignKey(Ciudad, on_delete=models.CASCADE, null=True)
+    descripcion_nacionalidad = models.ForeignKey(Nacionalidad, on_delete=models.CASCADE, null=True)
 
 class Proveedor(models.Model):
     codigo_proveedor=models.AutoField(primary_key=True)
