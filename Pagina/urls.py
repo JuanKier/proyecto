@@ -30,6 +30,10 @@ urlpatterns = [
     path('modciudad/<int:ciudad_actual>', views.modciudad, name='modciudad'),
     path('borciudad/<int:ciudad_actual>', views.borciudad, name='borciudad'),
 
+    path('vernacionalidad', views.vernacionalidad, name='vernacionalidad'),
+    path('modnacionalidad/<int:nacionalidad_actual>', views.modnacionalidad, name='modnacionalidad'),
+    path('bornacionalidad/<int:nacionalidad_actual>', views.bornacionalidad, name='bornacionalidad'),
+
     path('inventario', views.inventario, name='inventario'),
 
     path('cpu', views.cpu, name='cpu'),

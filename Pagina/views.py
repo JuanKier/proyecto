@@ -271,48 +271,109 @@ def verciudad(request):
     else:
         return redirect("login")
 
-def modciudad(request,ciudad_actual=0):
+
+def modciudad(request, ciudad_actual=0):
     if request.session.get("id_usuario"):
-        if request.method=="GET":
+        if request.method == "GET":
             listadepartamento = Departamento.objects.all()
-            ciu_actual=Ciudad.objects.filter(codigo_ciudad=ciudad_actual).exists()
+            ciu_actual = Ciudad.objects.filter(
+                codigo_ciudad=ciudad_actual).exists()
             if ciu_actual:
-                datos_ciudad=Ciudad.objects.filter(codigo_ciudad=ciudad_actual).first()
-                return validar(request, "ciudad/modciudad.html", 
-                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-                "titulo_f":"Modificar Ciudad", 
-                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
-                "datos_act":datos_ciudad, 
-                "ciudad_actual":ciudad_actual})
+                datos_ciudad = Ciudad.objects.filter(
+                    codigo_ciudad=ciudad_actual).first()
+                return validar(request, "ciudad/modciudad.html",
+                               {"nombre_completo_usuario": request.session.get("nombre_completo_usuario"),
+                                "titulo_f": "Modificar Ciudad",
+                                "subtitulo_f": "Vuelva a escribir los datos que desea modificar",
+                                "datos_act": datos_ciudad,
+                                "ciudad_actual": ciudad_actual,
+                                "listadepartamento": listadepartamento})
             else:
-                return validar(request, "ciudad/modciudad.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-                "titulo_f":"Nueva Ciudad", "subtitulo_f":"Por favor complete todos los datos solicitados", 
-                "ciudad_actual":ciudad_actual, 
-                "listadepartamento":listadepartamento})
+                return validar(request, "ciudad/modciudad.html", {"nombre_completo_usuario": request.session.get("nombre_completo_usuario"),
+                                                                  "titulo_f": "Nueva Ciudad", "subtitulo_f": "Por favor complete todos los datos solicitados",
+                                                                  "ciudad_actual": ciudad_actual,
+                                                                  "listadepartamento": listadepartamento})
 
-        if request.method=="POST":
-            if ciudad_actual==0:
-                ciudad_nuevo=Ciudad(codigo_ciudad=request.POST.get('codigo_ciudad'),
-                nombre_ciudad=request.POST.get('nombre_ciudad'),
-                nombre_departamento_id=request.POST.get('departamento'))
+        if request.method == "POST":
+            if ciudad_actual == 0:
+                ciudad_nuevo = Ciudad(codigo_ciudad=request.POST.get('codigo_ciudad'),
+                                      nombre_ciudad=request.POST.get('nombre_ciudad'),
+                                      nombre_departamento_id=request.POST.get('departamento'))
                 ciudad_nuevo.save()
-                listadepartamento = Departamento.objects.all()
 
             else:
-                ciudad_actual=Ciudad.objects.get(codigo_ciudad=ciudad_actual)
-                listadepartamento = Departamento.objects.all()
-                ciudad_actual.nombre_ciudad=request.POST.get('nombre_ciudad')
-                ciudad_actual.nombre_departamento_id=request.get("departamento")
-                ciudad_actual.save() 
+                ciudad_actual = Ciudad.objects.get(codigo_ciudad=ciudad_actual)
+                ciudad_actual.nombre_ciudad = request.POST.get('nombre_ciudad')
+                ciudad_actual.nombre_departamento_id = request.get('departamento')
+                ciudad_actual.save()
+                
 
         return redirect('verciudad')
-    
+
     else:
         return redirect("login")
 
 def borciudad(request, ciudad_actual):
         Ciudad.objects.filter(codigo_ciudad = ciudad_actual).delete()
         return redirect('verciudad')
+
+#--=======================================Nacionalidades======================================--
+
+
+def vernacionalidad(request):
+    if request.session.get("id_usuario"):
+        listatabla = Nacionalidad.objects.all()
+        return validar(request, "nacionalidades/vernacionalidad.html", 
+        {"nombre_completo_usuario": request.session.get("nombre_completo_usuario"), 
+        "titulo_f": "Nacionalidades", "subtitulo_f": "Listado de Nacionalidades registrados", 
+        "listatabla": listatabla})
+    else:
+        return redirect("login")
+
+
+def modnacionalidad(request, nacionalidad_actual=0):
+    if request.session.get("id_usuario"):
+        if request.method == "GET":
+            dept_actual = Nacionalidad.objects.filter(
+                codigo_nacionalidad=nacionalidad_actual).exists()
+            if dept_actual:
+                datos_nacionalidad = Nacionalidad.objects.filter(
+                    codigo_nacionalidad=nacionalidad_actual).first()
+                return validar(request, "nacionalidades/modnacionalidad.html",
+                               {"nombre_completo_usuario": request.session.get("nombre_completo_usuario"),
+                                "titulo_f": "Modificar Nacionalidad",
+                                "subtitulo_f": "Vuelva a escribir los datos que desea modificar",
+                                "datos_act": datos_nacionalidad,
+                                "nacionalidad_actual": nacionalidad_actual})
+            else:
+                return validar(request, "nacionalidades/modnacionalidad.html", 
+                {"nombre_completo_usuario": request.session.get("nombre_completo_usuario"), 
+                "titulo_f": "Nuevo Proveedor", 
+                "subtitulo_f": "Por favor complete todos los datos solicitados", 
+                "nacionalidad_actual": nacionalidad_actual})
+
+        if request.method == "POST":
+            if nacionalidad_actual == 0:
+                nacionalidad_nuevo = Nacionalidad(codigo_nacionalidad=request.POST.get('codigo_nacionalidad'),
+                                                  descripcion_nacionalidad=request.POST.get('descripcion_nacionalidad'))
+                nacionalidad_nuevo.save()
+
+            else:
+                nacionalidad_actual = Nacionalidad.objects.get(
+                    codigo_nacionalidad=nacionalidad_actual)
+                nacionalidad_actual.descripcion_nacionalidad = request.POST.get('descripcion_nacionalidad')
+                nacionalidad_actual.save()
+
+        return redirect('vernacionalidad')
+
+    else:
+        return redirect("login")
+
+
+def bornacionalidad(request, nacionalidad_actual):
+    Nacionalidad.objects.filter(
+        codigo_nacionalidad=nacionalidad_actual).delete()
+    return redirect('vernacionalidad')
 
 #--=======================================Productos======================================--
 def cpu(request):

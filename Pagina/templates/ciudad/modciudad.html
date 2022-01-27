@@ -44,8 +44,8 @@
             <div class="form-group form-default">
                 <label class="float-label">Departamento</label>
                     <select class= "form-select mb-3" name="departamento">
-                        {% for lista in listadepartamento %}
-                        <option value="{{lista.codigo_departamento}}" {% if lista.codigo_departamento == datos_act.nombre_departamento_id %} selected {% endif %}>
+                        {% for lista in parameters.listadepartamento %}
+                        <option value="{{lista.codigo_departamento}}" {% if lista.codigo_departamento == parameters.datos_act.nombre_departamento_id %} selected {% endif %}>
                             {{lista.nombre_departamento}}
                         </option>
                         {% endfor %}
