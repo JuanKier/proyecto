@@ -81,7 +81,8 @@
                
                 <div class="form-group form-default">
                     <label class="float-label">Departamento</label>
-                        <select class= "form-select mb-3" name="departamento">
+                        <select class= "form-select mb-3" name="departamento" id = "departamento" onchange = "llenar_ciudades()">
+                            <option>--SELECIONE UNA OPCION--</option>
                             {% for lista in parameters.listadepartamento %}
                             <option value="{{lista.codigo_departamento}}" {% if lista.codigo_departamento == parameters.datos_act.nombre_departamento_id %} selected {% endif %}>
                                 {{lista.nombre_departamento}}
@@ -92,12 +93,13 @@
 
                 <div class="form-group form-default">
                     <label class="float-label">Ciudad</label>
-                        <select class= "form-select mb-3" name="ciudad">
-                            {% for lista in parameters.listaciudad %}
+                        <select class= "form-select mb-3 ciudad" id= "ciudad" name="ciudad">
+                            <option>--SELECCIONE UNA OPCION--</option>
+                            <!-- {% for lista in parameters.listaciudad %}
                             <option value="{{lista.codigo_ciudad}}" {% if lista.codigo_ciudad == parameters.datos_act.nombre_ciudad_id %} selected {% endif %}>
                                 {{lista.nombre_ciudad}}
                             </option>
-                            {% endfor %}
+                            {% endfor %} -->
                         </select>
                 </div>
                 
@@ -133,5 +135,33 @@
 </div>
 
 <script src="{%static 'js/app.js'%}"></script>
+
+<script>
+    function llenar_ciudades(){
+        //SE LIMPIA EL COMBO
+        $("#ciudad").empty();
+        
+        //RECUPERAR EL EL COMBO CIUDAD
+        select_ciudad = document.getElementById('ciudad');
+
+        //CREAMOS UN OPTION QUE ESTE POR DEFECTO AL INICIO DE LA LISTA
+        var defecto = document.createElement('option');
+        defecto.value = 0; //SE ASIGNA UN VALUE AL VALOR POR DEFECTO
+        defecto.text = ("--SELECCIONE UNA OPCION--"); //SE ASIGNA UN TEXTO AL OPTION
+        select_ciudad.appendChild(defecto); // ESTA LINEA AÑADE UN OPTION
+
+
+        var id_departamento = document.getElementById('departamento').value; // SE RECUPERA EL VALUE DEL DEPARTAMENTO PARA SABER EL FK
+        {% for lista in parameters.listaciudad %} //SE RECORREN LAS CIUDADES PARA VERIFICAR SI LA FK COINCIDE CON EL OBTENIDO
+            aux = {{lista.nombre_departamento_id}} //SE GUARDA EN AUX LA FK DEL DEPARTAMENTO ALMACENADO EN LA CIUDAD
+            if (id_departamento == aux){ //SI COINCIDEN EL AUX CON EL ID_DEPARTAMENTO OBTENIDO DESDEL EL VALUE DE SELECT DEPARTAMENTO, SE AGREGA UN OPTION
+                var opt = document.createElement('option');
+                opt.value = {{lista.codigo_ciudad}};
+                opt.text = "{{lista.nombre_ciudad}}";
+                select_ciudad.appendChild(opt);
+            }
+        {% endfor %}  
+    }
+</script>
 
 {% endblock %}
