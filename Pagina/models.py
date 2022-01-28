@@ -23,8 +23,8 @@ class Usuario(models.Model):
     password_usuario = models.CharField(max_length = 10)
     nombre_completo_usuario = models.CharField(max_length = 200)
     tipo_usuario = models.IntegerField(null=True)
-    ci_usuario= models.CharField(max_length = 50)
-    telefono_usuario= models.IntegerField()
+    ci_usuario= models.CharField(max_length = 20)
+    telefono_usuario= models.CharField(max_length=30)
     direccion_usuario=models.CharField(max_length=200)
 
 class Cliente(models.Model):

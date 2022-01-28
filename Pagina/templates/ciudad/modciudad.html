@@ -32,6 +32,12 @@
         width: 100%;
         height: auto;
     }
+
+    .caja-botones{
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5em;
+    }
 </style>
 <div class="card">
     <div class="card-header">
@@ -57,9 +63,8 @@
                 <input type="text" name="nombre_ciudad" class="form-control" required
                     value="{{parameters.datos_act.nombre_ciudad}}">
             </div>
-            <div class="input-confirmar">
 
-                <div class="form-group form-default">
+                <div class="form-group form-default caja-botones">
                     <button type="submit" class="btn btn-success btn-round waves-effect waves-light" onclick="return confirm('Estás seguro de añadir esta Ciudad?')">Grabar</button>
                     <a href="{% url 'verciudad' %}" class="btn btn-info btn-round waves-effect waves-light">Cancelar</a>
                 </div>
