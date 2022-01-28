@@ -43,7 +43,7 @@ class Proveedor(models.Model):
     nombre_proveedor= models.CharField(max_length = 50)
     razon_social_proveedor= models.CharField(max_length = 50)
     ruc_proveedor= models.CharField(max_length = 50)
-    telefono_proveedor= models.IntegerField()
+    telefono_proveedor= models.CharField(max_length=30)
     direccion_proveedor=models.CharField(max_length= 200)
 
 

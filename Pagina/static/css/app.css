@@ -21061,13 +21061,13 @@ textarea.form-control-lg {
 }
 
 .btn-outline-primary {
-    border-color: #3b7ddd;
-    color: #3b7ddd
+    border-color: #5f0600;
+    color: #5f0600
 }
 
 .btn-outline-primary:hover {
-    background-color: #3b7ddd;
-    border-color: #3b7ddd;
+    background-color: #5f0600;
+    border-color: #5f0600;
     color: #fff
 }
 

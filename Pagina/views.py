@@ -51,6 +51,9 @@ def proveedor(request):
 def inventario(request):
     return validar(request, "inventario.html")
 
+def produccion(request):
+    return validar(request, "produccion.html")
+
 #--=======================================Usuario======================================--
 
 def verusuario(request):
