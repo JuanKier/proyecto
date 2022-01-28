@@ -26,11 +26,18 @@
     }
 
     .input-confirmar {
-        display: flex;
-        justify-content: space-between;
+        display: grid;
         align-items: center;
         width: 100%;
         height: auto;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 2em;
+    }
+
+    .caja-botones{
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5em;
     }
 </style>
 <div class="card">
@@ -44,7 +51,7 @@
             <div class="form-group form-default">
                 <label class="float-label">Nombre Completo</label>
                 <span class="form-bar"></span>
-                <input type="text" name="nombre_cliente" class="form-control" required
+                <input type="text" name="nombre_cliente" class="form-control mb-3" required
                     value="{{parameters.datos_act.nombre_cliente}}">
             </div>
 
@@ -53,13 +60,8 @@
                     <label class="float-label">Género</label>
                     <span class="form-bar"></span>
                     <select class= "form-select mb-3" name="genero_cliente" id="genero_cliente" required>
-                        {% if parameters.datos_act.genero_usuario == 1 %}
-                        <option value="1" id="opcion_select" selected>Masculino</option>
-                        <option value="2" id="opcion_select">Femenino</option>
-                        {% else %}
-                        <option value="1" id="opcion_select">Masculino</option>
-                        <option value="2" id="opcion_select" selected>Femenino</option>
-                        {% endif %}
+                        <option value="1" id="opcion_select" {% if parameters.datos_act.genero_cliente == 1 %} selected {% endif %}>Masculino</option>
+                        <option value="2" id="opcion_select" {% if parameters.datos_act.genero_cliente == 2 %} selected {% endif %}>Femenino</option>
                     </select>
                 </div>
                 <div class="form-group form-default">
@@ -71,7 +73,7 @@
                 <div class="form-group form-default">
                     <label class="float-label">Teléfono</label>
                     <span class="form-bar"></span>
-                    <input type="number" name="telefono_cliente" class="form-control" required
+                    <input type="text" name="telefono_cliente" class="form-control" required
                         value="{{parameters.datos_act.telefono_cliente}}">
                 </div>
                 
@@ -81,8 +83,8 @@
                
                 <div class="form-group form-default">
                     <label class="float-label">Departamento</label>
-                        <select class= "form-select mb-3" name="departamento" id = "departamento" onchange = "llenar_ciudades()">
-                            <option>--SELECIONE UNA OPCION--</option>
+                        <select class= "form-select mb-3" name="departamento" id = "departamento">
+                            <option value = 0>--SELECIONE UNA OPCION--</option>
                             {% for lista in parameters.listadepartamento %}
                             <option value="{{lista.codigo_departamento}}" {% if lista.codigo_departamento == parameters.datos_act.nombre_departamento_id %} selected {% endif %}>
                                 {{lista.nombre_departamento}}
@@ -93,17 +95,17 @@
 
                 <div class="form-group form-default">
                     <label class="float-label">Ciudad</label>
-                        <select class= "form-select mb-3 ciudad" id= "ciudad" name="ciudad">
-                            <option>--SELECCIONE UNA OPCION--</option>
-                            <!-- {% for lista in parameters.listaciudad %}
-                            <option value="{{lista.codigo_ciudad}}" {% if lista.codigo_ciudad == parameters.datos_act.nombre_ciudad_id %} selected {% endif %}>
+                        <select class= "form-select mb-3 ciudad" id= "ciudad" name="ciudad" >
+                            <option data-chained="0">--SELECCIONE UNA OPCION--</option>
+                            {% for lista in parameters.listaciudad %}
+                            <option value="{{lista.codigo_ciudad}}" {% if lista.codigo_ciudad == parameters.datos_act.nombre_ciudad_id %} selected {% endif %} data-chained="{{lista.nombre_departamento_id}}">
                                 {{lista.nombre_ciudad}}
                             </option>
-                            {% endfor %} -->
+                            {% endfor %}
                         </select>
                 </div>
                 
-                <div class="form-group form-default">
+                <div class="form-group form-default mb-3">
                     <label class="float-label">Dirección</label>
                     <span class="form-bar"></span>
                     <input type="text" name="direccion_cliente" class="form-control" value="{{parameters.datos_act.direccion_cliente}}">
@@ -124,44 +126,49 @@
                             {% endfor %}
                         </select>
                 </div>
-                
-                <div class="form-group form-default">
+            </div>
+
+                <div class="form-group form-default caja-botones">
                     <button type="submit" class="btn btn-success btn-round waves-effect waves-light" onclick="return confirm('Estás seguro de añadir este cliente?')">Grabar</button>
                     <a href="{% url 'vercliente' %}" class="btn btn-info btn-round waves-effect waves-light">Cancelar</a>
                 </div>
-            </div>
+
         </form>
     </div>
 </div>
 
 <script src="{%static 'js/app.js'%}"></script>
+<script src="{%static 'js/jquery.chained.js'%}"></script>
 
 <script>
-    function llenar_ciudades(){
-        //SE LIMPIA EL COMBO
-        $("#ciudad").empty();
+    $("#ciudad").chained("#departamento")
+    // function llenar_ciudades(){
+    //     console.log("HOLA");
+
+    //     //SE LIMPIA EL COMBO
+    //     $("#ciudad").empty();
         
-        //RECUPERAR EL EL COMBO CIUDAD
-        select_ciudad = document.getElementById('ciudad');
+    //     //RECUPERAR EL EL COMBO CIUDAD
+    //     select_ciudad = document.getElementById('ciudad');
 
-        //CREAMOS UN OPTION QUE ESTE POR DEFECTO AL INICIO DE LA LISTA
-        var defecto = document.createElement('option');
-        defecto.value = 0; //SE ASIGNA UN VALUE AL VALOR POR DEFECTO
-        defecto.text = ("--SELECCIONE UNA OPCION--"); //SE ASIGNA UN TEXTO AL OPTION
-        select_ciudad.appendChild(defecto); // ESTA LINEA AÑADE UN OPTION
+    //     //CREAMOS UN OPTION QUE ESTE POR DEFECTO AL INICIO DE LA LISTA
+    //     var defecto = document.createElement('option');
+    //     defecto.value = 0; //SE ASIGNA UN VALUE AL VALOR POR DEFECTO
+    //     defecto.text = ("--SELECCIONE UNA OPCION--"); //SE ASIGNA UN TEXTO AL OPTION
+    //     select_ciudad.appendChild(defecto); // ESTA LINEA AÑADE UN OPTION
 
 
-        var id_departamento = document.getElementById('departamento').value; // SE RECUPERA EL VALUE DEL DEPARTAMENTO PARA SABER EL FK
-        {% for lista in parameters.listaciudad %} //SE RECORREN LAS CIUDADES PARA VERIFICAR SI LA FK COINCIDE CON EL OBTENIDO
-            aux = {{lista.nombre_departamento_id}} //SE GUARDA EN AUX LA FK DEL DEPARTAMENTO ALMACENADO EN LA CIUDAD
-            if (id_departamento == aux){ //SI COINCIDEN EL AUX CON EL ID_DEPARTAMENTO OBTENIDO DESDEL EL VALUE DE SELECT DEPARTAMENTO, SE AGREGA UN OPTION
-                var opt = document.createElement('option');
-                opt.value = {{lista.codigo_ciudad}};
-                opt.text = "{{lista.nombre_ciudad}}";
-                select_ciudad.appendChild(opt);
-            }
-        {% endfor %}  
-    }
+    //     var id_departamento = document.getElementById('departamento').value; // SE RECUPERA EL VALUE DEL DEPARTAMENTO PARA SABER EL FK
+    //     {% for lista in parameters.listaciudad %} //SE RECORREN LAS CIUDADES PARA VERIFICAR SI LA FK COINCIDE CON EL OBTENIDO
+    //         aux = {{lista.nombre_departamento_id}} //SE GUARDA EN AUX LA FK DEL DEPARTAMENTO ALMACENADO EN LA CIUDAD
+    //         if (id_departamento == aux){ //SI COINCIDEN EL AUX CON EL ID_DEPARTAMENTO OBTENIDO DESDEL EL VALUE DE SELECT DEPARTAMENTO, SE AGREGA UN OPTION
+    //             var opt = document.createElement('option');
+    //             opt.value = {{lista.codigo_ciudad}};
+    //             opt.text = "{{lista.nombre_ciudad}}";
+    //             select_ciudad.appendChild(opt);
+    //         }
+    //     {% endfor %}  
+    // }
 </script>
 
 {% endblock %}

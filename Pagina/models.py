@@ -31,7 +31,7 @@ class Cliente(models.Model):
     codigo_cliente=models.AutoField(primary_key=True)
     nombre_cliente= models.CharField(max_length = 50)
     ruc_cliente= models.CharField(max_length = 50)
-    telefono_cliente= models.IntegerField()
+    telefono_cliente= models.CharField(max_length=30)
     direccion_cliente=models.CharField(max_length=200)
     genero_cliente=models.IntegerField(null=True)
     nombre_departamento = models.ForeignKey(Departamento, on_delete=models.CASCADE, null=True)
