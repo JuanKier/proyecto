@@ -46,5 +46,16 @@ class Proveedor(models.Model):
     telefono_proveedor= models.CharField(max_length=30)
     direccion_proveedor=models.CharField(max_length= 200)
 
+class Mantenimiento(models.Model):
+    codigo_mant = models.AutoField(primary_key=True)
+    equipo_mant = models.IntegerField(null=True)
+    desc_equipo_mant = models.CharField(max_length = 200)
+    horas_mant = models.IntegerField(null=True)
+    actividades_mant = models.CharField(max_length = 200)
+    inicio_mant = models.DateField()
+    fin_mant = models.DateField()
+    nombre_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True)
+    nombre_completo_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True)
+
 
     

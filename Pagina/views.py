@@ -398,6 +398,84 @@ def bornacionalidad(request, nacionalidad_actual):
         codigo_nacionalidad=nacionalidad_actual).delete()
     return redirect('vernacionalidad')
 
+
+#--=======================================Mantenimiento======================================--
+
+def vermant(request):
+    if request.session.get("id_usuario"):
+        listatabla=Mantenimiento.objects.all()
+        listacliente=Cliente.objects.all()
+        listausuario = Usuario.objects.all()
+        return validar(request, "produccion/vermant.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Mantenimientos", "subtitulo_f":"Listado de Mantenimientos registrados", 
+        "listatabla":listatabla, 
+        "listacliente": listacliente,
+        "listausuario": listausuario})
+    else:
+        return redirect("login")
+
+def modmant(request, mant_actual=0):
+    if request.session.get("id_usuario"):
+        if request.method=="GET":
+            listacliente=Cliente.objects.all()
+            listausuario = Usuario.objects.all()
+            mante_actual=Mantenimiento.objects.filter(codigo_mant=mant_actual).exists()
+            if mante_actual:
+                datos_mant=Mantenimiento.objects.filter(codigo_mant=mant_actual).first()
+                return validar(request, "produccion/modmant.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Modificar Mantenimiento", 
+                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                "datos_act":datos_mant, 
+                "mant_actual":mant_actual,
+                "listacliente": listacliente,
+                "listausuario": listausuario})
+            else:
+                return validar(request, "produccion/modmant.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Nuevo Cliente", "subtitulo_f":"Por favor complete todos los datos solicitados", 
+                "mant_actual":mant_actual,
+                "listacliente": listacliente,
+                "listausuario": listausuario})
+
+        if request.method=="POST":
+            if mant_actual==0:
+                mant_nuevo=Mantenimiento(codigo_mant=request.POST.get('codigo_mant'),
+                equipo_mant=request.POST.get('equipo_mant'),
+                desc_equipo_mant=request.POST.get('desc_equipo_mant'),
+                horas_mant=request.POST.get("horas_mant"),
+                actividades_mant=request.POST.get("actividades_mant"),
+                inicio_mant=request.POST.get('inicio_mant'),
+                fin_mant=request.POST.get("fin_mant"),
+                nombre_cliente_id=request.POST.get('cliente'),
+                nombre_completo_usuario_id=request.POST.get('empleado'))
+
+                mant_nuevo.save()
+            else:
+                mant_actual=Mantenimiento.objects.get(codigo_mant=mant_actual)
+                mant_actual.equipo_mant=request.POST.get('equipo_mant')
+                mant_actual.desc_equipo_mant=request.POST.get('desc_equipo_mant')
+                mant_actual.horas_mant=request.POST.get('horas_mant')
+                mant_actual.actividades_mant=request.POST.get('actividades_mant')
+                mant_actual.inicio_mant=request.POST.get('inicio_mant')
+                mant_actual.fin_mant=request.POST.get('fin_mant')
+                mant_actual.nombre_cliente_id = request.POST.get('cliente')
+                mant_actual.nombre_completo_usuario_id = request.POST.get('empleado')
+
+                mant_actual.save() 
+
+        return redirect('vermant')
+    
+    else:
+        return redirect("login")
+
+def bormant(request, mant_actual):
+        Cliente.objects.filter(codigo_mant = mant_actual).delete()
+        return redirect('vermant')
+
+
+
 #--=======================================Productos======================================--
 def cpu(request):
     return validar(request, "productos/cpu.html")

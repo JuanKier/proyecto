@@ -35,6 +35,14 @@ urlpatterns = [
     path('modnacionalidad/<int:nacionalidad_actual>', views.modnacionalidad, name='modnacionalidad'),
     path('bornacionalidad/<int:nacionalidad_actual>', views.bornacionalidad, name='bornacionalidad'),
 
+# ----------------------------------------PRODUCCION---------------------------------------------------
+    
+    #--Mantenimiento
+    path('vermant', views.vermant, name='vermant'),
+    path('modmant/<int:mant_actual>', views.modmant, name='modmant'),
+    path('bormant/<int:mant_actual>', views.bormant, name='bormant'),
+
+
     path('inventario', views.inventario, name='inventario'),
 
     path('cpu', views.cpu, name='cpu'),
