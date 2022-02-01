@@ -35,6 +35,7 @@
                                         <th>Fin</th>
                                         <th>Horas Trabajadas</th>
                                         <th>Actividades</th>
+                                        <th>Estado</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
@@ -64,6 +65,9 @@
                                         <td>{{ lista.fin_mant }}</td>
                                         <td>{{ lista.horas_mant }}</td>
                                         <td>{{ lista.actividades_mant }}</td>
+                                            {%if lista.estado_mant == 1 %}<td><span class="badge bg-danger">Recibido</span></td>{% endif %} 
+                                            {%if lista.estado_mant == 2 %}<td><span class="badge bg-warning">En proceso</span></td>{% endif %}
+                                            {%if lista.estado_mant == 3 %}<td><span class="badge bg-success">Terminado</span></td>{% endif %}
                                         <td>
                                             <div class="icon-btn">
                                                 <a href="{% url 'modmant' lista.codigo_mant %}"

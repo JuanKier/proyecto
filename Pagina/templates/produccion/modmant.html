@@ -34,6 +34,16 @@
         grid-gap: 2em;
     }
 
+    .input-estado {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        grid-gap: 2em;
+        justify-content: center;
+    }
+
     .caja-botones{
         display: flex;
         justify-content: flex-end;
@@ -48,24 +58,32 @@
         <form class="form-material" action="{% url 'modmant' parameters.mant_actual %}" method="POST" onsubmit="sessionStorage.setItem('1', 1);"
             style="margin: 1em">
             {% csrf_token %}
-            <div class="form-group form-default">
-                <label class="float-label">Equipo</label>
-                <span class="form-bar"></span>
-                <select class= "form-select mb-3" name="equipo_mant" id="equipo_mant" required>
-                    <option value=0>--SELECCIONE UNA OPCION--</option>
-                    <option value="1" id="opcion_select" {% if parameters.datos_act.equipo_mant == 1 %} selected {% endif %}>PC</option>
-                    <option value="2" id="opcion_select" {% if parameters.datos_act.equipo_mant == 2 %} selected {% endif %}>Notebook</option>
-                    <option value="3" id="opcion_select" {% if parameters.datos_act.equipo_mant == 3 %} selected {% endif %}>Consola</option>
-                    <option value="4" id="opcion_select" {% if parameters.datos_act.equipo_mant == 4 %} selected {% endif %}>Periférico</option>
-                </select>
-            </div>
+            <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
+                <div class="form-group form-default">
+                    <label class="float-label">Equipo</label>
+                    <span class="form-bar"></span>
+                    <select class="form-select mb-3" name="equipo_mant" id="equipo_mant" required>
+                        <option value=0>--SELECCIONE UNA OPCION--</option>
+                        <option value="1" id="opcion_select" {% if parameters.datos_act.equipo_mant == 1 %} selected {% endif %}>PC</option>
+                        <option value="2" id="opcion_select" {% if parameters.datos_act.equipo_mant == 2 %} selected {% endif %}>Notebook</option>
+                        <option value="3" id="opcion_select" {% if parameters.datos_act.equipo_mant == 3 %} selected {% endif %}>Consola</option>
+                        <option value="4" id="opcion_select" {% if parameters.datos_act.equipo_mant == 4 %} selected {% endif %}>Periférico</option>
+                    </select>
+                </div>
+            
+                <div class="form-group form-default">
+                    <label class="float-label">Descripción del Equipo</label>
+                    <span class="form-bar"></span>
+                    <input type="text" name="desc_equipo_mant" class="form-control mb-3" required
+                        value="{{parameters.datos_act.desc_equipo_mant}}">
+                </div>
 
-            <div class="form-group form-default">
-                <label class="float-label">Descripción del Equipo</label>
-                <span class="form-bar"></span>
-                <input type="text" name="desc_equipo_mant" class="form-control mb-3" required
-                    value="{{parameters.datos_act.desc_equipo_mant}}">
             </div>
+            <!-- <div>
+                <input type="text" id="cedula" onfocusout="traerCliente(this)">
+                <label for="ingresar-nombre" id="nombre_cliente">Nombre del Cliente: </label>
+            </div> -->
+            
 
             <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
                 <div class="form-group form-default">
@@ -79,7 +97,9 @@
                         {% endfor %}
                     </select>
                 </div>
-            
+            </div>
+
+            <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
                 <div class="form-group form-default">
                     <label class="float-label">Empleado</label>
                     <select class="form-select mb-3" name="empleado" id="empleado">
@@ -91,9 +111,16 @@
                         {% endfor %}
                     </select>
                 </div>
-            </div>
 
-            <div class="input-confirmar">
+                <div class="form-group form-default mb-3">
+                    <label class="float-label">Horas Trabajadas</label>
+                    <span class="form-bar"></span>
+                    <input type="number" name="horas_mant" class="form-control" required 
+                        value="{{parameters.datos_act.horas_mant}}">
+                </div>
+            </div>
+            
+            <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
                 <div class="form-group form-default mb-3">
                     <label class="float-label">Fecha de Inicio</label>
                     <span class="form-bar"></span>
@@ -104,23 +131,38 @@
                 <div class="form-group form-default mb-3">
                     <label class="float-label">Fecha de Finalización</label>
                     <span class="form-bar"></span>
-                    <input type="date" name="fin_mant" class="form-control" required 
+                    <input type="date" name="fin_mant" class="form-control" required
                         value="{{parameters.datos_act.fin_mant}}">
-                </div>
-            
-                <div class="form-group form-default mb-3">
-                    <label class="float-label">Horas Trabajadas</label>
-                    <span class="form-bar"></span>
-                    <input type="number" name="horas_mant" class="form-control" required 
-                        value="{{parameters.datos_act.horas_mant}}">
                 </div>
             </div>
 
-            <div class="form-group form-default">
-                <label class="float-label">Actividades Realizadas</label>
-                <span class="form-bar"></span>
-                <input type="text" name="actividades_mant" class="form-control mb-3" required
-                    value="{{parameters.datos_act.actividades_mant}}">
+            <div class="input-estado">
+                <div class="form-group form-default">
+                    <label class="float-label">Actividades</label>
+                    <span class="form-bar"></span>
+                    <input type="text" name="actividades_mant" class="form-control mb-3" required
+                        value="{{parameters.datos_act.actividades_mant}}">
+                </div>
+                
+                <fieldset class="mb-3">
+                    <div class="row">
+                        <label class="col-form-label col-sm-2 text-sm-end pt-sm-0">Estado</label>
+                        <div class="col-sm-10">
+                            <label class="form-check">
+                                <input name="estado_mant" type="radio" required class="form-check-input" value=1 id="opcion_select" {% if parameters.datos_act.estado_mant == 1 %} checked {% endif %}>
+                                <span class="form-check-label">Recepcionado</span>
+                            </label>
+                            <label class="form-check">
+                                <input name="estado_mant" type="radio" required class="form-check-input" value=2 id="opcion_select" {% if parameters.datos_act.estado_mant == 2 %} checked {% endif %}>
+                                <span class="form-check-label">En proceso</span>
+                            </label>
+                            <label class="form-check">
+                                <input name="estado_mant" type="radio" class="form-check-input" value=3 id="opcion_select" {% if parameters.datos_act.estado_mant == 3 %} checked {% endif %}>
+                                <span class="form-check-label">Terminado</span>
+                            </label>
+                        </div>
+                    </div>
+                </fieldset>
             </div>
 
             <div class="form-group form-default caja-botones">
@@ -164,6 +206,28 @@
     //         }
     //     {% endfor %}  
     // }
+</script>
+<script>
+    function traerCliente(event) { //event es el input donde se carga el valor
+        var flag = false
+        var nCliente = document.getElementById("nombre_cliente") //traigo el label que se va a modificar con el nombre del cliente
+        {% for Cliente in listacliente %}
+            var ruc_cliente = "{{Cliente.ruc_cliente}}"   //se trae cedula del cliente
+
+            if(event.value == ruc_cliente) { //se compara si las cedulas de la base de datos coincide con el del input
+                nCliente.innerHTML = "Nombre del Cliente: {{Cliente.nombre_cliente}}"   //si coincide se carga el nombre al label
+                flag = true
+            }
+
+            if(!flag) {
+                nCliente.innerHTML = "Nombre del Cliente: No existe ese cliente"//si coincide se muestra el mensaje en el label
+            }
+        {% endfor %}
+
+        if(event.value == '') { //si el input esta vacio el label se vaciara tambien
+            nCliente.innerHTML = "Nombre del Cliente:  "
+        }
+    }
 </script>
 
 {% endblock %}
