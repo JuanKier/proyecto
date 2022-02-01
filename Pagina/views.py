@@ -423,8 +423,8 @@ def modmant(request, mant_actual=0):
             mante_actual=Mantenimiento.objects.filter(codigo_mant=mant_actual).exists()
             if mante_actual:
                 datos_mant=Mantenimiento.objects.filter(codigo_mant=mant_actual).first()
-                #datos_mant.inicio_mant=str(datos_mant.inicio_mant)
-                #datos_mant.fin_mant=str(datos_mant.fin_mant)
+                datos_mant.inicio_mant=str(datos_mant.inicio_mant)
+                datos_mant.fin_mant=str(datos_mant.fin_mant)
                 return validar(request, "produccion/modmant.html", 
                 {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
                 "titulo_f":"Modificar Mantenimiento", 
