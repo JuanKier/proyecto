@@ -54,7 +54,7 @@ class Mantenimiento(models.Model):
     actividades_mant = models.CharField(max_length = 200)
     inicio_mant = models.DateField()
     fin_mant = models.DateField()
-    nombre_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True)
+    ruc_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True)
     nombre_completo_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True)
     estado_mant = models.IntegerField(default=1, null=True)
 

@@ -33,7 +33,7 @@
                                         <th>Empleado</th>
                                         <th>Inicio</th>
                                         <th>Fin</th>
-                                        <th>Horas Trabajadas</th>
+                                        <th>Horas</th>
                                         <th>Actividades</th>
                                         <th>Estado</th>
                                         <th>Acciones</th>
@@ -49,7 +49,7 @@
                                         <td>{{ lista.desc_equipo_mant }}</td>
                                         <td>
                                             {%for lista1 in parameters.listacliente%}
-                                            {% if lista1.codigo_cliente == lista.nombre_cliente_id%}
+                                            {% if lista1.ruc_cliente == lista.ruc_cliente_id%}
                                             {{lista1.nombre_cliente}}
                                             {%endif%}
                                             {%endfor%}

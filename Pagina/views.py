@@ -423,8 +423,8 @@ def modmant(request, mant_actual=0):
             mante_actual=Mantenimiento.objects.filter(codigo_mant=mant_actual).exists()
             if mante_actual:
                 datos_mant=Mantenimiento.objects.filter(codigo_mant=mant_actual).first()
-                datos_mant.inicio_mant=str(datos_mant.inicio_mant)
-                datos_mant.fin_mant=str(datos_mant.fin_mant)
+                #datos_mant.inicio_mant=str(datos_mant.inicio_mant)
+                #datos_mant.fin_mant=str(datos_mant.fin_mant)
                 return validar(request, "produccion/modmant.html", 
                 {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
                 "titulo_f":"Modificar Mantenimiento", 
@@ -451,7 +451,7 @@ def modmant(request, mant_actual=0):
                 inicio_mant=request.POST.get('inicio_mant'),
                 fin_mant=request.POST.get('fin_mant'),
                 estado_mant=request.POST.get('estado_mant'),
-                nombre_cliente_id=request.POST.get('cliente'),
+                ruc_cliente_id=request.POST.get('ruc_cliente'),
                 nombre_completo_usuario_id=request.POST.get('empleado'))
 
                 mant_nuevo.save()
@@ -464,7 +464,7 @@ def modmant(request, mant_actual=0):
                 mant_actual.inicio_mant=request.POST.get('inicio_mant')
                 mant_actual.fin_mant=request.POST.get('fin_mant')
                 mant_actual.estado_mant=request.POST.get('estado_mant')
-                mant_actual.nombre_cliente_id = request.POST.get('cliente')
+                mant_actual.ruc_cliente_id = request.POST.get('ruc_cliente')
                 mant_actual.nombre_completo_usuario_id = request.POST.get('empleado')
 
                 mant_actual.save() 

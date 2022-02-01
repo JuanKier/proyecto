@@ -79,13 +79,20 @@
                 </div>
 
             </div>
-            <!-- <div>
-                <input type="text" id="cedula" onfocusout="traerCliente(this)">
-                <label for="ingresar-nombre" id="nombre_cliente">Nombre del Cliente: </label>
-            </div> -->
-            
-
             <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
+                <div>
+                    <label class="float-label">CI o RUC de Cliente</label>
+                    <span class="form-bar"></span>
+                    <input class="form-control mb-3" type="text" name="ruc_cliente" id="ruc_cliente" onfocusout="traerCliente(this)" required>
+                </div>
+
+                <div>
+                    <label class="float-label">Nombre del Cliente</label>
+                    <label class="form-control mb-3" id="nombre_cliente"> </label>
+                </div>
+            </div>
+            
+            <!-- <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
                 <div class="form-group form-default">
                     <label class="float-label">Cliente</label>
                     <select class="form-select mb-3" name="cliente" id="cliente">
@@ -97,7 +104,7 @@
                         {% endfor %}
                     </select>
                 </div>
-            </div>
+            </div> -->
 
             <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
                 <div class="form-group form-default">
@@ -178,7 +185,7 @@
 <script src="{%static 'js/jquery.chained.js'%}"></script>
 
 <script>
-    $("#ciudad").chained("#departamento")
+    //$("#ciudad").chained("#departamento")
     // function llenar_ciudades(){
     //     console.log("HOLA");
 
@@ -211,21 +218,21 @@
     function traerCliente(event) { //event es el input donde se carga el valor
         var flag = false
         var nCliente = document.getElementById("nombre_cliente") //traigo el label que se va a modificar con el nombre del cliente
-        {% for Cliente in listacliente %}
-            var ruc_cliente = "{{Cliente.ruc_cliente}}"   //se trae cedula del cliente
+        {% for lista in parameters.listacliente %}
+        var ruc_cliente = "{{lista.ruc_cliente}}"   //se trae cedula del cliente
 
-            if(event.value == ruc_cliente) { //se compara si las cedulas de la base de datos coincide con el del input
-                nCliente.innerHTML = "Nombre del Cliente: {{Cliente.nombre_cliente}}"   //si coincide se carga el nombre al label
-                flag = true
-            }
+        if (event.value == ruc_cliente) { //se compara si las cedulas de la base de datos coincide con el del input
+            nCliente.innerHTML = "{{lista.nombre_cliente}}"   //si coincide se carga el nombre al label
+            flag = true
+        }
 
-            if(!flag) {
-                nCliente.innerHTML = "Nombre del Cliente: No existe ese cliente"//si coincide se muestra el mensaje en el label
-            }
+        if (!flag) {
+            nCliente.innerHTML = "No existe ese cliente"//si coincide se muestra el mensaje en el label
+        }
         {% endfor %}
 
-        if(event.value == '') { //si el input esta vacio el label se vaciara tambien
-            nCliente.innerHTML = "Nombre del Cliente:  "
+        if (event.value == '') { //si el input esta vacio el label se vaciara tambien
+            nCliente.innerHTML = " "
         }
     }
 </script>
