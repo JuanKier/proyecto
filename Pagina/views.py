@@ -436,7 +436,7 @@ def modmant(request, mant_actual=0):
             else:
                 return validar(request, "produccion/modmant.html", 
                 {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-                "titulo_f":"Nuevo Cliente", "subtitulo_f":"Por favor complete todos los datos solicitados", 
+                "titulo_f":"Nuevo Mantenimiento", "subtitulo_f":"Por favor complete todos los datos solicitados", 
                 "mant_actual":mant_actual,
                 "listacliente": listacliente,
                 "listausuario": listausuario})
@@ -451,7 +451,7 @@ def modmant(request, mant_actual=0):
                 inicio_mant=request.POST.get('inicio_mant'),
                 fin_mant=request.POST.get('fin_mant'),
                 estado_mant=request.POST.get('estado_mant'),
-                ruc_cliente_id=request.POST.get('ruc_cliente'),
+                nombre_cliente_id=request.POST.get('cliente'),
                 nombre_completo_usuario_id=request.POST.get('empleado'))
 
                 mant_nuevo.save()
@@ -464,7 +464,7 @@ def modmant(request, mant_actual=0):
                 mant_actual.inicio_mant=request.POST.get('inicio_mant')
                 mant_actual.fin_mant=request.POST.get('fin_mant')
                 mant_actual.estado_mant=request.POST.get('estado_mant')
-                mant_actual.ruc_cliente_id = request.POST.get('ruc_cliente')
+                mant_actual.nombre_cliente_id = request.POST.get('cliente')
                 mant_actual.nombre_completo_usuario_id = request.POST.get('empleado')
 
                 mant_actual.save() 
@@ -475,8 +475,166 @@ def modmant(request, mant_actual=0):
         return redirect("login")
 
 def bormant(request, mant_actual):
-        Cliente.objects.filter(codigo_mant = mant_actual).delete()
+        Mantenimiento.objects.filter(codigo_mant = mant_actual).delete()
         return redirect('vermant')
+
+#--=======================================Reparacion======================================--
+
+def verrep(request):
+    if request.session.get("id_usuario"):
+        listatabla=Reparacion.objects.all()
+        listacliente=Cliente.objects.all()
+        listausuario = Usuario.objects.all()
+        return validar(request, "produccion/verrep.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Reparaciones", "subtitulo_f":"Listado de Reparaciones registradas", 
+        "listatabla":listatabla, 
+        "listacliente": listacliente,
+        "listausuario": listausuario})
+    else:
+        return redirect("login")
+
+def modrep(request, rep_actual=0):
+    if request.session.get("id_usuario"):
+        if request.method=="GET":
+            listacliente=Cliente.objects.all()
+            listausuario = Usuario.objects.all()
+            repa_actual=Reparacion.objects.filter(codigo_rep=rep_actual).exists()
+            if repa_actual:
+                datos_rep=Reparacion.objects.filter(codigo_rep=rep_actual).first()
+                datos_rep.inicio_rep=str(datos_rep.inicio_rep)
+                datos_rep.fin_rep=str(datos_rep.fin_rep)
+                return validar(request, "produccion/modrep.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Modificar Reparación", 
+                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                "datos_act":datos_rep, 
+                "rep_actual":rep_actual,
+                "listacliente": listacliente,
+                "listausuario": listausuario})
+            else:
+                return validar(request, "produccion/modrep.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Nueva Reparacion", "subtitulo_f":"Por favor complete todos los datos solicitados", 
+                "rep_actual":rep_actual,
+                "listacliente": listacliente,
+                "listausuario": listausuario})
+
+        if request.method=="POST":
+            if rep_actual==0:
+                rep_nuevo=Reparacion(codigo_rep=request.POST.get('codigo_rep'),
+                equipo_rep=request.POST.get('equipo_rep'),
+                desc_equipo_rep=request.POST.get('desc_equipo_rep'),
+                horas_rep=request.POST.get("horas_rep"),
+                actividades_rep=request.POST.get("actividades_rep"),
+                inicio_rep=request.POST.get('inicio_rep'),
+                fin_rep=request.POST.get('fin_rep'),
+                estado_rep=request.POST.get('estado_rep'),
+                # nombre_cliente_id=request.POST.get('cliente'),
+                nombre_completo_usuario_id=request.POST.get('empleado'))
+
+                rep_nuevo.save()
+            else:
+                rep_actual=Reparacion.objects.get(codigo_rep=rep_actual)
+                rep_actual.equipo_rep=request.POST.get('equipo_rep')
+                rep_actual.desc_equipo_rep=request.POST.get('desc_equipo_rep')
+                rep_actual.horas_rep=request.POST.get('horas_rep')
+                rep_actual.actividades_rep=request.POST.get('actividades_rep')
+                rep_actual.inicio_rep=request.POST.get('inicio_rep')
+                rep_actual.fin_rep=request.POST.get('fin_rep')
+                rep_actual.estado_rep=request.POST.get('estado_rep')
+                # rep_actual.nombre_cliente_id = request.POST.get('cliente')
+                rep_actual.nombre_completo_usuario_id = request.POST.get('empleado')
+
+                rep_actual.save() 
+
+        return redirect('verrep')
+    
+    else:
+        return redirect("login")
+
+def borrep(request, rep_actual):
+        Reparacion.objects.filter(codigo_rep = rep_actual).delete()
+        return redirect('verrep')
+
+
+
+
+
+
+
+#--=======================================Perifericos======================================--
+
+def perifericover(request):
+    if request.session.get("id_usuario"):
+        listatabla=Perifericos.objects.all()
+        listaproveedor = Proveedor.objects.all()
+        return validar(request, "productos/perifericover.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Perifericos", "subtitulo_f":"Listado de Perifericos registrados", 
+        "listatabla":listatabla, 
+        "listaproveedor": listaproveedor})
+    else:
+        return redirect("login")
+
+def perifericomod(request, periferico_actual=0):
+    if request.session.get("id_usuario"):
+        if request.method=="GET":
+            listaproveedor = Proveedor.objects.all()
+            peri_actual=Perifericos.objects.filter(id_periferico=periferico_actual).exists()
+            if peri_actual:
+                datos_per=Perifericos.objects.filter(id_periferico=periferico_actual).first()
+                # datos_per.inicio_rep=str(datos_per.inicio_rep)
+                # datos_per.fin_rep=str(datos_per.fin_rep)
+                return validar(request, "productos/perifericomod.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Modificar Reparación", 
+                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                "datos_act":datos_per, 
+                "periferico_actual":periferico_actual,
+                "listaproveedor": listaproveedor})
+            else:
+                return validar(request, "productos/perifericomod.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Nuevo Perifericos", "subtitulo_f":"Por favor complete todos los datos solicitados", 
+                "periferico_actual":periferico_actual,
+                "listaproveedor": listaproveedor})
+
+        if request.method=="POST":
+            if periferico_actual==0:
+                perif_nuevo=Perifericos(id_periferico=request.POST.get('id_periferico'),
+                codigo_periferico=request.POST.get('codigo_periferico'),
+                tipo_periferico=request.POST.get('tipo_periferico'),
+                marca_periferico=request.POST.get('marca_periferico'),
+                descripcion_periferico=request.POST.get("descripcion_periferico"),
+                nombre_proveedor_id=request.POST.get("proveedor"),
+                precio_compra_periferico=request.POST.get('precio_compra_periferico'),
+                precio_venta_periferico=request.POST.get('precio_venta_periferico'),
+                stock_periferico=request.POST.get('stock_periferico'))
+
+                perif_nuevo.save()
+            else:
+                periferico_actual=Perifericos.objects.get(id_periferico=periferico_actual)
+                periferico_actual.codigo_periferico=request.POST.get('codigo_periferico')
+                periferico_actual.tipo_periferico=request.POST.get('tipo_periferico')
+                periferico_actual.marca_periferico=request.POST.get('marca_periferico')
+                periferico_actual.descripcion_periferico=request.POST.get('descripcion_periferico')
+                periferico_actual.nombre_proveedor_id=request.POST.get('proveedor')
+                periferico_actual.precio_compra_periferico=request.POST.get('precio_compra_periferico')
+                periferico_actual.precio_venta_periferico=request.POST.get('precio_venta_periferico')
+                periferico_actual.stock_periferico = request.POST.get('stock_periferico')
+
+                periferico_actual.save() 
+
+        return redirect('perifericover')
+    
+    else:
+        return redirect("login")
+
+def perifericobor(request, periferico_actual):
+        Perifericos.objects.filter(id_periferico = periferico_actual).delete()
+        return redirect('perifericover')
+
 
 
 
@@ -489,9 +647,6 @@ def case(request):
     
 def motherboard(request):
     return validar(request, "productos/motherboard.html")
-
-def perifericos(request):
-    return validar(request, "productos/perifericos.html")
 
 def psu(request):
     return validar(request, "productos/psu.html")

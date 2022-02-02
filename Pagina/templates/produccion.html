@@ -3,6 +3,11 @@
 {%block barra%}
 
 <body>
+	<style>
+	.display-4 {
+    	font-size: 2.48rem;
+	}
+	</style>
 	<p id="msjError" style="display: none">
 		{% if mensaje %}
 			<p class="message-error" hidden>{{mensaje}}</p>
@@ -51,7 +56,7 @@
 												</div>
 												<div class="col-sm-4 mb-3 mb-md-0">
 													<div class="card text-center h-100">
-														<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="#">
+														<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'verrep' %}">
 															<div class="mb-4">
 																<br></br>
 																<span class="display-4">Reparación</span>

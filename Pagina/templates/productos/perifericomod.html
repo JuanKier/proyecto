@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block barra %}
+<style>
+    .card-header {
+        background: #f2f2f2;
+    }
+
+    .card-block {
+        height: 40em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f2f2f2;
+    }
+
+    .form-material {
+        display: flex;
+        margin: 1em;
+        height: 100%;
+        width: 65%;
+        gap: 2em;
+        flex-direction: column;
+        background: #f2f2f2;
+    }
+
+    .input-confirmar {
+        display: grid;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 2em;
+    }
+
+    .input-estado {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        grid-gap: 2em;
+        justify-content: center;
+    }
+
+    .caja-botones{
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5em;
+    }
+</style>
+<div class="card">
+    <div class="card-header">
+        <h3>{{parameters.titulo_f}}</h3>
+    </div>
+    <div class="card-block">
+        <form class="form-material" action="{% url 'perifericomod' parameters.periferico_actual %}" method="POST" onsubmit="sessionStorage.setItem('1', 1);"
+            style="margin: 1em">
+            {% csrf_token %}
+            <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
+                <div class="form-group form-default">
+                    <label class="float-label">Código</label>
+                    <span class="form-bar"></span>
+                    <input type="text" name="codigo_periferico" class="form-control mb-3" required
+                        value="{{parameters.datos_act.codigo_periferico}}">
+                </div>
+                <div class="form-group form-default">
+                    <label class="float-label">Tipo</label>
+                    <span class="form-bar"></span>
+                    <select class="form-select mb-3" name="tipo_periferico" id="tipo_periferico" required>
+                        <option value=0>--SELECCIONE UNA OPCION--</option>
+                        <option value="1" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 1 %} selected {% endif %}>Fuente</option>
+                        <option value="2" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 2 %} selected {% endif %}>Gabinete</option>
+                        <option value="3" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 3 %} selected {% endif %}>Almacenamiento</option>
+                        <option value="4" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 4 %} selected {% endif %}>Mouse</option>
+                        <option value="5" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 5 %} selected {% endif %}>Teclado</option>
+                        <option value="6" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 6 %} selected {% endif %}>Auriculares</option>
+                        <option value="7" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 7 %} selected {% endif %}>Monitor</option>
+                        <option value="8" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 8 %} selected {% endif %}>Placa de Video</option>
+                        <option value="9" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 9 %} selected {% endif %}>Impresora</option>
+                        <option value="10" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 10 %} selected {% endif %}>Otros</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
+                <div class="form-group form-default">
+                    <label class="float-label">Marca</label>
+                    <span class="form-bar"></span>
+                    <input type="text" name="marca_periferico" class="form-control mb-3" required
+                        value="{{parameters.datos_act.marca_periferico}}">
+                </div>
+
+                <div class="form-group form-default">
+                    <label class="float-label">Descripcion</label>
+                    <span class="form-bar"></span>
+                    <input type="text" name="descripcion_periferico" class="form-control mb-3" required
+                        value="{{parameters.datos_act.descripcion_periferico}}">
+                </div>
+            </div>
+            
+            <div class="input-confirmar" style="grid-template-columns: 1fr 1fr 1fr;">
+                <div class="form-group form-default">
+                    <label class="float-label">Proveedor</label>
+                    <select class="form-select mb-3" name="proveedor" id="proveedor">
+                        <option value=0>--SELECCIONE UNA OPCION--</option>
+                        {% for lista in parameters.listaproveedor %}
+                        <option value="{{lista.codigo_proveedor}}" {% if lista.codigo_proveedor == parameters.datos_act.nombre_proveedor_id%} selected {% endif %}>
+                            {{lista.nombre_proveedor}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group form-default mb-3">
+                    <label class="float-label">Precio Compra</label>
+                    <span class="form-bar"></span>
+                    <input type="text" name="precio_compra_periferico" class="form-precio_compra_periferico" required 
+                        value="{{parameters.datos_act.precio_compra_periferico}}">
+                </div>
+            </div>
+
+            <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
+                <div class="form-group form-default mb-3">
+                    <label class="float-label">Stock</label>
+                    <span class="form-bar"></span>
+                    <input type="number" name="stock_periferico" class="form-stock_periferico" required 
+                        value="{{parameters.datos_act.stock_periferico}}">
+                </div>
+            
+                <div class="form-group form-default mb-3">
+                    <label class="float-label">Precio Venta</label>
+                    <span class="form-bar"></span>
+                    <input type="text" name="precio_venta_periferico" class="precio_venta_periferico-control" required
+                        value="{{parameters.datos_act.precio_venta_periferico}}">
+                </div>
+            </div>
+
+            <div class="form-group form-default caja-botones">
+                <button type="submit" class="btn btn-success btn-round waves-effect waves-light"
+                    onclick="return confirm('Estás seguro de añadir este Periferico?')">Grabar</button>
+                <a href="{% url 'perifericover' %}" class="btn btn-info btn-round waves-effect waves-light">Cancelar</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="{%static 'js/app.js'%}"></script>
+<script src="{%static 'js/jquery.chained.js'%}"></script>
+
+<script>
+    //$("#ciudad").chained("#departamento")
+    // function llenar_ciudades(){
+    //     console.log("HOLA");
+
+    //     //SE LIMPIA EL COMBO
+    //     $("#ciudad").empty();
+        
+    //     //RECUPERAR EL EL COMBO CIUDAD
+    //     select_ciudad = document.getElementById('ciudad');
+
+    //     //CREAMOS UN OPTION QUE ESTE POR DEFECTO AL INICIO DE LA LISTA
+    //     var defecto = document.createElement('option');
+    //     defecto.value = 0; //SE ASIGNA UN VALUE AL VALOR POR DEFECTO
+    //     defecto.text = ("--SELECCIONE UNA OPCION--"); //SE ASIGNA UN TEXTO AL OPTION
+    //     select_ciudad.appendChild(defecto); // ESTA LINEA AÑADE UN OPTION
+
+
+    //     var id_departamento = document.getElementById('departamento').value; // SE RECUPERA EL VALUE DEL DEPARTAMENTO PARA SABER EL FK
+    //     {% for lista in parameters.listaciudad %} //SE RECORREN LAS CIUDADES PARA VERIFICAR SI LA FK COINCIDE CON EL OBTENIDO
+    //         aux = {{lista.nombre_departamento_id}} //SE GUARDA EN AUX LA FK DEL DEPARTAMENTO ALMACENADO EN LA CIUDAD
+    //         if (id_departamento == aux){ //SI COINCIDEN EL AUX CON EL ID_DEPARTAMENTO OBTENIDO DESDEL EL VALUE DE SELECT DEPARTAMENTO, SE AGREGA UN OPTION
+    //             var opt = document.createElement('option');
+    //             opt.value = {{lista.codigo_ciudad}};
+    //             opt.text = "{{lista.nombre_ciudad}}";
+    //             select_ciudad.appendChild(opt);
+    //         }
+    //     {% endfor %}  
+    // }
+</script>
+<script>
+    function traerCliente(event) { //event es el input donde se carga el valor
+        var flag = false
+        var nCliente = document.getElementById("nombre_cliente") //traigo el label que se va a modificar con el nombre del cliente
+        {% for lista in parameters.listacliente %}
+        var ruc_cliente = "{{lista.ruc_cliente}}"   //se trae cedula del cliente
+
+        if (event.value == ruc_cliente) { //se compara si las cedulas de la base de datos coincide con el del input
+            nCliente.innerHTML = "{{lista.nombre_cliente}}"   //si coincide se carga el nombre al label
+            flag = true
+        }
+
+        if (!flag) {
+            nCliente.innerHTML = "No existe ese cliente"//si coincide se muestra el mensaje en el label
+        }
+        {% endfor %}
+
+        if (event.value == '') { //si el input esta vacio el label se vaciara tambien
+            nCliente.innerHTML = " "
+        }
+    }
+</script>
+
+{% endblock %}

@@ -42,13 +42,25 @@ urlpatterns = [
     path('modmant/<int:mant_actual>', views.modmant, name='modmant'),
     path('bormant/<int:mant_actual>', views.bormant, name='bormant'),
 
+     #--Reparación
+    path('verrep', views.verrep, name='verrep'),
+    path('modrep/<int:rep_actual>', views.modrep, name='modrep'),
+    path('borrep/<int:rep_actual>', views.borrep, name='borrep'),
+    
+
+# ----------------------------------------PRODUCTOS---------------------------------------------------
+
+    #--Perifericos
+    path('perifericover', views.perifericover, name='perifericover'),
+    path('perifericomod/<int:periferico_actual>', views.perifericomod, name='perifericomod'),
+    path('perifericobor/<int:periferico_actual>', views.perifericobor, name='perifericobor'),
+
 
     path('inventario', views.inventario, name='inventario'),
 
     path('cpu', views.cpu, name='cpu'),
     path('case', views.case, name='case'),
     path('motherboard', views.motherboard, name='motherboard'),
-    path('perifericos', views.perifericos, name='perifericos'),
     path('psu', views.psu, name='psu'),
     path('ram', views.ram, name='ram'),
     path('stg', views.stg, name='stg'),

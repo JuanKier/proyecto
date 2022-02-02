@@ -54,9 +54,29 @@ class Mantenimiento(models.Model):
     actividades_mant = models.CharField(max_length = 200)
     inicio_mant = models.DateField()
     fin_mant = models.DateField()
-    ruc_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True)
+    nombre_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True)
     nombre_completo_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True)
     estado_mant = models.IntegerField(default=1, null=True)
 
+class Reparacion(models.Model):
+    codigo_rep = models.AutoField(primary_key=True)
+    equipo_rep = models.IntegerField(null=True)
+    desc_equipo_rep = models.CharField(max_length = 200)
+    horas_rep = models.IntegerField(null=True)
+    actividades_rep = models.CharField(max_length = 200)
+    inicio_rep = models.DateField()
+    fin_rep = models.DateField()
+    # nombre_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True)
+    nombre_completo_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True)
+    estado_rep = models.IntegerField(default=1, null=True)
 
-    
+class Perifericos(models.Model):
+    id_periferico=models.AutoField(primary_key=True)
+    codigo_periferico=models.IntegerField(null=True)
+    tipo_periferico= models.CharField(max_length = 50)
+    marca_periferico= models.CharField(max_length=30)
+    descripcion_periferico=models.CharField(max_length=200)
+    nombre_proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE, null=True)
+    precio_compra_periferico=models.CharField(max_length=50)
+    precio_venta_periferico=models.CharField(max_length=50)
+    stock_periferico=models.SmallIntegerField(default=0)

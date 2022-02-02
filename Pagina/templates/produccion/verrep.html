@@ -18,7 +18,7 @@
         <div class="card-header">
             
             <div class="form-group form-default" style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="margin: 0">Lista de Mantenimientos</h3><a href="{% url 'modmant' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nuevo Mantenimiento</button></a>
+                <h3 style="margin: 0">Lista de Reparaciones</h3><a href="{% url 'modrep' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nueva Reparación</button></a>
             </div>
             <div class="py-4">
                 <div class="col-md-12">
@@ -42,11 +42,12 @@
                                 <tbody>
                                     {% for lista in parameters.listatabla %}
                                     <tr>
-                                            {%if lista.equipo_mant == 1 %}<td>PC</td>{% endif %} 
-                                            {%if lista.equipo_mant == 2 %}<td>Notebook</td>{% endif %}
-                                            {%if lista.equipo_mant == 3 %}<td>Consola</td>{% endif %}
-                                            {%if lista.equipo_mant == 4 %}<td>Periferico</td>{% endif %}
-                                        <td>{{ lista.desc_equipo_mant }}</td>
+                                            {%if lista.equipo_rep == 1 %}<td>PC</td>{% endif %} 
+                                            {%if lista.equipo_rep == 2 %}<td>Notebook</td>{% endif %}
+                                            {%if lista.equipo_rep == 3 %}<td>Consola</td>{% endif %}
+                                            {%if lista.equipo_rep == 4 %}<td>Periferico</td>{% endif %}
+                                            {%if lista.equipo_rep == 5 %}<td>Otros</td>{% endif %}
+                                        <td>{{ lista.equipo_rep }}</td>
                                         <td>
                                             <!-- {%for lista1 in parameters.listacliente%}
                                             {% if lista1.codigo_cliente == lista.nombre_cliente_id%}
@@ -61,21 +62,21 @@
                                             {%endif%}
                                             {%endfor%}
                                         </td>
-                                        <td>{{ lista.inicio_mant }}</td>
-                                        <td>{{ lista.fin_mant }}</td>
-                                        <td>{{ lista.horas_mant }}</td>
-                                        <td>{{ lista.actividades_mant }}</td>
-                                            {%if lista.estado_mant == 1 %}<td><span class="badge bg-danger">Recibido</span></td>{% endif %} 
-                                            {%if lista.estado_mant == 2 %}<td><span class="badge bg-warning">En proceso</span></td>{% endif %}
-                                            {%if lista.estado_mant == 3 %}<td><span class="badge bg-success">Terminado</span></td>{% endif %}
+                                        <td>{{ lista.inicio_rep }}</td>
+                                        <td>{{ lista.fin_rep }}</td>
+                                        <td>{{ lista.horas_rep }}</td>
+                                        <td>{{ lista.actividades_rep }}</td>
+                                            {%if lista.estado_rep == 1 %}<td><span class="badge bg-danger">Recibido</span></td>{% endif %} 
+                                            {%if lista.estado_rep == 2 %}<td><span class="badge bg-warning">En proceso</span></td>{% endif %}
+                                            {%if lista.estado_rep == 3 %}<td><span class="badge bg-success">Terminado</span></td>{% endif %}
                                         <td>
                                             <div class="icon-btn">
-                                                <a href="{% url 'modmant' lista.codigo_mant %}"
+                                                <a href="{% url 'modrep' lista.codigo_rep %}"
                                                     class="btn waves-effect waves-light btn-warning btn-icon"
                                                     style="color: white;" data-toggle="tooltip" data-placement="top"
                                                     title="" data-original-title="Modificar Registro"><i
                                                         data-feather="edit"></i></a>
-                                                <a href="{% url 'bormant' lista.codigo_mant %}"
+                                                <a href="{% url 'borrep' lista.codigo_rep %}"
                                                     onclick="return confirm('Eliminar el registro?')"
                                                     class="btn waves-effect waves-light btn-danger btn-icon"
                                                     style="color: white;" data-toggle="tooltip" data-placement="top"

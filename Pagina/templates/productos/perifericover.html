@@ -1,0 +1,112 @@
+{%extends "base.html"%}
+{%block barra%}
+{%load static%}
+
+<body>
+    <script>
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                fixedHeader: true
+            });
+        });
+    </script>
+
+    <div class="mb-3">
+        <h1 class="h3 d-inline align-middle">Periféricos</h1>
+    </div>
+    <div class="py-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    
+                    <div class="form-group form-default" style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="margin: 0">Lista de Periféricos</h3><a href="{% url 'perifericomod' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nuevo Periférico</button></a>
+                    </div>
+                    <div class="py-4">
+                        <div class="col-md-12">
+                            <div class="card">
+                <div class="card-body">
+                    <table id="example" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Tipo</th>
+                                <th>Marca</th>
+                                <th>Descripción</th>
+                                <th>Proveedor</th>
+                                <th>Precio Compra</th>
+                                <th>Precio Venta</th>
+                                <th>Stock</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for lista in parameters.listatabla %}
+                            <tr>
+                                <td>{{ lista.codigo_periferico }}</td>
+                                    {%if lista.tipo_periferico == 1 %}<td>Fuente</td>{% endif %} 
+                                    {%if lista.tipo_periferico == 2 %}<td>Gabinete</td>{% endif %}
+                                    {%if lista.tipo_periferico == 3 %}<td>Almacenamiento</td>{% endif %}
+                                    {%if lista.tipo_periferico == 4 %}<td>Mouse</td>{% endif %}
+                                    {%if lista.tipo_periferico == 5 %}<td>Teclado</td>{% endif %} 
+                                    {%if lista.tipo_periferico == 6 %}<td>Auriculares</td>{% endif %}
+                                    {%if lista.tipo_periferico == 7 %}<td>Monitor</td>{% endif %}
+                                    {%if lista.tipo_periferico == 8 %}<td>Placa de Video</td>{% endif %}
+                                    {%if lista.tipo_periferico == 9 %}<td>Impresora</td>{% endif %}
+                                    {%if lista.tipo_periferico == 10 %}<td>Otros</td>{% endif %}
+                                <td>{{ lista.tipo_periferico }}</td>
+                                <td>{{ lista.marca_periferico }}</td>
+                                <td>{{ lista.descripcion_periferico }}</td>
+                                <td>
+                                    {%for lista1 in parameters.listaproveedor%}
+                                    {% if lista1.codigo_proveedor == lista.nombre_proveedor_id%}
+                                    {{lista1.nombre_proveedor}}
+                                    {%endif%}
+                                    {%endfor%}
+                                </td>
+                                <td>{{ lista.precio_compra_periferico }}</td>
+                                <td>{{ lista.precio_venta_periferico }}</td>
+                                <td>{{ lista.stock_periferico }}</td>
+                                <td>
+                                    <div class="icon-btn">
+                                        <a href="{% url 'perifericomod' lista.codigo_periferico %}"
+                                            class="btn waves-effect waves-light btn-warning btn-icon"
+                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
+                                            data-original-title="Modificar Registro"><i data-feather="edit"></i></a>
+                                        <a href="{% url 'perifericobor' lista.codigo_periferico %}"
+                                            onclick="return confirm('Eliminar el registro?')"
+                                            class="btn waves-effect waves-light btn-danger btn-icon"
+                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
+                                            data-original-title="Eliminar Registro"><i data-feather="trash-2"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Código</th>
+                                <th>Tipo</th>
+                                <th>Marca</th>
+                                <th>Descripción</th>
+                                <th>Proveedor</th>
+                                <th>Precio Compra</th>
+                                <th>Precio Venta</th>
+                                <th>Stock</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{%static 'js/app.js'%}"></script>
+</body>
+
+</html>
+
+
+{%endblock%}
