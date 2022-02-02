@@ -72,8 +72,8 @@ class Reparacion(models.Model):
 
 class Perifericos(models.Model):
     id_periferico=models.AutoField(primary_key=True)
-    codigo_periferico=models.IntegerField(null=True)
-    tipo_periferico= models.CharField(max_length = 50)
+    cod_periferico=models.IntegerField(null=True)
+    tipo_periferico= models.IntegerField(null=True)
     marca_periferico= models.CharField(max_length=30)
     descripcion_periferico=models.CharField(max_length=200)
     nombre_proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE, null=True)

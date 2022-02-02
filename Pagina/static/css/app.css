@@ -3657,6 +3657,12 @@ fieldset:disabled .btn {
     pointer-events: none;
     cursor: default
 }
+.nav-link[data-toggle].collapsed:after {
+    content: " ▾";
+}
+.nav-link[data-toggle]:not(.collapsed):after {
+    content: " ▴";
+}
 .nav-tabs {
     border-bottom: 1px solid #dee2e6
 }

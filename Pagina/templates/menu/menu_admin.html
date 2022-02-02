@@ -23,24 +23,6 @@
 		</a>
 	</li>
 
-	<!-- <li class="sidebar-item">
-		<a data-bs-target="#multi" data-bs-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false"  href="products">
-			<i class="align-middle me-2 fas fa-fw fa-th-list"></i> </i> <span class="align-middle">Productos</span>
-		</a>
-		<ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar" style="">
-			<li class="sidebar-item">
-				<a class="sidebar-link" href="cpu">Procesadores</a>
-				<a class="sidebar-link" href="motherboard">Placas Madre</a>
-				<a class="sidebar-link" href="ram">Memorias Ram</a>
-				<a class="sidebar-link" href="vga">Tarjetas Gráficas</a>
-				<a class="sidebar-link" href="stg">Almacenamiento</a>
-				<a class="sidebar-link" href="psu">Fuentes de Poder</a>
-				<a class="sidebar-link" href="case">Gabinetes</a>
-				<a class="sidebar-link" href="cpu">Periféricos</a>
-			</li>
-		</ul>
-	</li> -->
-
 	<li class="sidebar-item">
 		<a class="sidebar-link" href="{%url 'vercliente'%}">
 			<i class="align-middle me-2 fas fa-fw fa-users"></i> <span class="align-middle">Clientes</span>
@@ -53,6 +35,17 @@
 		</a>
 	</li>
 
+	<a data-bs-target="#multi" data-bs-toggle="collapse" class="sidebar-link collapsed" aria-expanded="false">
+		<i class="align-middle me-2 fas fa-fw fa-keyboard"></i> <span class="align-middle">Productos</span>
+	</a>
+	<ul id="multi" class="sidebar-dropdown list-unstyled collapse" data-bs-parent="#sidebar">
+		<li class="sidebar-item">
+			<a class="sidebar-link" href="{%url 'perifericover'%}">
+				<i class="align-middle me-2 fas fa-fw fa-desktop"></i> <span class="align-middle">Periféricos</span>
+			</a>
+		</li>
+	</ul>
+	
 	<li class="sidebar-item">
 		<a class="sidebar-link" href="{%url 'inventario'%}">
 			<i class="align-middle me-2 fas fa-fw fa-book"></i> <span class="align-middle">Inventario</span>
@@ -70,6 +63,7 @@
 			<i class="align-middle me-2 fas fa-fw fa-dollar-sign"></i> <span class="align-middle">Ventas</span>
 		</a>
 	</li>
+
 	<li class="sidebar-header">
 		Mantenimiento
 	</li>
@@ -90,7 +84,6 @@
 			<i class="align-middle me-2 fas fa-fw fa-flag"></i> <span class="align-middle">Nacionalidades</span>
 		</a>
 	</li>
-
 </ul>
 
 </div>

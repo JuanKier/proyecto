@@ -43,7 +43,7 @@
                         <tbody>
                             {% for lista in parameters.listatabla %}
                             <tr>
-                                <td>{{ lista.codigo_periferico }}</td>
+                                <td>{{ lista.cod_periferico }}</td>
                                     {%if lista.tipo_periferico == 1 %}<td>Fuente</td>{% endif %} 
                                     {%if lista.tipo_periferico == 2 %}<td>Gabinete</td>{% endif %}
                                     {%if lista.tipo_periferico == 3 %}<td>Almacenamiento</td>{% endif %}
@@ -54,7 +54,6 @@
                                     {%if lista.tipo_periferico == 8 %}<td>Placa de Video</td>{% endif %}
                                     {%if lista.tipo_periferico == 9 %}<td>Impresora</td>{% endif %}
                                     {%if lista.tipo_periferico == 10 %}<td>Otros</td>{% endif %}
-                                <td>{{ lista.tipo_periferico }}</td>
                                 <td>{{ lista.marca_periferico }}</td>
                                 <td>{{ lista.descripcion_periferico }}</td>
                                 <td>
@@ -69,11 +68,11 @@
                                 <td>{{ lista.stock_periferico }}</td>
                                 <td>
                                     <div class="icon-btn">
-                                        <a href="{% url 'perifericomod' lista.codigo_periferico %}"
+                                        <a href="{% url 'perifericomod' lista.id_periferico %}"
                                             class="btn waves-effect waves-light btn-warning btn-icon"
                                             style="color: white;" data-toggle="tooltip" data-placement="top" title=""
                                             data-original-title="Modificar Registro"><i data-feather="edit"></i></a>
-                                        <a href="{% url 'perifericobor' lista.codigo_periferico %}"
+                                        <a href="{% url 'perifericobor' lista.id_periferico %}"
                                             onclick="return confirm('Eliminar el registro?')"
                                             class="btn waves-effect waves-light btn-danger btn-icon"
                                             style="color: white;" data-toggle="tooltip" data-placement="top" title=""

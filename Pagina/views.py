@@ -603,11 +603,11 @@ def perifericomod(request, periferico_actual=0):
         if request.method=="POST":
             if periferico_actual==0:
                 perif_nuevo=Perifericos(id_periferico=request.POST.get('id_periferico'),
-                codigo_periferico=request.POST.get('codigo_periferico'),
+                cod_periferico=request.POST.get('cod_periferico'),
                 tipo_periferico=request.POST.get('tipo_periferico'),
                 marca_periferico=request.POST.get('marca_periferico'),
                 descripcion_periferico=request.POST.get("descripcion_periferico"),
-                nombre_proveedor_id=request.POST.get("proveedor"),
+                nombre_proveedor_id=request.POST.get('proveedor'),
                 precio_compra_periferico=request.POST.get('precio_compra_periferico'),
                 precio_venta_periferico=request.POST.get('precio_venta_periferico'),
                 stock_periferico=request.POST.get('stock_periferico'))
@@ -615,7 +615,7 @@ def perifericomod(request, periferico_actual=0):
                 perif_nuevo.save()
             else:
                 periferico_actual=Perifericos.objects.get(id_periferico=periferico_actual)
-                periferico_actual.codigo_periferico=request.POST.get('codigo_periferico')
+                periferico_actual.cod_periferico=request.POST.get('cod_periferico')
                 periferico_actual.tipo_periferico=request.POST.get('tipo_periferico')
                 periferico_actual.marca_periferico=request.POST.get('marca_periferico')
                 periferico_actual.descripcion_periferico=request.POST.get('descripcion_periferico')
