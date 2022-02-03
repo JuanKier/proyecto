@@ -47,13 +47,13 @@
                                             {%if lista.equipo_rep == 3 %}<td>Consola</td>{% endif %}
                                             {%if lista.equipo_rep == 4 %}<td>Periferico</td>{% endif %}
                                             {%if lista.equipo_rep == 5 %}<td>Otros</td>{% endif %}
-                                        <td>{{ lista.equipo_rep }}</td>
+                                        <td>{{ lista.desc_equipo_rep }}</td>
                                         <td>
-                                            <!-- {%for lista1 in parameters.listacliente%}
+                                            {%for lista1 in parameters.listacliente%}
                                             {% if lista1.codigo_cliente == lista.nombre_cliente_id%}
-                                            {{lista1.nombre_cliente}}
+                                                {{lista1.nombre_cliente}}
                                             {%endif%}
-                                            {%endfor%} -->
+                                            {%endfor%}
                                         </td>
                                         <td>
                                             {%for lista2 in parameters.listausuario%}
