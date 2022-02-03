@@ -98,20 +98,6 @@
                     <input type="text" style="display: none;" id="id_cliente" name="id_cliente">
                 </div>
             </div>
-            
-            <!-- <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
-                <div class="form-group form-default">
-                    <label class="float-label">Cliente</label>
-                    <select class="form-select mb-3" name="cliente" id="cliente">
-                        <option value=0>--SELECCIONE UNA OPCION--</option>
-                        {% for lista in parameters.listacliente %}
-                        <option value="{{lista.codigo_cliente}}" {% if lista.codigo_cliente == parameters.datos_act.nombre_cliente_id%} selected {% endif %}>
-                            {{lista.nombre_cliente}}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div> -->
 
             <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
                 <div class="form-group form-default">
@@ -138,7 +124,7 @@
                 <div class="form-group form-default mb-3">
                     <label class="float-label">Fecha de Inicio</label>
                     <span class="form-bar"></span>
-                    <input type="date" name="inicio_mant" class="form-control" required 
+                    <input type="date" name="inicio_mant" class="form-control" id="fechaActual" required 
                         value="{{parameters.datos_act.inicio_mant}}">
                 </div>
             
@@ -222,6 +208,19 @@
     // }
 </script>
 <script>
+    window.onload = function(){
+        var fecha = new Date(); //Fecha actual
+        var mes = fecha.getMonth()+1; //obteniendo mes
+        var dia = fecha.getDate(); //obteniendo dia
+        var ano = fecha.getFullYear(); //obteniendo año
+        if(dia<10)
+            dia='0'+dia; //agrega cero si el menor de 10
+        if(mes<10)
+            mes='0'+mes //agrega cero si el menor de 10
+        document.getElementById('fechaActual').value=ano+"/"+mes+"/"+dia;
+    }  
+
+
     {% if  parameters.mant_actual > 0 %}
         traerCliente(document.getElementById("ruc_cliente"))
     {% endif %}
