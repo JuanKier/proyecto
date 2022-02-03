@@ -83,12 +83,19 @@
                 <div>
                     <label class="float-label">CI o RUC de Cliente</label>
                     <span class="form-bar"></span>
-                    <input class="form-control mb-3" type="text" name="ruc_cliente" id="ruc_cliente" onfocusout="traerCliente(this)" required>
+                    <input class="form-control mb-3" type="text" name="ruc_cliente" id="ruc_cliente" 
+                    {% for cliente in parameters.listacliente %}
+                     {% if cliente.codigo_cliente == parameters.datos_act.nombre_cliente_id %} 
+                     value="{{cliente.ruc_cliente}}" 
+                     {% endif %}
+                     {% endfor %} 
+                     onfocusout="traerCliente(this)" required>
                 </div>
 
                 <div>
                     <label class="float-label">Nombre del Cliente</label>
                     <label class="form-control mb-3" id="nombre_cliente"> </label>
+                    <input type="text" style="display: none;" id="id_cliente" name="id_cliente">
                 </div>
             </div>
             
@@ -215,14 +222,21 @@
     // }
 </script>
 <script>
+    {% if  parameters.mant_actual > 0 %}
+        traerCliente(document.getElementById("ruc_cliente"))
+    {% endif %}
+
+
     function traerCliente(event) { //event es el input donde se carga el valor
         var flag = false
         var nCliente = document.getElementById("nombre_cliente") //traigo el label que se va a modificar con el nombre del cliente
+        var inputCliente = document.getElementById("id_cliente")
         {% for lista in parameters.listacliente %}
         var ruc_cliente = "{{lista.ruc_cliente}}"   //se trae cedula del cliente
 
         if (event.value == ruc_cliente) { //se compara si las cedulas de la base de datos coincide con el del input
             nCliente.innerHTML = "{{lista.nombre_cliente}}"   //si coincide se carga el nombre al label
+            inputCliente.value = "{{lista.codigo_cliente}}"
             flag = true
         }
 

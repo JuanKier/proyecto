@@ -451,7 +451,7 @@ def modmant(request, mant_actual=0):
                 inicio_mant=request.POST.get('inicio_mant'),
                 fin_mant=request.POST.get('fin_mant'),
                 estado_mant=request.POST.get('estado_mant'),
-                nombre_cliente_id=request.POST.get('cliente'),
+                nombre_cliente_id=request.POST.get('id_cliente'),
                 nombre_completo_usuario_id=request.POST.get('empleado'))
 
                 mant_nuevo.save()
@@ -610,6 +610,7 @@ def perifericomod(request, periferico_actual=0):
                 nombre_proveedor_id=request.POST.get('proveedor'),
                 precio_compra_periferico=request.POST.get('precio_compra_periferico'),
                 precio_venta_periferico=request.POST.get('precio_venta_periferico'),
+                imagen_periferico=request.FILES.get('imagen_periferico'),
                 stock_periferico=request.POST.get('stock_periferico'))
 
                 perif_nuevo.save()
@@ -622,6 +623,7 @@ def perifericomod(request, periferico_actual=0):
                 periferico_actual.nombre_proveedor_id=request.POST.get('proveedor')
                 periferico_actual.precio_compra_periferico=request.POST.get('precio_compra_periferico')
                 periferico_actual.precio_venta_periferico=request.POST.get('precio_venta_periferico')
+                periferico_actual.imagen_periferico=request.FILES.get('imagen_periferico'),
                 periferico_actual.stock_periferico = request.POST.get('stock_periferico')
 
                 periferico_actual.save() 

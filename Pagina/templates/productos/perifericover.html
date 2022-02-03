@@ -30,6 +30,7 @@
                         <thead>
                             <tr>
                                 <th>Código</th>
+                                <th>Imagen</th>
                                 <th>Tipo</th>
                                 <th>Marca</th>
                                 <th>Descripción</th>
@@ -44,6 +45,9 @@
                             {% for lista in parameters.listatabla %}
                             <tr>
                                 <td>{{ lista.cod_periferico }}</td>
+                                {% if lista.imagen_periferico %}
+                                <td><img src="{{ lista.imagen_periferico.url }}" width="100" height="100"></td>
+                                {% endif %}
                                     {%if lista.tipo_periferico == 1 %}<td>Fuente</td>{% endif %} 
                                     {%if lista.tipo_periferico == 2 %}<td>Gabinete</td>{% endif %}
                                     {%if lista.tipo_periferico == 3 %}<td>Almacenamiento</td>{% endif %}

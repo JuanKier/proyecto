@@ -80,3 +80,4 @@ class Perifericos(models.Model):
     precio_compra_periferico=models.CharField(max_length=50)
     precio_venta_periferico=models.CharField(max_length=50)
     stock_periferico=models.SmallIntegerField(default=0)
+    imagen_periferico = models.ImageField(upload_to="perifericos", null=True)
