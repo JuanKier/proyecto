@@ -464,7 +464,7 @@ def modmant(request, mant_actual=0):
                 mant_actual.inicio_mant=request.POST.get('inicio_mant')
                 mant_actual.fin_mant=request.POST.get('fin_mant')
                 mant_actual.estado_mant=request.POST.get('estado_mant')
-                mant_actual.nombre_cliente_id = request.POST.get('cliente')
+                mant_actual.nombre_cliente_id = request.POST.get('id_cliente')
                 mant_actual.nombre_completo_usuario_id = request.POST.get('empleado')
 
                 mant_actual.save() 
@@ -530,7 +530,7 @@ def modrep(request, rep_actual=0):
                 inicio_rep=request.POST.get('inicio_rep'),
                 fin_rep=request.POST.get('fin_rep'),
                 estado_rep=request.POST.get('estado_rep'),
-                # nombre_cliente_id=request.POST.get('cliente'),
+                nombre_cliente_id=request.POST.get('id_cliente'),
                 nombre_completo_usuario_id=request.POST.get('empleado'))
 
                 rep_nuevo.save()
@@ -543,7 +543,7 @@ def modrep(request, rep_actual=0):
                 rep_actual.inicio_rep=request.POST.get('inicio_rep')
                 rep_actual.fin_rep=request.POST.get('fin_rep')
                 rep_actual.estado_rep=request.POST.get('estado_rep')
-                # rep_actual.nombre_cliente_id = request.POST.get('cliente')
+                mant_actual.nombre_cliente_id = request.POST.get('id_cliente')
                 rep_actual.nombre_completo_usuario_id = request.POST.get('empleado')
 
                 rep_actual.save() 

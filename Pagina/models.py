@@ -66,7 +66,7 @@ class Reparacion(models.Model):
     actividades_rep = models.CharField(max_length = 200)
     inicio_rep = models.DateField()
     fin_rep = models.DateField()
-    # nombre_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True)
+    nombre_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True)
     nombre_completo_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True)
     estado_rep = models.IntegerField(default=1, null=True)
 
