@@ -60,6 +60,7 @@
                     <label class="float-label">Género</label>
                     <span class="form-bar"></span>
                     <select class= "form-select mb-3" name="genero_cliente" id="genero_cliente" required>
+                        <option value=0>--SELECCIONE UNA OPCION--</option>
                         <option value="1" id="opcion_select" {% if parameters.datos_act.genero_cliente == 1 %} selected {% endif %}>Masculino</option>
                         <option value="2" id="opcion_select" {% if parameters.datos_act.genero_cliente == 2 %} selected {% endif %}>Femenino</option>
                     </select>
@@ -118,6 +119,7 @@
                 <div class="form-group form-default">
                     <label class="float-label">Nacionalidad</label>
                         <select class= "form-select mb-3" name="nacionalidad">
+                            <option value=0>--SELECCIONE UNA OPCION--</option>
                             {% for lista in parameters.listanacionalidad %}
                             <option value="{{lista.codigo_nacionalidad}}" {% if lista.codigo_nacionalidad == parameters.datos_act.descripcion_nacionalidad_id %} selected {% endif %}>
                                 {{lista.descripcion_nacionalidad}}

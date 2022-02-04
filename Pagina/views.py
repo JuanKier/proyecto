@@ -240,12 +240,13 @@ def borproveedor(request, proveedor_actual):
         Proveedor.objects.filter(codigo_proveedor = proveedor_actual).delete()
         return redirect('verproveedor')
 
+#--=======================================Maintenance======================================--
 #--=======================================Departamentos======================================--
 
 def verdepartamento(request):
     if request.session.get("id_usuario"):
         listatabla = Departamento.objects.all()
-        return validar(request, "departamentos/verdepartamento.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Departamentos", "subtitulo_f":"Listado de Departamentos registrados", "listatabla":listatabla})
+        return validar(request, "maintenance/departamentos/verdepartamento.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Departamentos", "subtitulo_f":"Listado de Departamentos registrados", "listatabla":listatabla})
     else:
         return redirect("login")
 
@@ -255,14 +256,14 @@ def moddepartamento(request,departamento_actual=0):
             dept_actual=Departamento.objects.filter(codigo_departamento=departamento_actual).exists()
             if dept_actual:
                 datos_departamento=Departamento.objects.filter(codigo_departamento=departamento_actual).first()
-                return validar(request, "departamentos/moddepartamento.html", 
+                return validar(request, "maintenance/departamentos/moddepartamento.html", 
                 {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
                 "titulo_f":"Modificar Departamento", 
                 "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
                 "datos_act":datos_departamento, 
                 "departamento_actual":departamento_actual})
             else:
-                return validar(request, "departamentos/moddepartamento.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Nuevo Proveedor", "subtitulo_f":"Por favor complete todos los datos solicitados", "departamento_actual":departamento_actual})
+                return validar(request, "maintenance/departamentos/moddepartamento.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Nuevo Proveedor", "subtitulo_f":"Por favor complete todos los datos solicitados", "departamento_actual":departamento_actual})
 
         if request.method=="POST":
             if departamento_actual==0:
@@ -290,7 +291,7 @@ def verciudad(request):
     if request.session.get("id_usuario"):
         listatabla = Ciudad.objects.all()
         listadepartamento = Departamento.objects.all()
-        return validar(request, "ciudad/verciudad.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Ciudades", "subtitulo_f":"Listado de Ciudades registrados", "listatabla":listatabla, "listadepartamento": listadepartamento})
+        return validar(request, "maintenance/ciudad/verciudad.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Ciudades", "subtitulo_f":"Listado de Ciudades registrados", "listatabla":listatabla, "listadepartamento": listadepartamento})
     else:
         return redirect("login")
 
@@ -304,7 +305,7 @@ def modciudad(request, ciudad_actual=0):
             if ciu_actual:
                 datos_ciudad = Ciudad.objects.filter(
                     codigo_ciudad=ciudad_actual).first()
-                return validar(request, "ciudad/modciudad.html",
+                return validar(request, "maintenance/ciudad/modciudad.html",
                                {"nombre_completo_usuario": request.session.get("nombre_completo_usuario"),
                                 "titulo_f": "Modificar Ciudad",
                                 "subtitulo_f": "Vuelva a escribir los datos que desea modificar",
@@ -312,7 +313,7 @@ def modciudad(request, ciudad_actual=0):
                                 "ciudad_actual": ciudad_actual,
                                 "listadepartamento": listadepartamento})
             else:
-                return validar(request, "ciudad/modciudad.html", {"nombre_completo_usuario": request.session.get("nombre_completo_usuario"),
+                return validar(request, "maintenance/ciudad/modciudad.html", {"nombre_completo_usuario": request.session.get("nombre_completo_usuario"),
                                                                   "titulo_f": "Nueva Ciudad", "subtitulo_f": "Por favor complete todos los datos solicitados",
                                                                   "ciudad_actual": ciudad_actual,
                                                                   "listadepartamento": listadepartamento})
@@ -346,7 +347,7 @@ def borciudad(request, ciudad_actual):
 def vernacionalidad(request):
     if request.session.get("id_usuario"):
         listatabla = Nacionalidad.objects.all()
-        return validar(request, "nacionalidades/vernacionalidad.html", 
+        return validar(request, "maintenance/nacionalidades/vernacionalidad.html", 
         {"nombre_completo_usuario": request.session.get("nombre_completo_usuario"), 
         "titulo_f": "Nacionalidades", "subtitulo_f": "Listado de Nacionalidades registrados", 
         "listatabla": listatabla})
@@ -362,14 +363,14 @@ def modnacionalidad(request, nacionalidad_actual=0):
             if dept_actual:
                 datos_nacionalidad = Nacionalidad.objects.filter(
                     codigo_nacionalidad=nacionalidad_actual).first()
-                return validar(request, "nacionalidades/modnacionalidad.html",
+                return validar(request, "maintenance/nacionalidades/modnacionalidad.html",
                                {"nombre_completo_usuario": request.session.get("nombre_completo_usuario"),
                                 "titulo_f": "Modificar Nacionalidad",
                                 "subtitulo_f": "Vuelva a escribir los datos que desea modificar",
                                 "datos_act": datos_nacionalidad,
                                 "nacionalidad_actual": nacionalidad_actual})
             else:
-                return validar(request, "nacionalidades/modnacionalidad.html", 
+                return validar(request, "maintenance/nacionalidades/modnacionalidad.html", 
                 {"nombre_completo_usuario": request.session.get("nombre_completo_usuario"), 
                 "titulo_f": "Nuevo Proveedor", 
                 "subtitulo_f": "Por favor complete todos los datos solicitados", 
@@ -398,7 +399,60 @@ def bornacionalidad(request, nacionalidad_actual):
         codigo_nacionalidad=nacionalidad_actual).delete()
     return redirect('vernacionalidad')
 
+#--=======================================Tipos_Ram======================================--
 
+def vertipo_ram(request):
+    if request.session.get("id_usuario"):
+        listatabla = Tipo_Ram.objects.all()
+        return validar(request, "maintenance/tipo_ram/vertipo_ram.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Tipos de Ram", 
+        "subtitulo_f":"Listado de Tipos de Ram registrados", 
+        "listatabla":listatabla})
+    else:
+        return redirect("login")
+
+def modtipo_ram(request,tipo_ram_actual=0):
+    if request.session.get("id_usuario"):
+        if request.method=="GET":
+            ram_actual=Tipo_Ram.objects.filter(id_tipo_ram=tipo_ram_actual).exists()
+            if ram_actual:
+                datos_tipo_ram=Tipo_Ram.objects.filter(id_tipo_ram=tipo_ram_actual).first()
+                return validar(request, "maintenance/tipo_ram/modtipo_ram.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Modificar Tipo Ram", 
+                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                "datos_act":datos_tipo_ram, 
+                "tipo_ram_actual":tipo_ram_actual})
+            else:
+                return validar(request, "maintenance/tipo_ram/modtipo_ram.html", { 
+                    "nombre_completo_usuario": request.session.get("nombre_completo_usuario"), 
+                    "titulo_f": "Nuevo Tipo de Ram", 
+                    "subtitulo_f": "Por favor complete todos los datos solicitados", 
+                    "tipo_ram_actual": tipo_ram_actual})
+
+        if request.method=="POST":
+            if tipo_ram_actual==0:
+                tipo_ram_nuevo=Tipo_Ram(id_tipo_ram=request.POST.get('id_tipo_ram'),
+                                        tipo_ram=request.POST.get('tipo_ram'))
+                tipo_ram_nuevo.save()
+
+            else:
+                tipo_ram_actual=Tipo_Ram.objects.get(id_tipo_ram=tipo_ram_actual)
+                tipo_ram_actual.tipo_ram=request.POST.get('tipo_ram')
+                tipo_ram_actual.save() 
+
+        return redirect('vertipo_ram')
+    
+    else:
+        return redirect("login")
+
+def bortipo_ram(request, tipo_ram_actual):
+        Tipo_Ram.objects.filter(id_tipo_ram = tipo_ram_actual).delete()
+        return redirect('vertipo_ram')
+
+
+#--=========================================SERVICIOS========================================--
 #--=======================================Mantenimiento======================================--
 
 def vermant(request):
@@ -543,7 +597,7 @@ def modrep(request, rep_actual=0):
                 rep_actual.inicio_rep=request.POST.get('inicio_rep')
                 rep_actual.fin_rep=request.POST.get('fin_rep')
                 rep_actual.estado_rep=request.POST.get('estado_rep')
-                mant_actual.nombre_cliente_id = request.POST.get('id_cliente')
+                rep_actual.nombre_cliente_id = request.POST.get('id_cliente')
                 rep_actual.nombre_completo_usuario_id = request.POST.get('empleado')
 
                 rep_actual.save() 
@@ -558,6 +612,78 @@ def borrep(request, rep_actual):
         return redirect('verrep')
 
 
+#--========================================PRODUCTOS======================================--
+#--========================================Repuestos======================================--
+
+def repuestover(request):
+    if request.session.get("id_usuario"):
+        listatabla=Repuestos.objects.all()
+        listaproveedor = Proveedor.objects.all()
+        return validar(request, "productos/repuestover.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Repuestos", "subtitulo_f":"Listado de Repuestos registrados", 
+        "listatabla":listatabla, 
+        "listaproveedor": listaproveedor})
+    else:
+        return redirect("login")
+
+def repuestomod(request, repuesto_actual=0):
+    if request.session.get("id_usuario"):
+        if request.method=="GET":
+            listaproveedor = Proveedor.objects.all()
+            repu_actual=Repuestos.objects.filter(id_repuesto=repuesto_actual).exists()
+            if repu_actual:
+                datos_repuesto=Repuestos.objects.filter(id_repuesto=repuesto_actual).first()
+                return validar(request, "productos/repuestomod.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Modificar Reparación", 
+                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                "datos_act":datos_repuesto, 
+                "repuesto_actual":repuesto_actual,
+                "listaproveedor": listaproveedor})
+            else:
+                return validar(request, "productos/repuestomod.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Nuevo Repuesto", "subtitulo_f":"Por favor complete todos los datos solicitados", 
+                "repuesto_actual":repuesto_actual,
+                "listaproveedor": listaproveedor})
+
+        if request.method=="POST":
+            if repuesto_actual==0:
+                repuesto_nuevo=Repuestos(id_repuesto=request.POST.get('id_repuesto'),
+                cod_repuesto=request.POST.get('cod_repuesto'),
+                tipo_repuesto=request.POST.get('tipo_repuesto'),
+                marca_repuesto=request.POST.get('marca_repuesto'),
+                descripcion_repuesto=request.POST.get("descripcion_repuesto"),
+                nombre_proveedor_id=request.POST.get('proveedor'),
+                precio_compra_repuesto=request.POST.get('precio_compra_repuesto'),
+                precio_venta_repuesto=request.POST.get('precio_venta_repuesto'),
+                imagen_repuesto=request.FILES.get('imagen_repuesto'),
+                stock_repuesto=request.POST.get('stock_repuesto'))
+
+                repuesto_nuevo.save()
+            else:
+                repuesto_actual=Repuestos.objects.get(id_repuesto=repuesto_actual)
+                repuesto_actual.cod_repuesto=request.POST.get('cod_repuesto')
+                repuesto_actual.tipo_repuesto=request.POST.get('tipo_repuesto')
+                repuesto_actual.marca_repuesto=request.POST.get('marca_repuesto')
+                repuesto_actual.descripcion_repuesto=request.POST.get('descripcion_repuesto')
+                repuesto_actual.nombre_proveedor_id=request.POST.get('proveedor')
+                repuesto_actual.precio_compra_repuesto=request.POST.get('precio_compra_repuesto')
+                repuesto_actual.precio_venta_repuesto=request.POST.get('precio_venta_repuesto')
+                repuesto_actual.imagen_repuesto=request.FILES.get('imagen_repuesto')
+                repuesto_actual.stock_repuesto = request.POST.get('stock_repuesto')
+
+                repuesto_actual.save() 
+
+        return redirect('repuestover')
+    
+    else:
+        return redirect("login")
+
+def repuestobor(request, repuesto_actual):
+        Repuestos.objects.filter(id_repuesto = repuesto_actual).delete()
+        return redirect('repuestover')
 
 
 
@@ -584,8 +710,6 @@ def perifericomod(request, periferico_actual=0):
             peri_actual=Perifericos.objects.filter(id_periferico=periferico_actual).exists()
             if peri_actual:
                 datos_per=Perifericos.objects.filter(id_periferico=periferico_actual).first()
-                # datos_per.inicio_rep=str(datos_per.inicio_rep)
-                # datos_per.fin_rep=str(datos_per.fin_rep)
                 return validar(request, "productos/perifericomod.html", 
                 {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
                 "titulo_f":"Modificar Reparación", 
@@ -623,7 +747,7 @@ def perifericomod(request, periferico_actual=0):
                 periferico_actual.nombre_proveedor_id=request.POST.get('proveedor')
                 periferico_actual.precio_compra_periferico=request.POST.get('precio_compra_periferico')
                 periferico_actual.precio_venta_periferico=request.POST.get('precio_venta_periferico')
-                periferico_actual.imagen_periferico=request.FILES.get('imagen_periferico'),
+                periferico_actual.imagen_periferico=request.FILES.get('imagen_periferico')
                 periferico_actual.stock_periferico = request.POST.get('stock_periferico')
 
                 periferico_actual.save() 

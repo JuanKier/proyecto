@@ -55,31 +55,26 @@
         <h3>{{parameters.titulo_f}}</h3>
     </div>
     <div class="card-block">
-        <form class="form-material" enctype="multipart/form-data" action="{% url 'perifericomod' parameters.periferico_actual %}" method="POST" onsubmit="sessionStorage.setItem('1', 1);"
+        <form class="form-material" enctype="multipart/form-data" action="{% url 'repuestomod' parameters.repuesto_actual %}" method="POST" onsubmit="sessionStorage.setItem('1', 1);"
             style="margin: 1em">
             {% csrf_token %}
             <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
                 <div class="form-group form-default">
                     <label class="float-label">Código</label>
                     <span class="form-bar"></span>
-                    <input type="text" name="cod_periferico" class="form-control mb-3" required
-                        value="{{parameters.datos_act.cod_periferico}}">
+                    <input type="text" name="cod_repuesto" class="form-control mb-3" required
+                        value="{{parameters.datos_act.cod_repuesto}}">
                 </div>
                 <div class="form-group form-default">
                     <label class="float-label">Tipo</label>
                     <span class="form-bar"></span>
-                    <select class="form-select mb-3" name="tipo_periferico" id="tipo_periferico" required>
+                    <select class="form-select mb-3" name="tipo_repuesto" id="tipo_repuesto" required>
                         <option value=0>--SELECCIONE UNA OPCION--</option>
-                        <option value="1" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 1 %} selected {% endif %}>Fuente</option>
-                        <option value="2" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 2 %} selected {% endif %}>Gabinete</option>
-                        <option value="3" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 3 %} selected {% endif %}>Almacenamiento</option>
-                        <option value="4" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 4 %} selected {% endif %}>Mouse</option>
-                        <option value="5" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 5 %} selected {% endif %}>Teclado</option>
-                        <option value="6" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 6 %} selected {% endif %}>Auriculares</option>
-                        <option value="7" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 7 %} selected {% endif %}>Monitor</option>
-                        <option value="8" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 8 %} selected {% endif %}>Placa de Video</option>
-                        <option value="9" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 9 %} selected {% endif %}>Impresora</option>
-                        <option value="10" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 10 %} selected {% endif %}>Otros</option>
+                        <option value="1" id="opcion_select" {% if parameters.datos_act.tipo_repuesto == 1 %} selected {% endif %}>Batería</option>
+                        <option value="2" id="opcion_select" {% if parameters.datos_act.tipo_repuesto == 2 %} selected {% endif %}>Cargador</option>
+                        <option value="3" id="opcion_select" {% if parameters.datos_act.tipo_repuesto == 3 %} selected {% endif %}>Pantalla</option>
+                        <option value="4" id="opcion_select" {% if parameters.datos_act.tipo_repuesto == 4 %} selected {% endif %}>Teclado</option>
+                        <option value="5" id="opcion_select" {% if parameters.datos_act.tipo_repuesto == 5 %} selected {% endif %}>Otros</option>
                     </select>
                 </div>
 
@@ -89,15 +84,15 @@
                 <div class="form-group form-default">
                     <label class="float-label">Marca</label>
                     <span class="form-bar"></span>
-                    <input type="text" name="marca_periferico" class="form-control mb-3" required
-                        value="{{parameters.datos_act.marca_periferico}}">
+                    <input type="text" name="marca_repuesto" class="form-control mb-3" required
+                        value="{{parameters.datos_act.marca_repuesto}}">
                 </div>
 
                 <div class="form-group form-default">
                     <label class="float-label">Descripcion</label>
                     <span class="form-bar"></span>
-                    <input type="text" name="descripcion_periferico" class="form-control mb-3" required
-                        value="{{parameters.datos_act.descripcion_periferico}}">
+                    <input type="text" name="descripcion_repuesto" class="form-control mb-3" required
+                        value="{{parameters.datos_act.descripcion_repuesto}}">
                 </div>
             </div>
             
@@ -117,8 +112,8 @@
                 <div class="form-group form-default">
                     <label class="float-label">Stock</label>
                     <span class="form-bar"></span>
-                    <input type="number" name="stock_periferico" class="form-control mb-3" required 
-                        value="{{parameters.datos_act.stock_periferico}}">
+                    <input type="number" name="stock_repuesto" class="form-control mb-3" required 
+                        value="{{parameters.datos_act.stock_repuesto}}">
                 </div>
             </div>
 
@@ -126,31 +121,30 @@
                 <div class="form-group form-default">
                     <label class="float-label">Precio Compra</label>
                     <span class="form-bar"></span>
-                    <input type="text" name="precio_compra_periferico" class="form-control mb-3" required 
-                        value="{{parameters.datos_act.precio_compra_periferico}}"> 
+                    <input type="text" name="precio_compra_repuesto" class="form-control mb-3" required 
+                        value="{{parameters.datos_act.precio_compra_repuesto}}"> 
                         <!-- onfocus="this.value = numberWithCommas(this.value)" onfocusout="this.value = numberWithCommas(this.value)"> -->
-                        
                 </div>
                 <div class="form-group form-default">
                     <label class="float-label">Precio Venta</label>
                     <span class="form-bar"></span>
-                    <input type="text" name="precio_venta_periferico" class="form-control mb-3" required
-                        value="{{parameters.datos_act.precio_venta_periferico}}"> 
-                        <!-- onfocus="this.value = numberWithCommas(this.value)" onfocusout="this.value = numberWithCommas(this.value)">  -->
+                    <input type="text" name="precio_venta_repuesto" class="form-control mb-3" required
+                        value="{{parameters.datos_act.precio_venta_repuesto}}"> 
+                        <!-- onfocus="this.value = numberWithCommas(this.value)" onfocusout="this.value = numberWithCommas(this.value)" > -->
                 </div>
             </div>
 
             <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
                 <label class="float-label">Imagen</label>
                 <span class="form-bar"></span>
-                <input type="file" name="imagen_periferico" class="form-control mb-3"
-                    value="{{parameters.datos_act.imagen_periferico}}">
+                <input type="file" name="imagen_repuesto" class="form-control mb-3"
+                    value="{{parameters.datos_act.imagen_repuesto}}">
             </div>
 
             <div class="form-group form-default caja-botones">
                 <button type="submit" class="btn btn-success btn-round waves-effect waves-light"
-                    onclick="return confirm('Estás seguro de añadir este Periferico?')">Grabar</button>
-                <a href="{% url 'perifericover' %}" class="btn btn-info btn-round waves-effect waves-light">Cancelar</a>
+                    onclick="return confirm('Estás seguro de añadir este Repuesto?')">Grabar</button>
+                <a href="{% url 'repuestover' %}" class="btn btn-info btn-round waves-effect waves-light">Cancelar</a>
             </div>
         </form>
     </div>

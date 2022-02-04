@@ -1,3 +1,4 @@
+from msilib.schema import Class
 from django.db import models
 from django.db.models.deletion import CASCADE, SET_NULL
 from django.db.models.fields.related import ForeignKey
@@ -46,6 +47,9 @@ class Proveedor(models.Model):
     telefono_proveedor= models.CharField(max_length=30)
     direccion_proveedor=models.CharField(max_length= 200)
 
+
+#--=========================================SERVICIOS========================================--
+
 class Mantenimiento(models.Model):
     codigo_mant = models.AutoField(primary_key=True)
     equipo_mant = models.IntegerField(null=True)
@@ -70,6 +74,23 @@ class Reparacion(models.Model):
     nombre_completo_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True)
     estado_rep = models.IntegerField(default=1, null=True)
 
+
+#----------------------------------------COMPATIBILIDAD-------------------------------------------
+
+class Tipo_Ram(models.Model):
+    id_tipo_ram=models.AutoField(primary_key=True)
+    tipo_ram=models.CharField(max_length=20)
+
+class Tipo_Cpu(models.Model):
+    id_tipo_cpu=models.AutoField(primary_key=True)
+    tipo_cpu=models.CharField(max_length=20)
+
+class Tipo_Gabinete(models.Model):
+    id_tipo_gabinete=models.AutoField(primary_key=True)
+    tipo_gabinete=models.CharField(max_length=20)
+
+#--=========================================PRODUCTOS========================================--
+
 class Perifericos(models.Model):
     id_periferico=models.AutoField(primary_key=True)
     cod_periferico=models.IntegerField(null=True)
@@ -77,7 +98,34 @@ class Perifericos(models.Model):
     marca_periferico= models.CharField(max_length=30)
     descripcion_periferico=models.CharField(max_length=200)
     nombre_proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE, null=True)
-    precio_compra_periferico=models.CharField(max_length=50)
-    precio_venta_periferico=models.CharField(max_length=50)
-    stock_periferico=models.SmallIntegerField(default=0)
+    precio_compra_periferico=models.IntegerField()
+    precio_venta_periferico=models.IntegerField()
+    stock_periferico=models.IntegerField(default=0)
     imagen_periferico = models.ImageField(upload_to="perifericos", null=True)
+
+class Repuestos(models.Model):
+    id_repuesto=models.AutoField(primary_key=True)
+    cod_repuesto=models.IntegerField(null=True)
+    tipo_repuesto= models.IntegerField(null=True)
+    marca_repuesto= models.CharField(max_length=30)
+    descripcion_repuesto=models.CharField(max_length=200)
+    nombre_proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE, null=True)
+    precio_compra_repuesto=models.IntegerField()
+    precio_venta_repuesto=models.IntegerField()
+    stock_repuesto=models.IntegerField(default=0)
+    imagen_repuesto = models.ImageField(upload_to="repuestos", null=True)
+
+# class RAM(models.Model):
+#     id_ram = models.AutoField(primary_key=True)
+#     cod_ram = models.IntegerField(null=True)
+#     tipo_ram = models.ForeignKey(Tipo_Ram, on_delete=models.CASCADE, null=True)
+#     marca_ram= models.CharField(max_length=30)
+#     descripcion_ram=models.CharField(max_length=200)
+#     nombre_proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE, null=True)
+#     precio_compra_ram=models.IntegerField()
+#     precio_venta_ram=models.IntegerField()
+#     stock_ram=models.IntegerField(default=0)
+#     imagen_ram = models.ImageField(upload_to="ram", null=True)
+
+
+

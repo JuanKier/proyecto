@@ -23,18 +23,28 @@ urlpatterns = [
     path('verproveedor', views.verproveedor, name='verproveedor'),
     path('modproveedor/<int:proveedor_actual>', views.modproveedor, name='modproveedor'),
     path('borproveedor/<int:proveedor_actual>', views.borproveedor, name='borproveedor'),
+
+    # ----------------------------------------MAINTENACE---------------------------------------------------
     
+      #--Departamentos
     path('verdepartamento', views.verdepartamento, name='verdepartamento'),
     path('moddepartamento/<int:departamento_actual>', views.moddepartamento, name='moddepartamento'),
     path('bordepartamento/<int:departamento_actual>', views.bordepartamento, name='bordepartamento'),
 
+        #--Ciudades
     path('verciudad', views.verciudad, name='verciudad'),
     path('modciudad/<int:ciudad_actual>', views.modciudad, name='modciudad'),
     path('borciudad/<int:ciudad_actual>', views.borciudad, name='borciudad'),
-
+        
+        #--Nacionalidades
     path('vernacionalidad', views.vernacionalidad, name='vernacionalidad'),
     path('modnacionalidad/<int:nacionalidad_actual>', views.modnacionalidad, name='modnacionalidad'),
     path('bornacionalidad/<int:nacionalidad_actual>', views.bornacionalidad, name='bornacionalidad'),
+
+        #--Tipos_de_Ram
+    path('vertipo_ram', views.vertipo_ram, name='vertipo_ram'),
+    path('modtipo_ram/<int:tipo_ram_actual>', views.modtipo_ram, name='modtipo_ram'),
+    path('bortipo_ram/<int:tipo_ram_actual>', views.bortipo_ram, name='bortipo_ram'),
 
 # ----------------------------------------PRODUCCION---------------------------------------------------
     
@@ -55,6 +65,11 @@ urlpatterns = [
     path('perifericover', views.perifericover, name='perifericover'),
     path('perifericomod/<int:periferico_actual>', views.perifericomod, name='perifericomod'),
     path('perifericobor/<int:periferico_actual>', views.perifericobor, name='perifericobor'),
+
+    #--Repuestos
+    path('repuestover', views.repuestover, name='repuestover'),
+    path('repuestomod/<int:repuesto_actual>', views.repuestomod, name='repuestomod'),
+    path('repuestobor/<int:repuesto_actual>', views.repuestobor, name='repuestobor'),
 
 
     path('inventario', views.inventario, name='inventario'),

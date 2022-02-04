@@ -1,0 +1,111 @@
+{%extends "base.html"%}
+{%block barra%}
+{%load static%}
+
+<body>
+    <script>
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                fixedHeader: true
+            });
+        });
+    </script>
+
+    <div class="mb-3">
+        <h1 class="h3 d-inline align-middle">Repuestos</h1>
+    </div>
+    <div class="py-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    
+                    <div class="form-group form-default" style="display: flex; justify-content: space-between; align-items: center;">
+                        <h3 style="margin: 0">Lista de Repuestos</h3><a href="{% url 'repuestomod' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nuevo Repuesto</button></a>
+                    </div>
+                    <div class="py-4">
+                        <div class="col-md-12">
+                            <div class="card">
+                <div class="card-body">
+                    <table id="example" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Código</th>
+                                <th>Imagen</th>
+                                <th>Tipo</th>
+                                <th>Marca</th>
+                                <th>Descripción</th>
+                                <th>Proveedor</th>
+                                <th>Precio Compra</th>
+                                <th>Precio Venta</th>
+                                <th>Stock</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for lista in parameters.listatabla %}
+                            <tr>
+                                <td>{{ lista.cod_repuesto }}</td>
+                                {% if lista.imagen_repuesto %}
+                                <td><img src="{{ lista.imagen_repuesto.url }}" width="100" height="100"></td>
+                                {% endif %}
+                                    {%if lista.tipo_repuesto == 1 %}<td>Batería</td>{% endif %} 
+                                    {%if lista.tipo_repuesto == 2 %}<td>Cargador</td>{% endif %}
+                                    {%if lista.tipo_repuesto == 3 %}<td>Pantalla</td>{% endif %}
+                                    {%if lista.tipo_repuesto == 4 %}<td>Teclado</td>{% endif %}
+                                    {%if lista.tipo_repuesto == 5 %}<td>Otros</td>{% endif %} 
+                                <td>{{ lista.marca_repuesto }}</td>
+                                <td>{{ lista.descripcion_repuesto }}</td>
+                                <td>
+                                    {%for lista1 in parameters.listaproveedor%}
+                                    {% if lista1.codigo_proveedor == lista.nombre_proveedor_id%}
+                                    {{lista1.nombre_proveedor}}
+                                    {%endif%}
+                                    {%endfor%}
+                                </td>
+                                <td>{{ lista.precio_compra_repuesto }}</td>
+                                <td>{{ lista.precio_venta_repuesto }}</td>
+                                <td>{{ lista.stock_repuesto }}</td>
+                                <td>
+                                    <div class="icon-btn">
+                                        <a href="{% url 'repuestomod' lista.id_repuesto %}"
+                                            class="btn waves-effect waves-light btn-warning btn-icon"
+                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
+                                            data-original-title="Modificar Registro"><i data-feather="edit"></i></a>
+                                        <a href="{% url 'repuestobor' lista.id_repuesto %}"
+                                            onclick="return confirm('Eliminar el registro?')"
+                                            class="btn waves-effect waves-light btn-danger btn-icon"
+                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
+                                            data-original-title="Eliminar Registro"><i data-feather="trash-2"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Código</th>
+                                <th>Imagen</th>
+                                <th>Tipo</th>
+                                <th>Marca</th>
+                                <th>Descripción</th>
+                                <th>Proveedor</th>
+                                <th>Precio Compra</th>
+                                <th>Precio Venta</th>
+                                <th>Stock</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="{%static 'js/app.js'%}"></script>
+</body>
+
+</html>
+
+
+{%endblock%}
