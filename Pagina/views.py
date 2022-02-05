@@ -52,13 +52,20 @@ def inventario(request):
     return validar(request, "inventario.html")
 
 def produccion(request):
-    return validar(request, "produccion.html")
+    if request.session.get("id_usuario"):
+        listatabla=Placa_base.objects.all()
+        listagabinete = Tipo_Gabinete.objects.all()
+        listaproveedor = Proveedor.objects.all()
+        return validar(request, "produccion.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Usuarios", "subtitulo_f":"Listado de Usuarios registrados", "listatabla":listatabla, "listagabinete":listagabinete,"listaproveedor": listaproveedor})
+    else:
+        return redirect("login")
 
 #--=======================================Usuario======================================--
 
 def verusuario(request):
     if request.session.get("id_usuario"):
         listatabla=Usuario.objects.all()
+        
         return validar(request, "users/verusuario.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Usuarios", "subtitulo_f":"Listado de Usuarios registrados", "listatabla":listatabla})
     else:
         return redirect("login")
@@ -433,13 +440,12 @@ def modtipo_ram(request,tipo_ram_actual=0):
 
         if request.method=="POST":
             if tipo_ram_actual==0:
-                tipo_ram_nuevo=Tipo_Ram(id_tipo_ram=request.POST.get('id_tipo_ram'),
-                                        tipo_ram=request.POST.get('tipo_ram'))
+                tipo_ram_nuevo=Tipo_Ram(desc_tipo_ram=request.POST.get('desc_tipo_ram'))
                 tipo_ram_nuevo.save()
 
             else:
                 tipo_ram_actual=Tipo_Ram.objects.get(id_tipo_ram=tipo_ram_actual)
-                tipo_ram_actual.tipo_ram=request.POST.get('tipo_ram')
+                tipo_ram_actual.desc_tipo_ram=request.POST.get('desc_tipo_ram')
                 tipo_ram_actual.save() 
 
         return redirect('vertipo_ram')
@@ -451,6 +457,107 @@ def bortipo_ram(request, tipo_ram_actual):
         Tipo_Ram.objects.filter(id_tipo_ram = tipo_ram_actual).delete()
         return redirect('vertipo_ram')
 
+#--=======================================Tipos_CPU======================================--
+
+def vertipo_cpu(request):
+    if request.session.get("id_usuario"):
+        listatabla = Tipo_Cpu.objects.all()
+        return validar(request, "maintenance/tipo_cpu/vertipo_cpu.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Tipos de CPU", 
+        "subtitulo_f":"Listado de Tipos de CPU registrados", 
+        "listatabla":listatabla})
+    else:
+        return redirect("login")
+
+def modtipo_cpu(request,tipo_cpu_actual=0):
+    if request.session.get("id_usuario"):
+        if request.method=="GET":
+            cpu_actual=Tipo_Cpu.objects.filter(id_tipo_cpu=tipo_cpu_actual).exists()
+            if cpu_actual:
+                datos_tipo_cpu=Tipo_Cpu.objects.filter(id_tipo_cpu=tipo_cpu_actual).first()
+                return validar(request, "maintenance/tipo_cpu/modtipo_cpu.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Modificar Tipo CPU", 
+                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                "datos_act":datos_tipo_cpu, 
+                "tipo_cpu_actual":tipo_cpu_actual})
+            else:
+                return validar(request, "maintenance/tipo_cpu/modtipo_cpu.html", { 
+                    "nombre_completo_usuario": request.session.get("nombre_completo_usuario"), 
+                    "titulo_f": "Nuevo Tipo de CPU", 
+                    "subtitulo_f": "Por favor complete todos los datos solicitados", 
+                    "tipo_cpu_actual": tipo_cpu_actual})
+
+        if request.method=="POST":
+            if tipo_cpu_actual==0:
+                tipo_cpu_nuevo=Tipo_Cpu(desc_tipo_cpu=request.POST.get('desc_tipo_cpu'))
+                tipo_cpu_nuevo.save()
+
+            else:
+                tipo_cpu_actual=Tipo_Cpu.objects.get(id_tipo_cpu=tipo_cpu_actual)
+                tipo_cpu_actual.desc_tipo_cpu=request.POST.get('desc_tipo_cpu')
+                tipo_cpu_actual.save() 
+
+        return redirect('vertipo_cpu')
+    
+    else:
+        return redirect("login")
+
+def bortipo_cpu(request, tipo_cpu_actual):
+        Tipo_Cpu.objects.filter(id_tipo_cpu = tipo_cpu_actual).delete()
+        return redirect('vertipo_cpu')
+
+#--=======================================Tipos_CPU======================================--
+
+def vertipo_gabinete(request):
+    if request.session.get("id_usuario"):
+        listatabla = Tipo_Gabinete.objects.all()
+        return validar(request, "maintenance/tipo_gabinete/vertipo_gabinete.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Tipos de Gabinete", 
+        "subtitulo_f":"Listado de Tipos de Gabinetes registrados", 
+        "listatabla":listatabla})
+    else:
+        return redirect("login")
+
+def modtipo_gabinete(request,tipo_gabinete_actual=0):
+    if request.session.get("id_usuario"):
+        if request.method=="GET":
+            cpu_actual=Tipo_Gabinete.objects.filter(id_tipo_gabinete=tipo_gabinete_actual).exists()
+            if cpu_actual:
+                datos_tipo_gabinete=Tipo_Gabinete.objects.filter(id_tipo_gabinete=tipo_gabinete_actual).first()
+                return validar(request, "maintenance/tipo_gabinete/modtipo_gabinete.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Modificar Tipo CPU", 
+                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                "datos_act":datos_tipo_gabinete, 
+                "tipo_gabinete_actual":tipo_gabinete_actual})
+            else:
+                return validar(request, "maintenance/tipo_gabinete/modtipo_gabinete.html", { 
+                    "nombre_completo_usuario": request.session.get("nombre_completo_usuario"), 
+                    "titulo_f": "Nuevo Tipo de CPU", 
+                    "subtitulo_f": "Por favor complete todos los datos solicitados", 
+                    "tipo_gabinete_actual": tipo_gabinete_actual})
+
+        if request.method=="POST":
+            if tipo_gabinete_actual==0:
+                tipo_gabinete_nuevo=Tipo_Gabinete(desc_tipo_gabinete=request.POST.get('desc_tipo_gabinete'))
+                tipo_gabinete_nuevo.save()
+
+            else:
+                tipo_gabinete_actual=Tipo_Gabinete.objects.get(id_tipo_gabinete=tipo_gabinete_actual)
+                tipo_gabinete_actual.desc_tipo_gabinete=request.POST.get('desc_tipo_gabinete')
+                tipo_gabinete_actual.save() 
+
+        return redirect('vertipo_gabinete')
+    
+    else:
+        return redirect("login")
+
+def bortipo_gabinete(request, tipo_cpu_actual):
+        Tipo_Gabinete.objects.filter(id_tipo_cpu = tipo_cpu_actual).delete()
+        return redirect('vertipo_gabinete')
 
 #--=========================================SERVICIOS========================================--
 #--=======================================Mantenimiento======================================--
@@ -611,6 +718,28 @@ def borrep(request, rep_actual):
         Reparacion.objects.filter(codigo_rep = rep_actual).delete()
         return redirect('verrep')
 
+#--=======================================Montaje======================================--
+
+def nuevomontaje (request, placa_base_actual):
+    if request.method == "GET":
+        datosplaca=Placa_base.objects.get(id_placa_base=placa_base_actual)
+        tipo_ram_placa = datosplaca.tipo_ram_placa_base_id
+        tipo_cpu_placa = datosplaca.tipo_cpu_placa_base_id
+        tipo_gabinete_placa = datosplaca.tipo_gabinete_placa_base_id
+        listaram = RAM.objects.filter(tipo_ram_id=tipo_ram_placa)
+        listacpu = CPU.objects.filter(tipo_cpu_id=tipo_cpu_placa)
+        listagabinete = Gabinete.objects.filter(tipo_gabinete_id=tipo_gabinete_placa)
+        listaperiferico = Perifericos.objects.all()
+        return validar(request, "produccion/nuevomontaje.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Nuevo Montaje", 
+                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                "placa_base_actual":placa_base_actual, 
+                "listaram": listaram,
+                "listacpu": listacpu,
+                "listagabinete": listagabinete,
+                "datosplaca":datosplaca,
+                "listaperiferico":listaperiferico})
 
 #--========================================PRODUCTOS======================================--
 #--========================================Repuestos======================================--
@@ -762,30 +891,318 @@ def perifericobor(request, periferico_actual):
         return redirect('perifericover')
 
 
+#--=======================================Placa_Base======================================--
 
+def ver_placa_base(request):
+        listatabla = Placa_base.objects.all()
+        listaram = Tipo_Ram.objects.all()
+        listacpu = Tipo_Cpu.objects.all()
+        listagabinete = Tipo_Gabinete.objects.all()
+        listaproveedor = Proveedor.objects.all()
+        return validar(request, "productos/ver_placa_base.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Perifericos", "subtitulo_f":"Listado de Perifericos registrados", 
+        "listatabla":listatabla, 
+        "listaram":listaram,
+        "listacpu":listacpu,
+        "listagabinete":listagabinete,
+        "listaproveedor": listaproveedor})
 
-#--=======================================Productos======================================--
-def cpu(request):
-    return validar(request, "productos/cpu.html")
+def mod_placa_base(request, placa_base_actual=0):
+    if request.session.get("id_usuario"):
+        if request.method=="GET":
+            listaram = Tipo_Ram.objects.all()
+            listacpu = Tipo_Cpu.objects.all()
+            listagabinete = Tipo_Gabinete.objects.all()
+            listaproveedor = Proveedor.objects.all()
+            peri_actual=Placa_base.objects.filter(id_placa_base=placa_base_actual).exists()
+            if peri_actual:
+                datos_per=Placa_base.objects.filter(id_placa_base=placa_base_actual).first()
+                return validar(request, "productos/mod_placa_base.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Modificar Reparación", 
+                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                "datos_act":datos_per, 
+                "placa_base_actual":placa_base_actual,
+                "listaram":listaram,
+                "listacpu":listacpu,
+                "listagabinete":listagabinete,
+                "listaproveedor": listaproveedor})
+            else:
+                return validar(request, "productos/mod_placa_base.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Nuevo Perifericos", "subtitulo_f":"Por favor complete todos los datos solicitados", 
+                "placa_base_actual":placa_base_actual,
+                "listaram":listaram,
+                "listacpu":listacpu,
+                "listagabinete":listagabinete,
+                "listaproveedor": listaproveedor})
 
-def case(request):
-    return validar(request, "productos/case.html")
+        if request.method=="POST":
+            if placa_base_actual==0:
+                perif_nuevo=Placa_base(id_placa_base=request.POST.get('id_placa_base'),
+                cod_placa_base=request.POST.get('cod_placa_base'),
+                marca_placa_base=request.POST.get('marca_placa_base'),
+                descripcion_placa_base=request.POST.get('descripcion_placa_base'),
+                nombre_proveedor_id=request.POST.get('proveedor'),
+                precio_compra_placa_base=request.POST.get('precio_compra_placa_base'),
+                precio_venta_placa_base=request.POST.get('precio_venta_placa_base'),
+                tipo_ram_placa_base_id=request.POST.get('tipo_ram_placa_base'),
+                tipo_cpu_placa_base_id=request.POST.get('tipo_cpu_placa_base'),
+                tipo_gabinete_placa_base_id=request.POST.get('tipo_gabinete_placa_base'),
+                imagen_placa_base=request.FILES.get('imagen_placa_base'),
+                stock_placa_base=request.POST.get('stock_placa_base'))
+
+                perif_nuevo.save()
+            else:
+                placa_base_actual=Placa_base.objects.get(id_placa_base=placa_base_actual)
+                placa_base_actual.cod_placa_base=request.POST.get('cod_placa_base')
+                placa_base_actual.marca_placa_base=request.POST.get('marca_placa_base')
+                placa_base_actual.descripcion_placa_base=request.POST.get('descripcion_placa_base')
+                placa_base_actual.nombre_proveedor_id=request.POST.get('proveedor')
+                placa_base_actual.precio_compra_placa_base=request.POST.get('precio_compra_placa_base')
+                placa_base_actual.precio_venta_placa_base=request.POST.get('precio_venta_placa_base')
+                placa_base_actual.tipo_ram_placa_base_id=request.POST.get('tipo_ram_placa_base')
+                placa_base_actual.tipo_cpu_placa_base_id=request.POST.get('tipo_cpu_placa_base')
+                placa_base_actual.tipo_gabinete_placa_base_id=request.POST.get('tipo_gabinete_placa_base')
+                placa_base_actual.stock_placa_base=request.POST.get('stock_placa_base')
+                if request.POST.get('imagen_placa_base') != "":
+                    placa_base_actual.imagen_placa_base=request.FILES.get('imagen_placa_base')
+                else: 
+                    placa_base_actual.imagen_placa_base = placa_base_actual.imagen_placa_base
+                
+                placa_base_actual.save() 
+
+        return redirect('ver_placa_base')
     
-def motherboard(request):
-    return validar(request, "productos/motherboard.html")
+    else:
+        return redirect("login")
 
-def psu(request):
-    return validar(request, "productos/psu.html")
+def bor_placa_base(request, placa_base_actual):
+        Perifericos.objects.filter(id_placa_base = placa_base_actual).delete()
+        return redirect('ver_placa_base')
 
-def ram(request):
-    return validar(request, "productos/ram.html")
+#--=======================================RAM======================================--
 
-def stg(request):
-    return validar(request, "productos/stg.html")
+def ver_ram(request):
+        listatabla = RAM.objects.all()
+        listaram = Tipo_Ram.objects.all()
+        listaproveedor = Proveedor.objects.all()
+        return validar(request, "productos/ver_ram.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Memorias RAM", "subtitulo_f":"Listado de Memorias RAM registrados", 
+        "listatabla":listatabla, 
+        "listaram":listaram,
+        "listaproveedor": listaproveedor})
 
-def vga(request):
-    return validar(request, "productos/vga.html")
+def mod_ram(request, ram_actual=0):
+    if request.session.get("id_usuario"):
+        if request.method=="GET":
+            listaram = Tipo_Ram.objects.all()
+            listaproveedor = Proveedor.objects.all()
+            peri_actual=RAM.objects.filter(id_ram=ram_actual).exists()
+            if peri_actual:
+                datos_per=RAM.objects.filter(id_ram=ram_actual).first()
+                return validar(request, "productos/mod_ram.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Modificar Reparación", 
+                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                "datos_act":datos_per, 
+                "ram_actual":ram_actual,
+                "listaram":listaram,
+                "listaproveedor": listaproveedor})
+            else:
+                return validar(request, "productos/mod_ram.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Nueva Memoria RAM", "subtitulo_f":"Por favor complete todos los datos solicitados", 
+                "ram_actual":ram_actual,
+                "listaram":listaram,
+                "listaproveedor": listaproveedor})
 
+        if request.method=="POST":
+            if ram_actual==0:
+                ram_nuevo=RAM(id_ram=request.POST.get('id_ram'),
+                cod_ram=request.POST.get('cod_ram'),
+                marca_ram=request.POST.get('marca_ram'),
+                descripcion_ram=request.POST.get('descripcion_ram'),
+                nombre_proveedor_id=request.POST.get('proveedor'),
+                precio_compra_ram=request.POST.get('precio_compra_ram'),
+                precio_venta_ram=request.POST.get('precio_venta_ram'),
+                tipo_ram_id=request.POST.get('tipo_ram'),
+                imagen_ram=request.FILES.get('imagen_ram'),
+                stock_ram=request.POST.get('stock_ram'))
+
+                ram_nuevo.save()
+            else:
+                ram_actual=RAM.objects.get(id_ram=ram_actual)
+                ram_actual.cod_ram=request.POST.get('cod_ram')
+                ram_actual.marca_ram=request.POST.get('marca_ram')
+                ram_actual.descripcion_ram=request.POST.get('descripcion_ram')
+                ram_actual.nombre_proveedor_id=request.POST.get('proveedor')
+                ram_actual.precio_compra_ram=request.POST.get('precio_compra_ram')
+                ram_actual.precio_venta_ram=request.POST.get('precio_venta_ram')
+                ram_actual.tipo_ram_id=request.POST.get('tipo_ram')
+                ram_actual.imagen_ram=request.FILES.get('imagen_ram')
+                ram_actual.stock_ram=request.POST.get('stock_ram')
+
+                ram_actual.save() 
+
+        return redirect('ver_ram')
+    
+    else:
+        return redirect("login")
+
+def bor_ram(request, ram_actual):
+        RAM.objects.filter(id_ram = ram_actual).delete()
+        return redirect('ver_ram')
+
+#--=======================================CPU======================================--
+
+def ver_cpu(request):
+        listatabla = CPU.objects.all()
+        listacpu = Tipo_Cpu.objects.all()
+        listaproveedor = Proveedor.objects.all()
+        return validar(request, "productos/ver_cpu.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Procesadores", "subtitulo_f":"Listado de Procesadores registrados", 
+        "listatabla":listatabla, 
+        "listacpu":listacpu,
+        "listaproveedor": listaproveedor})
+
+def mod_cpu(request, cpu_actual=0):
+    if request.session.get("id_usuario"):
+        if request.method=="GET":
+            listacpu = Tipo_Cpu.objects.all()
+            listaproveedor = Proveedor.objects.all()
+            peri_actual=CPU.objects.filter(id_cpu=cpu_actual).exists()
+            if peri_actual:
+                datos_per=CPU.objects.filter(id_cpu=cpu_actual).first()
+                return validar(request, "productos/mod_cpu.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Modificar Procesador", 
+                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                "datos_act":datos_per, 
+                "cpu_actual":cpu_actual,
+                "listacpu":listacpu,
+                "listaproveedor": listaproveedor})
+            else:
+                return validar(request, "productos/mod_cpu.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Nuevo Procesador", "subtitulo_f":"Por favor complete todos los datos solicitados", 
+                "cpu_actual":cpu_actual,
+                "listacpu":listacpu,
+                "listaproveedor": listaproveedor})
+
+        if request.method=="POST":
+            if cpu_actual==0:
+                cpu_nuevo=CPU(id_cpu=request.POST.get('id_cpu'),
+                cod_cpu=request.POST.get('cod_cpu'),
+                marca_cpu=request.POST.get('marca_cpu'),
+                descripcion_cpu=request.POST.get('descripcion_cpu'),
+                nombre_proveedor_id=request.POST.get('proveedor'),
+                precio_compra_cpu=request.POST.get('precio_compra_cpu'),
+                precio_venta_cpu=request.POST.get('precio_venta_cpu'),
+                tipo_cpu_id=request.POST.get('tipo_cpu'),
+                imagen_cpu=request.FILES.get('imagen_cpu'),
+                stock_cpu=request.POST.get('stock_cpu'))
+
+                cpu_nuevo.save()
+            else:
+                cpu_actual=CPU.objects.get(id_cpu=cpu_actual)
+                cpu_actual.cod_cpu=request.POST.get('cod_cpu')
+                cpu_actual.marca_cpu=request.POST.get('marca_cpu')
+                cpu_actual.descripcion_cpu=request.POST.get('descripcion_cpu')
+                cpu_actual.nombre_proveedor_id=request.POST.get('proveedor')
+                cpu_actual.precio_compra_cpu=request.POST.get('precio_compra_cpu')
+                cpu_actual.precio_venta_cpu=request.POST.get('precio_venta_cpu')
+                cpu_actual.tipo_cpu=request.POST.get('tipo_cpu')
+                cpu_actual.imagen_cpu=request.FILES.get('imagen_cpu')
+                cpu_actual.stock_cpu=request.POST.get('stock_cpu')
+
+                cpu_actual.save() 
+
+        return redirect('ver_cpu')
+    
+    else:
+        return redirect("login")
+
+def bor_cpu(request, cpu_actual):
+        CPU.objects.filter(id_cpu = cpu_actual).delete()
+        return redirect('ver_cpu')
+
+#--=======================================Gabinetes======================================--
+
+def ver_gab(request):
+        listatabla = Gabinete.objects.all()
+        listagabinete = Tipo_Gabinete.objects.all()
+        listaproveedor = Proveedor.objects.all()
+        return validar(request, "productos/ver_gab.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Gabinetes", "subtitulo_f":"Listado de Gabinetes registrados", 
+        "listatabla":listatabla, 
+        "listagabinete":listagabinete,
+        "listaproveedor": listaproveedor})
+
+def mod_gab(request, gab_actual=0):
+    if request.session.get("id_usuario"):
+        if request.method=="GET":
+            listagabinete = Tipo_Gabinete.objects.all()
+            listaproveedor = Proveedor.objects.all()
+            peri_actual=Gabinete.objects.filter(id_gab=gab_actual).exists()
+            if peri_actual:
+                datos_per=Gabinete.objects.filter(id_gab=gab_actual).first()
+                return validar(request, "productos/mod_gab.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Modificar Gabinete", 
+                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                "datos_act":datos_per, 
+                "gab_actual":gab_actual,
+                "listagabinete":listagabinete,
+                "listaproveedor": listaproveedor})
+            else:
+                return validar(request, "productos/mod_gab.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Nuevo Gabinete", "subtitulo_f":"Por favor complete todos los datos solicitados", 
+                "gab_actual":gab_actual,
+                "listagabinete":listagabinete,
+                "listaproveedor": listaproveedor})
+
+        if request.method=="POST":
+            if gab_actual==0:
+                cpu_nuevo=Gabinete(id_gab=request.POST.get('id_gab'),
+                cod_gab=request.POST.get('cod_gab'),
+                marca_gab=request.POST.get('marca_gab'),
+                descripcion_gab=request.POST.get('descripcion_gab'),
+                nombre_proveedor_id=request.POST.get('proveedor'),
+                precio_compra_gab=request.POST.get('precio_compra_gab'),
+                precio_venta_gab=request.POST.get('precio_venta_gab'),
+                tipo_gabinete_id=request.POST.get('tipo_gabinete'),
+                imagen_gab=request.FILES.get('imagen_gab'),
+                stock_gab=request.POST.get('stock_gab'))
+
+                cpu_nuevo.save()
+            else:
+                gab_actual=Gabinete.objects.get(id_gab=gab_actual)
+                gab_actual.cod_gab=request.POST.get('cod_gab')
+                gab_actual.marca_gab=request.POST.get('marca_gab')
+                gab_actual.descripcion_gab=request.POST.get('descripcion_gab')
+                gab_actual.nombre_proveedor_id=request.POST.get('proveedor')
+                gab_actual.precio_compra_gab=request.POST.get('precio_compra_gab')
+                gab_actual.precio_venta_gab=request.POST.get('precio_venta_gab')
+                gab_actual.tipo_gabinete=request.POST.get('tipo_gabinete')
+                gab_actual.imagen_gab=request.FILES.get('imagen_gab')
+                gab_actual.stock_gab=request.POST.get('stock_gab')
+
+                gab_actual.save() 
+
+        return redirect('ver_gab')
+    
+    else:
+        return redirect("login")
+
+def bor_gab(request, gab_actual):
+        Gabinete.objects.filter(id_gab = gab_actual).delete()
+        return redirect('ver_gab')
  
 #--=======================================Validación======================================--
 def validar(request, pageSuccess, parameters={}):

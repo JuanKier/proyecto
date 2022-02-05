@@ -18,7 +18,7 @@
         <div class="card-header">
             
             <div class="form-group form-default" style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="margin: 0">Lista de Tipos de Ram</h3><a href="{% url 'modtipo_ram' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nuevo Tipo de Ram</button></a>
+                <h3 style="margin: 0">Lista de Tipos de Gabinete</h3><a href="{% url 'modtipo_gabinete' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nuevo Tipo de Ram</button></a>
             </div>
             <div class="py-4">
                 <div class="col-md-12">
@@ -28,22 +28,22 @@
                                 <thead>
                                     <tr>
                                         <th>Codigo</th>
-                                        <th>Tipo de Ram</th>
+                                        <th>Tipo de Gabinete</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for lista in parameters.listatabla %}
                                     <tr>
-                                        <td>{{ lista.id_tipo_ram }}</td>
-                                        <td>{{ lista.desc_tipo_ram }}</td>
+                                        <td>{{ lista.id_tipo_gabinete }}</td>
+                                        <td>{{ lista.desc_tipo_gabinete }}</td>
                                         <td><div class="icon-btn">
-                                                <a href="{% url 'modtipo_ram' lista.id_tipo_ram %}"
+                                                <a href="{% url 'modtipo_gabinete' lista.id_tipo_gabinete %}"
                                                     class="btn waves-effect waves-light btn-warning btn-icon"
                                                     style="color: white;" data-toggle="tooltip" data-placement="top"
                                                     title="" data-original-title="Modificar Registro"><i
                                                         data-feather="edit"></i></a>
-                                                <a href="{% url 'bortipo_ram' lista.id_tipo_ram %}"
+                                                <a href="{% url 'bortipo_gabinete' lista.id_tipo_gabinete %}"
                                                     onclick="return confirm('Eliminar el registro?')"
                                                     class="btn waves-effect waves-light btn-danger btn-icon"
                                                     style="color: white;" data-toggle="tooltip" data-placement="top"

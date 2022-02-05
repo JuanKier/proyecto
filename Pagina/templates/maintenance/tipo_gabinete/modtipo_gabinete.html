@@ -38,20 +38,20 @@
         <h3>{{parameters.titulo_f}}</h3>
     </div>
     <div class="card-block">
-        <form class="form-material" action="{% url 'modtipo_ram' parameters.tipo_ram_actual %}" method="POST" onsubmit="sessionStorage.setItem('1', 1);"
+        <form class="form-material" action="{% url 'modtipo_gabinete' parameters.tipo_gabinete_actual %}" method="POST" onsubmit="sessionStorage.setItem('1', 1);"
             style="margin: 1em">
             {% csrf_token %}
             <div class="form-group form-default">
-                <label class="float-label">Tipo de Ram</label>
+                <label class="float-label">Tipo de Gabinete</label>
                 <span class="form-bar"></span>
-                <input type="text" name="desc_tipo_ram" class="form-control" required
-                    value="{{parameters.datos_act.desc_tipo_ram}}">
+                <input type="text" name="desc_tipo_gabinete" class="form-control" required
+                    value="{{parameters.datos_act.desc_tipo_gabinete}}">
             </div>
             <div class="input-confirmar">
 
                 <div class="form-group form-default">
                     <button type="submit" class="btn btn-success btn-round waves-effect waves-light" onclick="return confirm('Estás seguro de añadir este Tipo de Ram?')">Grabar</button>
-                    <a href="{% url 'vertipo_ram' %}" class="btn btn-info btn-round waves-effect waves-light">Cancelar</a>
+                    <a href="{% url 'vertipo_gabinete' %}" class="btn btn-info btn-round waves-effect waves-light">Cancelar</a>
                 </div>
             </div>
         </form>

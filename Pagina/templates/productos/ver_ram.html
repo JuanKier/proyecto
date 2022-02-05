@@ -12,7 +12,7 @@
     </script>
 
     <div class="mb-3">
-        <h1 class="h3 d-inline align-middle">Periféricos</h1>
+        <h1 class="h3 d-inline align-middle">Repuestos</h1>
     </div>
     <div class="py-4">
         <div class="col-md-12">
@@ -20,7 +20,7 @@
                 <div class="card-header">
                     
                     <div class="form-group form-default" style="display: flex; justify-content: space-between; align-items: center;">
-                        <h3 style="margin: 0">Lista de Periféricos</h3><a href="{% url 'perifericomod' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nuevo Periférico</button></a>
+                        <h3 style="margin: 0">Lista de Repuestos</h3><a href="{% url 'mod_ram' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nuevo Repuesto</button></a>
                     </div>
                     <div class="py-4">
                         <div class="col-md-12">
@@ -44,22 +44,19 @@
                         <tbody>
                             {% for lista in parameters.listatabla %}
                             <tr>
-                                <td>{{ lista.cod_periferico }}</td>
-                                {% if lista.imagen_periferico %}
-                                <td><img src="{{ lista.imagen_periferico.url }}" width="100" height="100"></td>
+                                <td>{{ lista.cod_ram }}</td>
+                                {% if lista.imagen_ram %}
+                                <td><img src="{{ lista.imagen_ram.url }}" width="100" height="100"></td>
                                 {% endif %}
-                                    {%if lista.tipo_periferico == 1 %}<td>Fuente</td>{% endif %} 
-                                    {%if lista.tipo_periferico == 2 %}<td>Gabinete</td>{% endif %}
-                                    {%if lista.tipo_periferico == 3 %}<td>Almacenamiento</td>{% endif %}
-                                    {%if lista.tipo_periferico == 4 %}<td>Mouse</td>{% endif %}
-                                    {%if lista.tipo_periferico == 5 %}<td>Teclado</td>{% endif %} 
-                                    {%if lista.tipo_periferico == 6 %}<td>Auriculares</td>{% endif %}
-                                    {%if lista.tipo_periferico == 7 %}<td>Monitor</td>{% endif %}
-                                    {%if lista.tipo_periferico == 8 %}<td>Placa de Video</td>{% endif %}
-                                    {%if lista.tipo_periferico == 9 %}<td>Impresora</td>{% endif %}
-                                    {%if lista.tipo_periferico == 10 %}<td>Otros</td>{% endif %}
-                                <td>{{ lista.marca_periferico }}</td>
-                                <td>{{ lista.descripcion_periferico }}</td>
+                                <td>
+                                    {%for lista2 in parameters.listaram%}
+                                    {% if lista2.id_tipo_ram == lista.tipo_ram_id%}
+                                    {{lista2.desc_tipo_ram}}
+                                    {%endif%}
+                                    {%endfor%}
+                                </td>
+                                <td>{{ lista.marca_ram }}</td>
+                                <td>{{ lista.descripcion_ram }}</td>
                                 <td>
                                     {%for lista1 in parameters.listaproveedor%}
                                     {% if lista1.codigo_proveedor == lista.nombre_proveedor_id%}
@@ -67,16 +64,16 @@
                                     {%endif%}
                                     {%endfor%}
                                 </td>
-                                <td>{{ lista.precio_compra_periferico }}</td>
-                                <td>{{ lista.precio_venta_periferico }}</td>
-                                <td>{{ lista.stock_periferico }}</td>
+                                <td>{{ lista.precio_compra_ram }}</td>
+                                <td>{{ lista.precio_venta_ram }}</td>
+                                <td>{{ lista.stock_ram }}</td>
                                 <td>
                                     <div class="icon-btn">
-                                        <a href="{% url 'perifericomod' lista.id_periferico %}"
+                                        <a href="{% url 'mod_ram' lista.id_ram %}"
                                             class="btn waves-effect waves-light btn-warning btn-icon"
                                             style="color: white;" data-toggle="tooltip" data-placement="top" title=""
                                             data-original-title="Modificar Registro"><i data-feather="edit"></i></a>
-                                        <a href="{% url 'perifericobor' lista.id_periferico %}"
+                                        <a href="{% url 'bor_ram' lista.id_ram %}"
                                             onclick="return confirm('Eliminar el registro?')"
                                             class="btn waves-effect waves-light btn-danger btn-icon"
                                             style="color: white;" data-toggle="tooltip" data-placement="top" title=""
@@ -89,6 +86,7 @@
                         <tfoot>
                             <tr>
                                 <th>Código</th>
+                                <th>Imagen</th>
                                 <th>Tipo</th>
                                 <th>Marca</th>
                                 <th>Descripción</th>

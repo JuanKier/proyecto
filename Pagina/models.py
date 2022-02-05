@@ -79,15 +79,15 @@ class Reparacion(models.Model):
 
 class Tipo_Ram(models.Model):
     id_tipo_ram=models.AutoField(primary_key=True)
-    tipo_ram=models.CharField(max_length=20)
+    desc_tipo_ram=models.CharField(max_length=20)
 
 class Tipo_Cpu(models.Model):
     id_tipo_cpu=models.AutoField(primary_key=True)
-    tipo_cpu=models.CharField(max_length=20)
+    desc_tipo_cpu=models.CharField(max_length=20)
 
 class Tipo_Gabinete(models.Model):
     id_tipo_gabinete=models.AutoField(primary_key=True)
-    tipo_gabinete=models.CharField(max_length=20)
+    desc_tipo_gabinete=models.CharField(max_length=20, null=True)
 
 #--=========================================PRODUCTOS========================================--
 
@@ -115,17 +115,52 @@ class Repuestos(models.Model):
     stock_repuesto=models.IntegerField(default=0)
     imagen_repuesto = models.ImageField(upload_to="repuestos", null=True)
 
-# class RAM(models.Model):
-#     id_ram = models.AutoField(primary_key=True)
-#     cod_ram = models.IntegerField(null=True)
-#     tipo_ram = models.ForeignKey(Tipo_Ram, on_delete=models.CASCADE, null=True)
-#     marca_ram= models.CharField(max_length=30)
-#     descripcion_ram=models.CharField(max_length=200)
-#     nombre_proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE, null=True)
-#     precio_compra_ram=models.IntegerField()
-#     precio_venta_ram=models.IntegerField()
-#     stock_ram=models.IntegerField(default=0)
-#     imagen_ram = models.ImageField(upload_to="ram", null=True)
+class RAM(models.Model):
+    id_ram = models.AutoField(primary_key=True)
+    cod_ram = models.IntegerField(null=True)
+    tipo_ram = models.ForeignKey(Tipo_Ram, on_delete=models.CASCADE, null=True)
+    marca_ram= models.CharField(max_length=30)
+    descripcion_ram=models.CharField(max_length=200)
+    nombre_proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE, null=True)
+    precio_compra_ram=models.IntegerField()
+    precio_venta_ram=models.IntegerField()
+    stock_ram=models.IntegerField(default=0)
+    imagen_ram = models.ImageField(upload_to="ram", null=True)
 
+class CPU(models.Model):
+    id_cpu = models.AutoField(primary_key=True)
+    cod_cpu = models.IntegerField(null=True)
+    tipo_cpu = models.ForeignKey(Tipo_Cpu, on_delete=models.CASCADE, null=True)
+    marca_cpu= models.CharField(max_length=30)
+    descripcion_cpu=models.CharField(max_length=200)
+    nombre_proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE, null=True)
+    precio_compra_cpu=models.IntegerField()
+    precio_venta_cpu=models.IntegerField()
+    stock_cpu=models.IntegerField(default=0)
+    imagen_cpu = models.ImageField(upload_to="cpu", null=True)
 
+class Gabinete(models.Model):
+    id_gab = models.AutoField(primary_key=True)
+    cod_gab = models.IntegerField(null=True)
+    tipo_gabinete = models.ForeignKey(Tipo_Gabinete, on_delete=models.CASCADE, null=True)
+    marca_gab= models.CharField(max_length=30)
+    descripcion_gab=models.CharField(max_length=200)
+    nombre_proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE, null=True)
+    precio_compra_gab=models.IntegerField()
+    precio_venta_gab=models.IntegerField()
+    stock_gab=models.IntegerField(default=0)
+    imagen_gab = models.ImageField(upload_to="gab", null=True)
 
+class Placa_base(models.Model):
+    id_placa_base = models.AutoField(primary_key=True)
+    cod_placa_base = models.IntegerField(null=True)
+    marca_placa_base= models.CharField(max_length=30)
+    descripcion_placa_base=models.CharField(max_length=200)
+    nombre_proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE, null=True)
+    precio_compra_placa_base=models.IntegerField()
+    precio_venta_placa_base=models.IntegerField()
+    stock_placa_base=models.IntegerField(default=0)
+    imagen_placa_base = models.ImageField(upload_to="placa_base", null=True)
+    tipo_ram_placa_base = models.ForeignKey(Tipo_Ram, on_delete=models.CASCADE, null=True)
+    tipo_cpu_placa_base = models.ForeignKey(Tipo_Cpu, on_delete=models.CASCADE, null=True)
+    tipo_gabinete_placa_base = models.ForeignKey(Tipo_Gabinete, on_delete=models.CASCADE, null=True)

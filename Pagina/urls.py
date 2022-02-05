@@ -46,6 +46,16 @@ urlpatterns = [
     path('modtipo_ram/<int:tipo_ram_actual>', views.modtipo_ram, name='modtipo_ram'),
     path('bortipo_ram/<int:tipo_ram_actual>', views.bortipo_ram, name='bortipo_ram'),
 
+        #--Tipos_de_Cpu
+    path('vertipo_cpu', views.vertipo_cpu, name='vertipo_cpu'),
+    path('modtipo_cpu/<int:tipo_cpu_actual>', views.modtipo_cpu, name='modtipo_cpu'),
+    path('bortipo_cpu/<int:tipo_cpu_actual>', views.bortipo_cpu, name='bortipo_cpu'),
+
+        #--Tipos_de_Gabinete
+    path('vertipo_gabinete', views.vertipo_gabinete, name='vertipo_gabinete'),
+    path('modtipo_gabinete/<int:tipo_gabinete_actual>', views.modtipo_gabinete, name='modtipo_gabinete'),
+    path('bortipo_gabinete/<int:tipo_gabinete_actual>', views.bortipo_gabinete, name='bortipo_gabinete'),
+
 # ----------------------------------------PRODUCCION---------------------------------------------------
     
     #--Mantenimiento
@@ -70,16 +80,31 @@ urlpatterns = [
     path('repuestover', views.repuestover, name='repuestover'),
     path('repuestomod/<int:repuesto_actual>', views.repuestomod, name='repuestomod'),
     path('repuestobor/<int:repuesto_actual>', views.repuestobor, name='repuestobor'),
+        
+    #--Placa_Base
+    path('ver_placa_base', views.ver_placa_base, name='ver_placa_base'),
+    path('mod_placa_base/<int:placa_base_actual>', views.mod_placa_base, name='mod_placa_base'),
+    path('bor_placa_base/<int:placa_base_actual>', views.bor_placa_base, name='bor_placa_base'),
 
+    #--RAM
+    path('ver_ram', views.ver_ram, name='ver_ram'),
+    path('mod_ram/<int:ram_actual>', views.mod_ram, name='mod_ram'),
+    path('bor_ram/<int:ram_actual>', views.bor_ram, name='bor_ram'),
+
+    #--CPU
+    path('ver_cpu', views.ver_cpu, name='ver_cpu'),
+    path('mod_cpu/<int:cpu_actual>', views.mod_cpu, name='mod_cpu'),
+    path('bor_cpu/<int:cpu_actual>', views.bor_cpu, name='bor_cpu'),
+
+    #--GABINETE
+    path('ver_gab', views.ver_gab, name='ver_gab'),
+    path('mod_gab/<int:gab_actual>', views.mod_gab, name='mod_gab'),
+    path('bor_gab/<int:gab_actual>', views.bor_gab, name='bor_gab'),
+
+    path('nuevomontaje/<int:placa_base_actual>', views.nuevomontaje, name='nuevomontaje'),
+    
 
     path('inventario', views.inventario, name='inventario'),
-
-    path('cpu', views.cpu, name='cpu'),
-    path('case', views.case, name='case'),
-    path('motherboard', views.motherboard, name='motherboard'),
-    path('psu', views.psu, name='psu'),
-    path('ram', views.ram, name='ram'),
-    path('stg', views.stg, name='stg'),
-    path('vga', views.vga, name='vga'),    
+  
 ]
 

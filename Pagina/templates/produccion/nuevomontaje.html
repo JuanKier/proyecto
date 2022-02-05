@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block barra %}
+<style>
+    .card-header {
+        background: #f2f2f2;
+    }
+
+    .card-block {
+        height: 40em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f2f2f2;
+    }
+
+    .form-material {
+        display: flex;
+        margin: 1em;
+        height: 100%;
+        width: 65%;
+        gap: 2em;
+        flex-direction: column;
+        background: #f2f2f2;
+    }
+
+    .input-confirmar {
+        display: grid;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-gap: 2em;
+        padding: 1em;
+    }
+
+    .input-estado {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        grid-gap: 2em;
+        justify-content: center;
+    }
+
+    .caja-botones{
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5em;
+    }
+
+    .contenedor{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #fff;
+    }
+    
+    .titulo{
+        margin-top: 1em;
+    }
+
+</style>
+<div class="contenedor">
+    <div class="titulo">
+        <h1>{{parameters.titulo_f}}-{{parameters.datosplaca.descripcion_placa_base}}</h1>
+    </div>
+    <div>
+            <div>
+                <img src="{{parameters.datosplaca.imagen_placa_base.url}}" alt="" style= "width: 300px; height: 300px; align-items: center;">
+            </div>
+        </div>
+        <form class="form-material" style="margin: 1em;border-radius: 10px;" enctype="multipart/form-data" action="{% url 'nuevomontaje' parameters.placa_base_actual %}" method="POST" onsubmit="sessionStorage.setItem('1', 1);"
+            style="margin: 1em">
+            {% csrf_token %}
+            <div class="input-confirmar" style="grid-template-columns: 1fr;">
+                <div class="form-group form-default">
+                    <label class="float-label">Gabinetes</label>
+                    <select class="form-select mb-3" name="tipo_gabinete" id="tipo_gabinete">
+                        <option value=0>--SELECCIONE UNA OPCION--</option>
+                        {% for lista in parameters.listagabinete %}
+                        <option value="{{lista.id_gab }}" {% if lista.id_gab  == parameters.datos_act.descripcion_gab_id%} selected {% endif %}>
+                            {{lista.descripcion_gab}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group form-default">
+                    <label class="float-label">Memorias RAM</label>
+                    <select class="form-select mb-3" name="tipo_ram" id="tipo_ram">
+                        <option value=0>--SELECCIONE UNA OPCION--</option>
+                        {% for lista in parameters.listaram %}
+                        <option value="{{lista.id_ram}}" {% if lista.id_ram == parameters.datos_act.descripcion_ram%} selected {% endif %}>
+                            {{lista.descripcion_ram}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group form-default">
+                    <label class="float-label">Procesadores</label>
+                    <select class="form-select mb-3" name="tipo_cpu" id="tipo_cpu">
+                        <option value=0>--SELECCIONE UNA OPCION--</option>
+                        {% for lista in parameters.listacpu %}
+                        <option value="{{lista.tipo_cpu}}" {% if lista.tipo_cpu == parameters.datos_act.descripcion_cpu%} selected {% endif %}>
+                            {{lista.descripcion_cpu}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="form-group form-default">
+                    <label class="float-label">Perifericos</label>
+                    <select class="form-select mb-3" name="tipo_periferico" id="tipo_periferico">
+                        <option value=0>--SELECCIONE UNA OPCION--</option>
+                        {% for lista in parameters.listaperiferico %}
+                        <option value="{{lista.tipo_periferico}}" {% if lista.tipo_periferico == parameters.datos_act.descripcion_periferico%} selected {% endif %}>
+                            {{lista.descripcion_periferico}}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            
+        </form>
+    </div>
+</div>
+
+<script src="{%static 'js/app.js'%}"></script>
+<script src="{%static 'js/jquery.chained.js'%}"></script>
+
+<script>
+    //$("#ciudad").chained("#departamento")
+    // function llenar_ciudades(){
+    //     console.log("HOLA");
+
+    //     //SE LIMPIA EL COMBO
+    //     $("#ciudad").empty();
+        
+    //     //RECUPERAR EL EL COMBO CIUDAD
+    //     select_ciudad = document.getElementById('ciudad');
+
+    //     //CREAMOS UN OPTION QUE ESTE POR DEFECTO AL INICIO DE LA LISTA
+    //     var defecto = document.createElement('option');
+    //     defecto.value = 0; //SE ASIGNA UN VALUE AL VALOR POR DEFECTO
+    //     defecto.text = ("--SELECCIONE UNA OPCION--"); //SE ASIGNA UN TEXTO AL OPTION
+    //     select_ciudad.appendChild(defecto); // ESTA LINEA AÑADE UN OPTION
+
+
+    //     var id_departamento = document.getElementById('departamento').value; // SE RECUPERA EL VALUE DEL DEPARTAMENTO PARA SABER EL FK
+    //     {% for lista in parameters.listaciudad %} //SE RECORREN LAS CIUDADES PARA VERIFICAR SI LA FK COINCIDE CON EL OBTENIDO
+    //         aux = {{lista.nombre_departamento_id}} //SE GUARDA EN AUX LA FK DEL DEPARTAMENTO ALMACENADO EN LA CIUDAD
+    //         if (id_departamento == aux){ //SI COINCIDEN EL AUX CON EL ID_DEPARTAMENTO OBTENIDO DESDEL EL VALUE DE SELECT DEPARTAMENTO, SE AGREGA UN OPTION
+    //             var opt = document.createElement('option');
+    //             opt.value = {{lista.codigo_ciudad}};
+    //             opt.text = "{{lista.nombre_ciudad}}";
+    //             select_ciudad.appendChild(opt);
+    //         }
+    //     {% endfor %}  
+    // }
+</script>
+<script>
+    function numberWithCommas(x) {
+        return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
+    }
+
+
+    function traerCliente(event) { //event es el input donde se carga el valor
+        var flag = false
+        var nCliente = document.getElementById("nombre_cliente") //traigo el label que se va a modificar con el nombre del cliente
+        {% for lista in parameters.listacliente %}
+        var ruc_cliente = "{{lista.ruc_cliente}}"   //se trae cedula del cliente
+
+        if (event.value == ruc_cliente) { //se compara si las cedulas de la base de datos coincide con el del input
+            nCliente.innerHTML = "{{lista.nombre_cliente}}"   //si coincide se carga el nombre al label
+            flag = true
+        }
+
+        if (!flag) {
+            nCliente.innerHTML = "No existe ese cliente"//si coincide se muestra el mensaje en el label
+        }
+        {% endfor %}
+
+        if (event.value == '') { //si el input esta vacio el label se vaciara tambien
+            nCliente.innerHTML = " "
+        }
+    }
+</script>
+
+{% endblock %}
