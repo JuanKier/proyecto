@@ -1,6 +1,7 @@
 {%extends "base.html"%}
 {%block barra%}
 {%load static%}
+
 <body>
     <script>
         $(document).ready(function () {
@@ -10,26 +11,6 @@
         });
     </script>
 
-<div class="modal fade" id="modal_placas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Seleccione un producto</h5>
-                <button onclick="cerrar_modal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body" style="display: flex; justify-content: space-between; ">
-                <a href="{% url 'mod_placa_base' 0 %}" class="btn btn-info btn-round waves-effect waves-light">Placa Base</a>
-                <a href="{% url 'mod_cpu' 0 %}" class="btn btn-info btn-round waves-effect waves-light">Procesador</a>
-                <a href="{% url 'mod_ram' 0 %}" class="btn btn-info btn-round waves-effect waves-light">Memoria RAM</a>
-                <a href="{% url 'perifericomod' 0 %}" class="btn btn-info btn-round waves-effect waves-light">Periférico</a>
-                <a href="{% url 'mod_gab' 0 %}" class="btn btn-info btn-round waves-effect waves-light">Gabinete</a>
-                <a href="{% url 'repuestomod' 0 %}" class="btn btn-info btn-round waves-effect waves-light">Repuestos</a>
-            </div>
-        </div>
-    </div> 
-</div>  
     <div class="mb-3">
         <h1 class="h3 d-inline align-middle">Productos</h1>
     </div>
@@ -37,10 +18,9 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                      
+                    
                     <div class="form-group form-default" style="display: flex; justify-content: space-between; align-items: center;">
-                        <h3 style="margin: 0">Lista de Productos</h3><a href="javascript:mostrar_modal()" class="btn btn-success btn-round waves-effect waves-light">Añadir Producto
-                        </a>
+                        <h3 style="margin: 0">Lista de Productos</h3>
                     </div>
                     <div class="py-4">
                         <div class="col-md-12">
@@ -58,7 +38,6 @@
                                 <th>Precio Compra</th>
                                 <th>Precio Venta</th>
                                 <th>Stock</th>
-                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -92,19 +71,7 @@
                                 <td>{{ lista.precio_compra_periferico }}</td>
                                 <td>{{ lista.precio_venta_periferico }}</td>
                                 <td>{{ lista.stock_periferico }}</td>
-                                <td>
-                                    <div class="icon-btn">
-                                        <a href="{% url 'perifericomod' lista.id_periferico %}"
-                                            class="btn waves-effect waves-light btn-warning btn-icon"
-                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Modificar Registro"><i data-feather="edit"></i></a>
-                                        <a href="{% url 'perifericobor' lista.id_periferico %}"
-                                            onclick="return confirm('Eliminar el registro?')"
-                                            class="btn waves-effect waves-light btn-danger btn-icon"
-                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Eliminar Registro"><i data-feather="trash-2"></i></a>
-                                    </div>
-                                </td>
+                                
                             {% endfor %}
                             {% for lista in parameters.listarepuesto %}
                             <tr>
@@ -131,19 +98,7 @@
                                 <td>{{ lista.precio_compra_repuesto }}</td>
                                 <td>{{ lista.precio_venta_repuesto }}</td>
                                 <td>{{ lista.stock_repuesto }}</td>
-                                <td>
-                                    <div class="icon-btn">
-                                        <a href="{% url 'repuestomod' lista.id_repuesto %}"
-                                            class="btn waves-effect waves-light btn-warning btn-icon"
-                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Modificar Registro"><i data-feather="edit"></i></a>
-                                        <a href="{% url 'repuestobor' lista.id_repuesto %}"
-                                            onclick="return confirm('Eliminar el registro?')"
-                                            class="btn waves-effect waves-light btn-danger btn-icon"
-                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Eliminar Registro"><i data-feather="trash-2"></i></a>
-                                    </div>
-                                </td>
+                                
                             {% endfor %}
                             {% for lista in parameters.listacpu %}
                             <tr>
@@ -166,19 +121,7 @@
                                 <td>{{ lista.precio_compra_cpu }}</td>
                                 <td>{{ lista.precio_venta_cpu }}</td>
                                 <td>{{ lista.stock_cpu }}</td>
-                                <td>
-                                    <div class="icon-btn">
-                                        <a href="{% url 'mod_cpu' lista.id_cpu %}"
-                                            class="btn waves-effect waves-light btn-warning btn-icon"
-                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Modificar Registro"><i data-feather="edit"></i></a>
-                                        <a href="{% url 'bor_cpu' lista.id_cpu %}"
-                                            onclick="return confirm('Eliminar el registro?')"
-                                            class="btn waves-effect waves-light btn-danger btn-icon"
-                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Eliminar Registro"><i data-feather="trash-2"></i></a>
-                                    </div>
-                                </td>
+                                
                             {% endfor %}
                             {% for lista in parameters.listagabinete %}
                             <tr>
@@ -201,19 +144,7 @@
                                 <td>{{ lista.precio_compra_gab }}</td>
                                 <td>{{ lista.precio_venta_gab }}</td>
                                 <td>{{ lista.stock_gab }}</td>
-                                <td>
-                                    <div class="icon-btn">
-                                        <a href="{% url 'mod_gab' lista.id_gab %}"
-                                            class="btn waves-effect waves-light btn-warning btn-icon"
-                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Modificar Registro"><i data-feather="edit"></i></a>
-                                        <a href="{% url 'bor_gab' lista.id_gab %}"
-                                            onclick="return confirm('Eliminar el registro?')"
-                                            class="btn waves-effect waves-light btn-danger btn-icon"
-                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Eliminar Registro"><i data-feather="trash-2"></i></a>
-                                    </div>
-                                </td>
+                                
                             {% endfor %}
                             {% for lista in parameters.listaplaca %}
                             <tr>
@@ -236,19 +167,7 @@
                                 <td>{{ lista.precio_compra_placa_base }}</td>
                                 <td>{{ lista.precio_venta_placa_base }}</td>
                                 <td>{{ lista.stock_placa_base }}</td>
-                                <td>
-                                    <div class="icon-btn">
-                                        <a href="{% url 'mod_placa_base' lista.id_placa_base %}"
-                                            class="btn waves-effect waves-light btn-warning btn-icon"
-                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Modificar Registro"><i data-feather="edit"></i></a>
-                                        <a href="{% url 'bor_placa_base' lista.id_placa_base %}"
-                                            onclick="return confirm('Eliminar el registro?')"
-                                            class="btn waves-effect waves-light btn-danger btn-icon"
-                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Eliminar Registro"><i data-feather="trash-2"></i></a>
-                                    </div>
-                                </td>
+                                
                             {% endfor %}
                             {% for lista in parameters.listaram %}
                             <tr>
@@ -271,19 +190,7 @@
                                 <td>{{ lista.precio_compra_ram }}</td>
                                 <td>{{ lista.precio_venta_ram }}</td>
                                 <td>{{ lista.stock_ram }}</td>
-                                <td>
-                                    <div class="icon-btn">
-                                        <a href="{% url 'mod_ram' lista.id_ram %}"
-                                            class="btn waves-effect waves-light btn-warning btn-icon"
-                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Modificar Registro"><i data-feather="edit"></i></a>
-                                        <a href="{% url 'bor_ram' lista.id_ram %}"
-                                            onclick="return confirm('Eliminar el registro?')"
-                                            class="btn waves-effect waves-light btn-danger btn-icon"
-                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Eliminar Registro"><i data-feather="trash-2"></i></a>
-                                    </div>
-                                </td>
+                                
                             {% endfor %}
                             </tr>
                         </tbody>
@@ -298,7 +205,6 @@
                                 <th>Precio Compra</th>
                                 <th>Precio Venta</th>
                                 <th>Stock</th>
-                                <th>Acciones</th>
                             </tr>
                         </tfoot>
                     </table>
@@ -310,19 +216,6 @@
 
     <script src="{%static 'js/app.js'%}"></script>
     <script>
-        function mostrar_modal() {
-        	$(document).ready(function () {
-            $('#modal_placas').modal('show');
-        	});
-    	}
-
-		function cerrar_modal() {
-        	$(document).ready(function () {
-            $('#modal_placas').modal('hide');
-        	});
-    	}
-		    
-        
         function alerta() {
             if (sessionStorage.getItem('1') == 1) {
                 Swal.fire({

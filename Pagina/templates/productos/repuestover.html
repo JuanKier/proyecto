@@ -45,8 +45,10 @@
                             {% for lista in parameters.listatabla %}
                             <tr>
                                 <td>{{ lista.cod_repuesto }}</td>
-                                {% if lista.imagen_repuesto %}
-                                <td><img src="{{ lista.imagen_repuesto.url }}" width="100" height="100"></td>
+                                {% if lista.imagen_repuesto != '' %}
+                                        <td><img src="{{ lista.imagen_repuesto.url }}" width="100" height="100"></td>
+                                {% else %}
+                                        <td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100" height="100"></td>   
                                 {% endif %}
                                     {%if lista.tipo_repuesto == 1 %}<td>Batería</td>{% endif %} 
                                     {%if lista.tipo_repuesto == 2 %}<td>Cargador</td>{% endif %}

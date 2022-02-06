@@ -800,7 +800,10 @@ def repuestomod(request, repuesto_actual=0):
                 repuesto_actual.nombre_proveedor_id=request.POST.get('proveedor')
                 repuesto_actual.precio_compra_repuesto=request.POST.get('precio_compra_repuesto')
                 repuesto_actual.precio_venta_repuesto=request.POST.get('precio_venta_repuesto')
-                repuesto_actual.imagen_repuesto=request.FILES.get('imagen_repuesto')
+                if request.POST.get('imagen_repuesto') != "":
+                    repuesto_actual.imagen_repuesto=request.FILES.get('imagen_repuesto')
+                else: 
+                    repuesto_actual.imagen_repuesto = repuesto_actual.imagen_repuesto
                 repuesto_actual.stock_repuesto = request.POST.get('stock_repuesto')
 
                 repuesto_actual.save() 
@@ -841,7 +844,7 @@ def perifericomod(request, periferico_actual=0):
                 datos_per=Perifericos.objects.filter(id_periferico=periferico_actual).first()
                 return validar(request, "productos/perifericomod.html", 
                 {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-                "titulo_f":"Modificar Reparación", 
+                "titulo_f":"Modificar Periférico", 
                 "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
                 "datos_act":datos_per, 
                 "periferico_actual":periferico_actual,
@@ -849,7 +852,7 @@ def perifericomod(request, periferico_actual=0):
             else:
                 return validar(request, "productos/perifericomod.html", 
                 {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-                "titulo_f":"Nuevo Perifericos", "subtitulo_f":"Por favor complete todos los datos solicitados", 
+                "titulo_f":"Nuevo Periférico", "subtitulo_f":"Por favor complete todos los datos solicitados", 
                 "periferico_actual":periferico_actual,
                 "listaproveedor": listaproveedor})
 
@@ -876,7 +879,10 @@ def perifericomod(request, periferico_actual=0):
                 periferico_actual.nombre_proveedor_id=request.POST.get('proveedor')
                 periferico_actual.precio_compra_periferico=request.POST.get('precio_compra_periferico')
                 periferico_actual.precio_venta_periferico=request.POST.get('precio_venta_periferico')
-                periferico_actual.imagen_periferico=request.FILES.get('imagen_periferico')
+                if request.POST.get('imagen_periferico') != "":
+                    periferico_actual.imagen_periferico=request.FILES.get('imagen_periferico')
+                else: 
+                    periferico_actual.imagen_periferico = periferico_actual.imagen_periferico
                 periferico_actual.stock_periferico = request.POST.get('stock_periferico')
 
                 periferico_actual.save() 
@@ -901,7 +907,7 @@ def ver_placa_base(request):
         listaproveedor = Proveedor.objects.all()
         return validar(request, "productos/ver_placa_base.html", 
         {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-        "titulo_f":"Perifericos", "subtitulo_f":"Listado de Perifericos registrados", 
+        "titulo_f":"Placas Base", "subtitulo_f":"Listado de Placas Base registrados", 
         "listatabla":listatabla, 
         "listaram":listaram,
         "listacpu":listacpu,
@@ -920,7 +926,7 @@ def mod_placa_base(request, placa_base_actual=0):
                 datos_per=Placa_base.objects.filter(id_placa_base=placa_base_actual).first()
                 return validar(request, "productos/mod_placa_base.html", 
                 {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-                "titulo_f":"Modificar Reparación", 
+                "titulo_f":"Modificar Placa Base", 
                 "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
                 "datos_act":datos_per, 
                 "placa_base_actual":placa_base_actual,
@@ -931,7 +937,7 @@ def mod_placa_base(request, placa_base_actual=0):
             else:
                 return validar(request, "productos/mod_placa_base.html", 
                 {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-                "titulo_f":"Nuevo Perifericos", "subtitulo_f":"Por favor complete todos los datos solicitados", 
+                "titulo_f":"Nueva Placa Base", "subtitulo_f":"Por favor complete todos los datos solicitados", 
                 "placa_base_actual":placa_base_actual,
                 "listaram":listaram,
                 "listacpu":listacpu,
@@ -990,7 +996,7 @@ def ver_ram(request):
         listaproveedor = Proveedor.objects.all()
         return validar(request, "productos/ver_ram.html", 
         {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-        "titulo_f":"Memorias RAM", "subtitulo_f":"Listado de Memorias RAM registrados", 
+        "titulo_f":"Memorias RAM", "subtitulo_f":"Listado de Memorias RAM registradas", 
         "listatabla":listatabla, 
         "listaram":listaram,
         "listaproveedor": listaproveedor})
@@ -1005,7 +1011,7 @@ def mod_ram(request, ram_actual=0):
                 datos_per=RAM.objects.filter(id_ram=ram_actual).first()
                 return validar(request, "productos/mod_ram.html", 
                 {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-                "titulo_f":"Modificar Reparación", 
+                "titulo_f":"Modificar Memoria RAM", 
                 "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
                 "datos_act":datos_per, 
                 "ram_actual":ram_actual,
@@ -1042,7 +1048,10 @@ def mod_ram(request, ram_actual=0):
                 ram_actual.precio_compra_ram=request.POST.get('precio_compra_ram')
                 ram_actual.precio_venta_ram=request.POST.get('precio_venta_ram')
                 ram_actual.tipo_ram_id=request.POST.get('tipo_ram')
-                ram_actual.imagen_ram=request.FILES.get('imagen_ram')
+                if request.POST.get('imagen_ram') != "":
+                    ram_actual.imagen_ram=request.FILES.get('imagen_ram')
+                else: 
+                    ram_actual.imagen_ram = ram_actual.imagen_ram
                 ram_actual.stock_ram=request.POST.get('stock_ram')
 
                 ram_actual.save() 
@@ -1116,7 +1125,10 @@ def mod_cpu(request, cpu_actual=0):
                 cpu_actual.precio_compra_cpu=request.POST.get('precio_compra_cpu')
                 cpu_actual.precio_venta_cpu=request.POST.get('precio_venta_cpu')
                 cpu_actual.tipo_cpu=request.POST.get('tipo_cpu')
-                cpu_actual.imagen_cpu=request.FILES.get('imagen_cpu')
+                if request.POST.get('imagen_cpu') != "":
+                    cpu_actual.imagen_cpu=request.FILES.get('imagen_cpu')
+                else: 
+                    cpu_actual.imagen_cpu = cpu_actual.imagen_cpu
                 cpu_actual.stock_cpu=request.POST.get('stock_cpu')
 
                 cpu_actual.save() 
@@ -1190,7 +1202,10 @@ def mod_gab(request, gab_actual=0):
                 gab_actual.precio_compra_gab=request.POST.get('precio_compra_gab')
                 gab_actual.precio_venta_gab=request.POST.get('precio_venta_gab')
                 gab_actual.tipo_gabinete=request.POST.get('tipo_gabinete')
-                gab_actual.imagen_gab=request.FILES.get('imagen_gab')
+                if request.POST.get('imagen_gab') != "":
+                    gab_actual.imagen_gab=request.FILES.get('imagen_gab')
+                else: 
+                    gab_actual.imagen_gab = gab_actual.imagen_gab
                 gab_actual.stock_gab=request.POST.get('stock_gab')
 
                 gab_actual.save() 
@@ -1203,6 +1218,48 @@ def mod_gab(request, gab_actual=0):
 def bor_gab(request, gab_actual):
         Gabinete.objects.filter(id_gab = gab_actual).delete()
         return redirect('ver_gab')
+        
+#--=======================================Listado_General======================================--
+
+def ver_productos(request):
+        listaperiferico = Perifericos.objects.all()
+        listagabinete = Gabinete.objects.all()
+        listacpu = CPU.objects.all()
+        listaram = RAM.objects.all()
+        listaplaca = Placa_base.objects.all()
+        listarepuesto = Repuestos.objects.all()
+        listaproveedor = Proveedor.objects.all()
+        return validar(request, "productos/ver_productos.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Productos", "subtitulo_f":"Listado de Productos registrados", 
+        "listagabinete":listagabinete,
+        "listaperiferico":listaperiferico,
+        "listacpu":listacpu,
+        "listaram":listaram,
+        "listaplaca":listaplaca,
+        "listaproveedor":listaproveedor,
+        "listarepuesto": listarepuesto})
+
+#--=======================================Inventario======================================--
+
+def inventario(request):
+        listaperiferico = Perifericos.objects.all()
+        listagabinete = Gabinete.objects.all()
+        listacpu = CPU.objects.all()
+        listaram = RAM.objects.all()
+        listaplaca = Placa_base.objects.all()
+        listarepuesto = Repuestos.objects.all()
+        listaproveedor = Proveedor.objects.all()
+        return validar(request, "inventario.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Productos", "subtitulo_f":"Listado de Productos registrados", 
+        "listagabinete":listagabinete,
+        "listaperiferico":listaperiferico,
+        "listacpu":listacpu,
+        "listaram":listaram,
+        "listaplaca":listaplaca,
+        "listaproveedor":listaproveedor,
+        "listarepuesto": listarepuesto})
  
 #--=======================================Validación======================================--
 def validar(request, pageSuccess, parameters={}):

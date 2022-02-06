@@ -45,8 +45,10 @@
                             {% for lista in parameters.listatabla %}
                             <tr>
                                 <td>{{ lista.cod_gab }}</td>
-                                {% if lista.imagen_gab %}
-                                <td><img src="{{ lista.imagen_gab.url }}" width="100" height="100"></td>
+                                {% if lista.imagen_gab != '' %}
+                                        <td><img src="{{ lista.imagen_gab.url }}" width="100" height="100"></td>
+                                {% else %}
+                                        <td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100" height="100"></td>   
                                 {% endif %}
                                 <td>
                                     {%for lista2 in parameters.listagabinete%}
