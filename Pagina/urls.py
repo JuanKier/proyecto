@@ -101,7 +101,9 @@ urlpatterns = [
     path('mod_gab/<int:gab_actual>', views.mod_gab, name='mod_gab'),
     path('bor_gab/<int:gab_actual>', views.bor_gab, name='bor_gab'),
 
-    path('nuevomontaje/<int:placa_base_actual>', views.nuevomontaje, name='nuevomontaje'),
+    path('nuevomontaje/<int:placa_base_actual>/<int:montaje_actual>', views.nuevomontaje, name='nuevomontaje'),
+    path('bormontaje/<int:placa_base_actual>/<int:montaje_actual>', views.bormontaje, name='bormontaje'),
+    
     path('ver_productos', views.ver_productos, name='ver_productos'),
     path('inventario', views.inventario, name='inventario'),
 

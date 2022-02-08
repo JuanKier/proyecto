@@ -164,3 +164,18 @@ class Placa_base(models.Model):
     tipo_ram_placa_base = models.ForeignKey(Tipo_Ram, on_delete=models.CASCADE, null=True)
     tipo_cpu_placa_base = models.ForeignKey(Tipo_Cpu, on_delete=models.CASCADE, null=True)
     tipo_gabinete_placa_base = models.ForeignKey(Tipo_Gabinete, on_delete=models.CASCADE, null=True)
+
+class Montaje(models.Model):
+    codigo_montaje = models.AutoField(primary_key=True)
+    id_placa_base = models.ForeignKey(Placa_base, on_delete=models.CASCADE, null=True)
+    tipo_ram = models.ForeignKey(RAM, on_delete=models.CASCADE, null=True)
+    tipo_cpu = models.ForeignKey(CPU, on_delete=models.CASCADE, null=True)
+    tipo_gabinete = models.ForeignKey(Gabinete, on_delete=models.CASCADE, null=True)
+    id_periferico = models.ForeignKey(Perifericos, on_delete=models.CASCADE, null=True)
+    horas_mont = models.IntegerField(null=True)
+    actividades_mont = models.CharField(max_length = 200)
+    inicio_mont = models.DateField()
+    fin_mont = models.DateField()
+    nombre_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True)
+    nombre_completo_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True)
+    estado_mont = models.IntegerField(default=1, null=True)

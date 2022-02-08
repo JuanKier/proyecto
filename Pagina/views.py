@@ -26,7 +26,13 @@ def login(request):
             return render(request, 'login.html', {"mensaje_error":"Usuario ingresado no existe."})
 
 def index(request):
-    return validar(request, "index.html")
+    if request.session.get("id_usuario"):
+        listatabla=Placa_base.objects.all()
+        listagabinete = Tipo_Gabinete.objects.all()
+        listaproveedor = Proveedor.objects.all()
+        return validar(request, "index.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Usuarios", "subtitulo_f":"Listado de Usuarios registrados", "listatabla":listatabla, "listagabinete":listagabinete,"listaproveedor": listaproveedor})
+    else:
+        return redirect("login")
      
 
 def salir(request):
@@ -270,7 +276,7 @@ def moddepartamento(request,departamento_actual=0):
                 "datos_act":datos_departamento, 
                 "departamento_actual":departamento_actual})
             else:
-                return validar(request, "maintenance/departamentos/moddepartamento.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Nuevo Proveedor", "subtitulo_f":"Por favor complete todos los datos solicitados", "departamento_actual":departamento_actual})
+                return validar(request, "maintenance/departamentos/moddepartamento.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Nuevo Departamento", "subtitulo_f":"Por favor complete todos los datos solicitados", "departamento_actual":departamento_actual})
 
         if request.method=="POST":
             if departamento_actual==0:
@@ -379,7 +385,7 @@ def modnacionalidad(request, nacionalidad_actual=0):
             else:
                 return validar(request, "maintenance/nacionalidades/modnacionalidad.html", 
                 {"nombre_completo_usuario": request.session.get("nombre_completo_usuario"), 
-                "titulo_f": "Nuevo Proveedor", 
+                "titulo_f": "Nueva Nacionalidad", 
                 "subtitulo_f": "Por favor complete todos los datos solicitados", 
                 "nacionalidad_actual": nacionalidad_actual})
 
@@ -529,7 +535,7 @@ def modtipo_gabinete(request,tipo_gabinete_actual=0):
                 datos_tipo_gabinete=Tipo_Gabinete.objects.filter(id_tipo_gabinete=tipo_gabinete_actual).first()
                 return validar(request, "maintenance/tipo_gabinete/modtipo_gabinete.html", 
                 {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-                "titulo_f":"Modificar Tipo CPU", 
+                "titulo_f":"Modificar Tipo de Gabinete", 
                 "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
                 "datos_act":datos_tipo_gabinete, 
                 "tipo_gabinete_actual":tipo_gabinete_actual})
@@ -720,27 +726,123 @@ def borrep(request, rep_actual):
 
 #--=======================================Montaje======================================--
 
-def nuevomontaje (request, placa_base_actual):
-    if request.method == "GET":
-        datosplaca=Placa_base.objects.get(id_placa_base=placa_base_actual)
-        tipo_ram_placa = datosplaca.tipo_ram_placa_base_id
-        tipo_cpu_placa = datosplaca.tipo_cpu_placa_base_id
-        tipo_gabinete_placa = datosplaca.tipo_gabinete_placa_base_id
-        listaram = RAM.objects.filter(tipo_ram_id=tipo_ram_placa)
-        listacpu = CPU.objects.filter(tipo_cpu_id=tipo_cpu_placa)
-        listagabinete = Gabinete.objects.filter(tipo_gabinete_id=tipo_gabinete_placa)
-        listaperiferico = Perifericos.objects.all()
-        return validar(request, "produccion/nuevomontaje.html", 
+# def vermontaje(request):
+#     if request.session.get("id_usuario"):
+#         listaplaca=Placa_base.objects.all()
+#         listaram = RAM.objects.all()
+#         listacpu = CPU.objects.all()
+#         listagabinete = Gabinete.objects.all()
+#         listaperiferico = Perifericos.objects.all()
+#         listausuario = Usuario.objects.all()
+#         listacliente = Cliente.objects.all()
+#         listatabla = Montaje.objects.all()
+#         return validar(request, "produccion/vermontaje.html", 
+#         {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+#         "titulo_f":"Reparaciones", "subtitulo_f":"Listado de Reparaciones registradas", 
+#         "listatabla":listatabla, 
+#         "listaram": listaram,
+#         "listacpu": listacpu,
+#         "listagabinete": listagabinete,
+#         "listaplaca":listaplaca,
+#         "listacliente": listacliente,
+#         "listaperiferico":listaperiferico,
+#         "listausuario": listausuario})
+#     else:
+#         return redirect("login")
+
+def nuevomontaje (request, placa_base_actual, montaje_actual=0):
+    if request.session.get("id_usuario"):
+        if request.method == "GET":
+            listamontaje=Montaje.objects.all()
+            datosplaca=Placa_base.objects.get(id_placa_base=placa_base_actual)
+            tipo_ram_placa = datosplaca.tipo_ram_placa_base_id
+            tipo_cpu_placa = datosplaca.tipo_cpu_placa_base_id
+            tipo_gabinete_placa = datosplaca.tipo_gabinete_placa_base_id
+            listaram = RAM.objects.filter(tipo_ram_id=tipo_ram_placa)
+            listacpu = CPU.objects.filter(tipo_cpu_id=tipo_cpu_placa)
+            listagabinete = Gabinete.objects.filter(tipo_gabinete_id=tipo_gabinete_placa)
+            listaperiferico = Perifericos.objects.all()
+            listausuario = Usuario.objects.all()
+            listacliente = Cliente.objects.all()
+            mont_actual=Montaje.objects.filter(codigo_montaje=montaje_actual).exists()
+            if mont_actual:
+                datos_mont=Montaje.objects.filter(codigo_montaje=montaje_actual).first()
+                datos_mont.inicio_mont=str(datos_mont.inicio_mont)
+                datos_mont.fin_mont=str(datos_mont.fin_mont)
+                return validar(request, "produccion/nuevomontaje.html", 
                 {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-                "titulo_f":"Nuevo Montaje", 
+                "titulo_f":"Modificar Montaje", 
                 "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                "datos_act":datos_mont, 
+                "montaje_actual":montaje_actual,
                 "placa_base_actual":placa_base_actual, 
                 "listaram": listaram,
                 "listacpu": listacpu,
                 "listagabinete": listagabinete,
                 "datosplaca":datosplaca,
-                "listaperiferico":listaperiferico})
+                "listacliente": listacliente,
+                "listaperiferico":listaperiferico,
+                "listamontaje":listamontaje,
+                "listausuario": listausuario})
+            else:
+                return validar(request, "produccion/nuevomontaje.html", 
+                        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                        "titulo_f":"Nuevo Montaje", 
+                        "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                        "montaje_actual":montaje_actual,
+                        "placa_base_actual":placa_base_actual, 
+                        "listamontaje":listamontaje,
+                        "listaram": listaram,
+                        "listacpu": listacpu,
+                        "listagabinete": listagabinete,
+                        "datosplaca":datosplaca,
+                        "listausuario":listausuario,
+                        "listacliente":listacliente,
+                        "listaperiferico":listaperiferico})
 
+        if request.method=="POST":
+            print(request.POST.get('placa_base_actual'))
+            if montaje_actual==0:
+                montaje_nuevo=Montaje(codigo_montaje=request.POST.get('codigo_montaje'),
+                id_placa_base_id=request.POST.get('placa_base_actual'),
+                tipo_gabinete_id=request.POST.get('tipo_gabinete'),
+                tipo_ram_id=request.POST.get('tipo_ram'),
+                tipo_cpu_id=request.POST.get('tipo_cpu'),
+                id_periferico_id=request.POST.get('tipo_periferico'),
+                nombre_cliente_id=request.POST.get('id_cliente'),
+                horas_mont=request.POST.get('horas_mont'),
+                inicio_mont=request.POST.get('inicio_mont'),
+                fin_mont=request.POST.get('fin_mont'),
+                estado_mont=request.POST.get('estado_mont'),
+                actividades_mont=request.POST.get('actividades_mont'),
+                nombre_completo_usuario_id=request.POST.get('empleado'))
+
+                montaje_nuevo.save()
+            else:
+                montaje_actual=Montaje.objects.get(codigo_montaje=montaje_actual)
+                montaje_actual.id_placa_base_id=request.POST.get('placa_base_actual')
+                montaje_actual.tipo_gabinete_id=request.POST.get('tipo_gabinete')
+                montaje_actual.tipo_ram_id=request.POST.get('tipo_ram')
+                montaje_actual.tipo_cpu_id=request.POST.get('tipo_cpu')
+                montaje_actual.id_periferico_id=request.POST.get('tipo_periferico')
+                montaje_actual.nombre_cliente_id=request.POST.get('id_cliente')
+                montaje_actual.horas_mont=request.POST.get('horas_mont')
+                montaje_actual.inicio_mont=request.POST.get('inicio_mont')
+                montaje_actual.fin_mont=request.POST.get('fin_mont')
+                montaje_actual.estado_mont=request.POST.get('estado_mont')
+                montaje_actual.actividades_mont=request.POST.get('actividades_mont')
+                montaje_actual.nombre_completo_usuario_id=request.POST.get('empleado')
+
+                montaje_actual.save() 
+
+        return redirect('index')
+    
+    else:
+        return redirect("login")
+
+def bormontaje(request, montaje_actual):
+        Montaje.objects.filter(codigo_montaje = montaje_actual).delete()
+        return redirect('index')
 #--========================================PRODUCTOS======================================--
 #--========================================Repuestos======================================--
 

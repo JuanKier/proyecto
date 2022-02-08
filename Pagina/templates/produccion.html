@@ -5,7 +5,7 @@
 <body>
 	<style>
 	.display-4 {
-    	font-size: 2.48rem;
+    	font-size: 2rem;
 	}
 	</style>
 	<p id="msjError" style="display: none">
@@ -16,7 +16,6 @@
 					<div class="row mb-2 mb-xl-3">
 							<h3><strong>Área</strong> de Producción</h3>
 							<div>
-								<div class="col-md-10 col-xl-8 mx-auto">
 									<h1 class="text-center">Servicios</h1>
 									<p class="lead text-center mb-4">Seleccione una opción</p>
 		
@@ -80,7 +79,6 @@
 											</div>
 										</div>
 									</div>
-								</div>
 						</div>
 
 						<div class="modal fade" id="modal_placas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -126,7 +124,7 @@
 												<td>{{ lista.stock_placa_base }}</td>
 												<td>
 													<div class="icon-btn">
-														<a href="{% url 'nuevomontaje' lista.id_placa_base %}"
+														<a href="{% url 'nuevomontaje' lista.id_placa_base 0 %}"
 															class="btn waves-effect waves-light btn-info btn-icon"
 															style="color: white;" data-toggle="tooltip" data-placement="top" title=""
 															data-original-title="Modificar Registro">Seleccionar</a>
