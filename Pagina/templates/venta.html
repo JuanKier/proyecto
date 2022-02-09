@@ -1,0 +1,417 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block barra %}
+<style>
+    .card-header {
+        background: #f2f2f2;
+    }
+
+    .card-block {
+        height: 40em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #f2f2f2;
+    }
+
+    .form-material {
+        display: flex;
+        margin: 1em;
+        height: 100%;
+        width: 65%;
+        gap: 2em;
+        flex-direction: column;
+        background: #f2f2f2;
+    }
+
+    .input-confirmar {
+        display: grid;
+        width: 100%;
+        height: auto;
+        grid-template-columns: 1fr 1fr;
+        grid-gap: 2em;
+        padding: 1em;
+    }
+
+    .input-estado {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        width: 100%;
+        height: auto;
+        grid-gap: 2em;
+        justify-content: center;
+        padding: 1em;
+    }
+
+    .caja-botones{
+        display: flex;
+        justify-content: flex-end;
+        gap: 0.5em;
+    }
+
+    .contenedor{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background: #fff;
+    }
+    
+    .titulo{
+        margin-top: 1em;
+    }
+
+</style>
+<body>
+	<script>
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                fixedHeader: true,
+				responsive: true
+
+            });
+        });
+    </script>
+
+<div class="card-header">
+	<h3>{{parameters.titulo_f}}</h3>
+</div>
+<div class="py-4">
+	<div class="col-md-12">
+		<div class="card">
+			<div class="card-header">
+				<form  style="margin: 1em;border-radius: 10px;" enctype="multipart/form-data" action="#" method="POST" onsubmit="sessionStorage.setItem('1', 1);" style="margin: 1em">
+					{% csrf_token %}
+					<div class="input-confirmar">
+						<div>
+							<table id="example" class="table table-striped" style="width:100%">
+								<div class="card-header">
+									<h5 class="card-title">Productos</h5>
+								</div>
+								<thead>
+									<tr>
+										<th>Código</th>
+										<th>Imagen</th>
+										<th>Tipo</th>
+										<th>Marca</th>
+										<th>Descripción</th>
+										<th>Precio Venta</th>
+										<th>Stock</th>
+										<th>Acción</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for lista in parameters.listaperiferico %}
+									<tr class="items">
+										<td >{{ lista.cod_periferico }}</td>
+										{% if lista.imagen_periferico != '' %}
+										<td><img class="item-image" src="{{ lista.imagen_periferico.url }}" width="100" height="100"></td>
+										{% else %}
+										<td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
+												height="100"></td>
+										{% endif %}
+										{%if lista.tipo_periferico == 1 %}<td>Fuente</td>{% endif %}
+										{%if lista.tipo_periferico == 2 %}<td>Gabinete</td>{% endif %}
+										{%if lista.tipo_periferico == 3 %}<td>Almacenamiento</td>{% endif %}
+										{%if lista.tipo_periferico == 4 %}<td>Mouse</td>{% endif %}
+										{%if lista.tipo_periferico == 5 %}<td>Teclado</td>{% endif %}
+										{%if lista.tipo_periferico == 6 %}<td>Auriculares</td>{% endif %}
+										{%if lista.tipo_periferico == 7 %}<td>Monitor</td>{% endif %}
+										{%if lista.tipo_periferico == 8 %}<td>Placa de Video</td>{% endif %}
+										{%if lista.tipo_periferico == 9 %}<td>Impresora</td>{% endif %}
+										{%if lista.tipo_periferico == 10 %}<td>Otros</td>{% endif %}
+										<td>{{ lista.marca_periferico }}</td>
+										<td class="item-title">{{ lista.descripcion_periferico }}</td>
+										<td class="item-price">{{ lista.precio_venta_periferico }}</td>
+										<td>{{ lista.stock_periferico }}</td>
+										<td><button class = "items-button btn btn-secondary addToCart">Carrito</button></td>
+
+										{% endfor %}
+										{% for lista in parameters.listarepuesto %}
+									<tr>
+										<td>{{ lista.cod_repuesto }}</td>
+										{% if lista.imagen_repuesto != '' %}
+										<td><img src="{{ lista.imagen_repuesto.url }}" width="100" height="100"></td>
+										{% else %}
+										<td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
+												height="100"></td>
+										{% endif %}
+										{%if lista.tipo_repuesto == 1 %}<td>Batería</td>{% endif %}
+										{%if lista.tipo_repuesto == 2 %}<td>Cargador</td>{% endif %}
+										{%if lista.tipo_repuesto == 3 %}<td>Pantalla</td>{% endif %}
+										{%if lista.tipo_repuesto == 4 %}<td>Teclado</td>{% endif %}
+										{%if lista.tipo_repuesto == 5 %}<td>Otros</td>{% endif %}
+										<td>{{ lista.marca_repuesto }}</td>
+										<td>{{ lista.descripcion_repuesto }}</td>
+										<td>{{ lista.precio_venta_repuesto }}</td>
+										<td>{{ lista.stock_repuesto }}</td>
+										<td><button class = "items-button btn btn-secondary addToCart">Carrito</button></td>
+										{% endfor %}
+										{% for lista in parameters.listacpu %}
+									<tr>
+										<td>{{ lista.cod_cpu }}</td>
+										{% if lista.imagen_cpu != '' %}
+										<td><img src="{{ lista.imagen_cpu.url }}" width="100" height="100">
+										</td>
+										{% else %}
+										<td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
+												height="100"></td>
+										{% endif %}
+										<td>Procesador</td>
+										<td>{{ lista.marca_cpu }}</td>
+										<td>{{ lista.descripcion_cpu }}</td>
+										<td>{{ lista.precio_venta_cpu }}</td>
+										<td>{{ lista.stock_cpu }}</td>
+										<td><button class = "items-button btn btn-secondary addToCart">Carrito</button></td>
+										{% endfor %}
+										{% for lista in parameters.listagabinete %}
+									<tr>
+										<td>{{ lista.cod_gab }}</td>
+										{% if lista.imagen_gab != '' %}
+										<td><img src="{{ lista.imagen_gab.url }}" width="100" height="100">
+										</td>
+										{% else %}
+										<td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
+												height="100"></td>
+										{% endif %}
+										<td>Gabinete</td>
+										<td>{{ lista.marca_gab }}</td>
+										<td>{{ lista.descripcion_gab }}</td>
+										<td>{{ lista.precio_venta_gab }}</td>
+										<td>{{ lista.stock_gab }}</td>
+										<td><button class = "items-button btn btn-secondary addToCart">Carrito</button></td>
+										{% endfor %}
+										{% for lista in parameters.listaplaca %}
+									<tr>
+										<td>{{ lista.cod_placa_base }}</td>
+										{% if lista.imagen_placa_base != '' %}
+										<td><img src="{{ lista.imagen_placa_base.url }}" width="100" height="100"></td>
+										{% else %}
+										<td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
+												height="100"></td>
+										{% endif %}
+										<td>Placa Base</td>
+										<td>{{ lista.marca_placa_base }}</td>
+										<td>{{ lista.descripcion_placa_base }}</td>
+										<td>{{ lista.precio_venta_placa_base }}</td>
+										<td>{{ lista.stock_placa_base }}</td>
+										<td><button class = "items-button btn btn-secondary addToCart">Carrito</button></td>
+										{% endfor %}
+										{% for lista in parameters.listaram %}
+									<tr>
+										<td>{{ lista.cod_ram }}</td>
+										{% if lista.imagen_ram != '' %}
+										<td><img src="{{ lista.imagen_ram.url }}" width="100" height="100">
+										</td>
+										{% else %}
+										<td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
+												height="100"></td>
+										{% endif %}
+										<td>Memoria RAM</td>
+										<td>{{ lista.marca_ram }}</td>
+										<td>{{ lista.descripcion_ram }}</td>
+										<td>{{ lista.precio_venta_ram }}</td>
+										<td>{{ lista.stock_ram }}</td>
+										<td><button class = "items-button btn btn-secondary addToCart">Carrito</button></td>
+										{% endfor %}
+									</tr>
+								</tbody>
+							</table>
+						</div>
+
+						<div class="col-12 col-xl-6">
+							<div class="card">
+								<div class="card-header">
+									<section class="shopping-cart">
+										<div class="container">
+											<h1 class="text-center">CARRITO</h1>
+											<hr>
+											<div class="row">
+												<div class="col-6">
+													<div class="shopping-cart-header">
+														<h6>Producto</h6>
+													</div>
+												</div>
+												<div class="col-2">
+													<div class="shopping-cart-header">
+														<h6 class="text-truncate">Precio</h6>
+													</div>
+												</div>
+												<div class="col-4">
+													<div class="shopping-cart-header">
+														<h6>Cantidad</h6>
+													</div>
+												</div>
+											</div>
+											<!-- ? START SHOPPING CART ITEMS -->
+											<div class="shopping-cart-items shoppingCartItemsContainer">
+											</div>
+											<!-- ? END SHOPPING CART ITEMS -->
+								
+											<!-- START TOTAL -->
+											<div class="row">
+												<div class="col-12">
+													<div class="shopping-cart-total d-flex align-items-center">
+														<p class="mb-0">Total</p>
+														<p class="ml-4 mb-0 shoppingCartTotal">0€</p>
+														<div class="toast ml-auto bg-info" role="alert" aria-live="assertive" aria-atomic="true"
+															data-delay="2000">
+															<div class="toast-header">
+																<span>✅</span>
+																<strong class="mr-auto ml-1 text-secondary">Elemento en el carrito</strong>
+																<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+																	<span aria-hidden="true">&times;</span>
+																</button>
+															</div>
+															<div class="toast-body text-white">
+																Se aumentó correctamente la cantidad
+															</div>
+														</div>
+														<button class="btn btn-success ml-auto comprarButton" type="button" data-toggle="modal"
+															data-target="#comprarModal">Comprar</button>
+													</div>
+												</div>
+											</div>
+								
+											<!-- END TOTAL -->
+								
+											<!-- START MODAL COMPRA -->
+											<div class="modal fade" id="comprarModal" tabindex="-1" aria-labelledby="comprarModalLabel"
+												aria-hidden="true">
+												<div class="modal-dialog modal-dialog-centered">
+													<div class="modal-content">
+														<div class="modal-header">
+															<h5 class="modal-title" id="comprarModalLabel">Gracias por su compra</h5>
+															<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+																<span aria-hidden="true">&times;</span>
+															</button>
+														</div>
+														<div class="modal-body">
+															<p>Pronto recibirá su pedido</p>
+														</div>
+														<div class="modal-footer">
+															<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<!-- END MODAL COMPRA -->
+								
+								
+										</div>
+								
+									</section>
+									<!-- END SECTION SHOPPING CART -->
+								
+									<!-- START FOOTER -->
+									<footer class="bg-dark p-3 mt-5">
+										<p class="text-center m-0 text-muted">Tienda video juegos</p>
+									</footer>
+								</div>
+							</div>
+				</form>
+			</div>
+			</form>
+		</div>
+	</div>
+
+
+		<div class="form-group form-default caja-botones">
+			<button type="submit" class="btn btn-success btn-round waves-effect waves-light"
+				onclick="return confirm('Estás seguro de añadir este Montaje?')">Grabar</button>
+			<a href="{% url 'index' %}" class="btn btn-info btn-round waves-effect waves-light">Cancelar</a>
+		</div>
+	</div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+	crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+	crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+	integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+	crossorigin="anonymous"></script>
+<script src="{%static 'js/app.js'%}"></script>
+<script src="{%static 'js/jquery.chained.js'%}"></script>
+<link href="{%static 'css/select2.css'%}" rel="stylesheet"/>
+<script src="{%static 'js/select2.js'%}"></script>
+<script src="{%static 'js/tienda.js'%}"></script>
+<script>
+    $(document).ready(function() { $("#tipo_periferico").select2(); });
+    $(document).ready(function() { $("#tipo_placa_video").select2(); });
+    $(document).ready(function() { $("#tipo_fuente").select2(); });
+    $(document).ready(function() { $("#tipo_almacenamiento").select2(); });
+    $(document).ready(function() { $("#tipo_gabinete").select2(); });
+    $(document).ready(function() { $("#tipo_ram").select2(); });
+    $(document).ready(function() { $("#tipo_cpu").select2(); });
+    // $(function() {
+    //     $('#tipo_periferico').change(function() {
+    //         console.log($(this).val());
+    //     }).multipleSelect({
+    //         width: '100%',
+    //         filter: true
+    //     });
+    // });
+    //$("#ciudad").chained("#departamento")
+    // function llenar_ciudades(){
+    //     console.log("HOLA");
+
+    //     //SE LIMPIA EL COMBO
+    //     $("#ciudad").empty();
+        
+    //     //RECUPERAR EL EL COMBO CIUDAD
+    //     select_ciudad = document.getElementById('ciudad');
+
+    //     //CREAMOS UN OPTION QUE ESTE POR DEFECTO AL INICIO DE LA LISTA
+    //     var defecto = document.createElement('option');
+    //     defecto.value = 0; //SE ASIGNA UN VALUE AL VALOR POR DEFECTO
+    //     defecto.text = ("--SELECCIONE UNA OPCION--"); //SE ASIGNA UN TEXTO AL OPTION
+    //     select_ciudad.appendChild(defecto); // ESTA LINEA AÑADE UN OPTION
+
+
+    //     var id_departamento = document.getElementById('departamento').value; // SE RECUPERA EL VALUE DEL DEPARTAMENTO PARA SABER EL FK
+    //     {% for lista in parameters.listaciudad %} //SE RECORREN LAS CIUDADES PARA VERIFICAR SI LA FK COINCIDE CON EL OBTENIDO
+    //         aux = {{lista.nombre_departamento_id}} //SE GUARDA EN AUX LA FK DEL DEPARTAMENTO ALMACENADO EN LA CIUDAD
+    //         if (id_departamento == aux){ //SI COINCIDEN EL AUX CON EL ID_DEPARTAMENTO OBTENIDO DESDEL EL VALUE DE SELECT DEPARTAMENTO, SE AGREGA UN OPTION
+    //             var opt = document.createElement('option');
+    //             opt.value = {{lista.codigo_ciudad}};
+    //             opt.text = "{{lista.nombre_ciudad}}";
+    //             select_ciudad.appendChild(opt);
+    //         }
+    //     {% endfor %}  
+    // }
+</script>
+<script>
+
+    {% if  parameters.mant_actual > 0 %}
+    traerCliente(document.getElementById("ruc_cliente"))
+    {% endif %}
+
+
+    function traerCliente(event) { //event es el input donde se carga el valor
+        var flag = false
+        var nCliente = document.getElementById("nombre_cliente") //traigo el label que se va a modificar con el nombre del cliente
+        var inputCliente = document.getElementById("id_cliente")
+        {% for lista in parameters.listacliente %}
+        var ruc_cliente = "{{lista.ruc_cliente}}"   //se trae cedula del cliente
+
+        if (event.value == ruc_cliente) { //se compara si las cedulas de la base de datos coincide con el del input
+            nCliente.innerHTML = "{{lista.nombre_cliente}}"   //si coincide se carga el nombre al label
+            inputCliente.value = "{{lista.codigo_cliente}}"
+            flag = true
+        }
+
+        if (!flag) {
+            nCliente.innerHTML = "No existe ese cliente"//si coincide se muestra el mensaje en el label
+        }
+        {% endfor %}
+
+        if (event.value == '') { //si el input esta vacio el label se vaciara tambien
+            nCliente.innerHTML = " "
+        }
+    }
+</script>
+</body>
+{% endblock %}

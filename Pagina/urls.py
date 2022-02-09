@@ -6,10 +6,6 @@ urlpatterns = [
     path('index', views.index, name='index'),
     path('', views.login, name='login'),
     path('salir', views.salir, name='salir'),
-    path('profile', views.profile, name='profile'),
-    path('products', views.products, name='products'),
-    path('clients', views.clients, name='clients'),
-    path('users', views.users, name='users'),
     path('produccion', views.produccion, name='produccion'),
 
     path('verusuario', views.verusuario, name='verusuario'),
@@ -67,6 +63,11 @@ urlpatterns = [
     path('verrep', views.verrep, name='verrep'),
     path('modrep/<int:rep_actual>', views.modrep, name='modrep'),
     path('borrep/<int:rep_actual>', views.borrep, name='borrep'),
+
+     #--Montaje
+    path('vermontaje', views.vermontaje, name='vermontaje'),
+    path('nuevomontaje/<int:placa_base_actual>/<int:montaje_actual>', views.nuevomontaje, name='nuevomontaje'),
+    path('bormontaje/<int:montaje_actual>', views.bormontaje, name='bormontaje'),
     
 
 # ----------------------------------------PRODUCTOS---------------------------------------------------
@@ -101,8 +102,9 @@ urlpatterns = [
     path('mod_gab/<int:gab_actual>', views.mod_gab, name='mod_gab'),
     path('bor_gab/<int:gab_actual>', views.bor_gab, name='bor_gab'),
 
-    path('nuevomontaje/<int:placa_base_actual>/<int:montaje_actual>', views.nuevomontaje, name='nuevomontaje'),
-    path('bormontaje/<int:placa_base_actual>/<int:montaje_actual>', views.bormontaje, name='bormontaje'),
+    #--VENTA
+    path('venta', views.venta, name='venta'),
+
     
     path('ver_productos', views.ver_productos, name='ver_productos'),
     path('inventario', views.inventario, name='inventario'),

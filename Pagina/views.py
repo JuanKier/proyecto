@@ -34,25 +34,31 @@ def index(request):
     else:
         return redirect("login")
      
+def venta(request):
+    if request.session.get("id_usuario"):
+        listaperiferico = Perifericos.objects.all()
+        listagabinete = Gabinete.objects.all()
+        listacpu = CPU.objects.all()
+        listaram = RAM.objects.all()
+        listaplaca = Placa_base.objects.all()
+        listarepuesto = Repuestos.objects.all()
+        listaproveedor = Proveedor.objects.all()
+        return validar(request, "venta.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Nueva Venta", 
+        "listagabinete":listagabinete,
+        "listaperiferico":listaperiferico,
+        "listacpu":listacpu,
+        "listaram":listaram,
+        "listaplaca":listaplaca,
+        "listaproveedor":listaproveedor,
+        "listarepuesto": listarepuesto})
+    else:
+        return redirect("login")  
 
 def salir(request):
     request.session.flush()
-    return redirect("./")   
-
-def profile(request):
-    return validar(request, "profile.html")
-
-def products(request):
-    return validar(request, "products.html")    
-
-def clients(request):
-    return validar(request, "clients.html")
-
-def users(request):
-    return validar(request, "users.html")
-
-def proveedor(request):
-    return validar(request, "proveedor.html")
+    return redirect("./") 
 
 def inventario(request):
     return validar(request, "inventario.html")
@@ -726,29 +732,31 @@ def borrep(request, rep_actual):
 
 #--=======================================Montaje======================================--
 
-# def vermontaje(request):
-#     if request.session.get("id_usuario"):
-#         listaplaca=Placa_base.objects.all()
-#         listaram = RAM.objects.all()
-#         listacpu = CPU.objects.all()
-#         listagabinete = Gabinete.objects.all()
-#         listaperiferico = Perifericos.objects.all()
-#         listausuario = Usuario.objects.all()
-#         listacliente = Cliente.objects.all()
-#         listatabla = Montaje.objects.all()
-#         return validar(request, "produccion/vermontaje.html", 
-#         {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-#         "titulo_f":"Reparaciones", "subtitulo_f":"Listado de Reparaciones registradas", 
-#         "listatabla":listatabla, 
-#         "listaram": listaram,
-#         "listacpu": listacpu,
-#         "listagabinete": listagabinete,
-#         "listaplaca":listaplaca,
-#         "listacliente": listacliente,
-#         "listaperiferico":listaperiferico,
-#         "listausuario": listausuario})
-#     else:
-#         return redirect("login")
+def vermontaje(request):
+    if request.session.get("id_usuario"):
+        listaplaca=Placa_base.objects.all()
+        listaram = RAM.objects.all()
+        listacpu = CPU.objects.all()
+        listagabinete = Gabinete.objects.all()
+        listaperiferico = Perifericos.objects.all()
+        listausuario = Usuario.objects.all()
+        listacliente = Cliente.objects.all()
+        listatabla = Montaje.objects.all()
+        listamontaje=Montaje.objects.all()
+        return validar(request, "produccion/vermontaje.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Reparaciones", "subtitulo_f":"Listado de Reparaciones registradas", 
+        "listatabla":listatabla, 
+        "listaram": listaram,
+        "listacpu": listacpu,
+        "listagabinete": listagabinete,
+        "listaplaca":listaplaca,
+        "listacliente": listacliente,
+        "listaperiferico":listaperiferico,
+        "listamontaje":listamontaje,
+        "listausuario": listausuario})
+    else:
+        return redirect("login")
 
 def nuevomontaje (request, placa_base_actual, montaje_actual=0):
     if request.session.get("id_usuario"):
@@ -815,6 +823,9 @@ def nuevomontaje (request, placa_base_actual, montaje_actual=0):
                 fin_mont=request.POST.get('fin_mont'),
                 estado_mont=request.POST.get('estado_mont'),
                 actividades_mont=request.POST.get('actividades_mont'),
+                tipo_placa_video=request.POST.get('tipo_placa_video'),
+                tipo_fuente=request.POST.get('tipo_fuente'),
+                tipo_almacenamiento=request.POST.get('tipo_almacenamiento'),
                 nombre_completo_usuario_id=request.POST.get('empleado'))
 
                 montaje_nuevo.save()
@@ -832,17 +843,20 @@ def nuevomontaje (request, placa_base_actual, montaje_actual=0):
                 montaje_actual.estado_mont=request.POST.get('estado_mont')
                 montaje_actual.actividades_mont=request.POST.get('actividades_mont')
                 montaje_actual.nombre_completo_usuario_id=request.POST.get('empleado')
+                montaje_actual.tipo_placa_video=request.POST.get('tipo_placa_video')
+                montaje_actual.tipo_fuente=request.POST.get('tipo_fuente')
+                montaje_actual.tipo_almacenamiento=request.POST.get('tipo_almacenamiento')
 
                 montaje_actual.save() 
 
-        return redirect('index')
+        return redirect('vermontaje')
     
     else:
         return redirect("login")
 
 def bormontaje(request, montaje_actual):
         Montaje.objects.filter(codigo_montaje = montaje_actual).delete()
-        return redirect('index')
+        return redirect('vermontaje')
 #--========================================PRODUCTOS======================================--
 #--========================================Repuestos======================================--
 
@@ -1366,7 +1380,7 @@ def inventario(request):
 #--=======================================Validación======================================--
 def validar(request, pageSuccess, parameters={}):
     if request.session.get("id_usuario"):
-        if (request.session.get("tipo_usuario") == 2) and ((pageSuccess == 'users/verusuario.html') or (pageSuccess == 'products.html') or (pageSuccess == 'profile.html')):
+        if (request.session.get("tipo_usuario") == 2) and ((pageSuccess == 'users/verusuario.html') or (pageSuccess == 'maintenance/tipo_cpu/vertipo_cpu.html') or (pageSuccess == 'maintenance/tipo_ram/vertipo_ram.html') or (pageSuccess == 'maintenance/tipo_gabinete/vertipo_gabinete.html')):
             return render(request, "index.html", {"nombre_usuario": request.session.get("nombre_completo_usuario"),"tipo_usuario": request.session.get("tipo_usuario"), "mensaje": "Este usuario no cuenta con los privilegios suficientes"})
         else: 
             return render(request, pageSuccess, {"nombre_usuario": request.session.get("nombre_completo_usuario"),"tipo_usuario": request.session.get("tipo_usuario"), "parameters": parameters})

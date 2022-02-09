@@ -98,7 +98,7 @@
 												</div>
 												<div class="col-sm-4 mb-3 mb-md-0">
 													<div class="card text-center h-100">
-														<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'verrep' %}">
+														<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'venta'%}">
 															<div>
 																
 																<span class="display-4">Ventas</span>
@@ -206,19 +206,8 @@
 											</tr>
 											{% endfor %}
 										</tbody>
-										<tfoot>
-											<tr>
-												<th>Código</th>
-												<th>Imagen</th>
-												<th>Tamaño</th>
-												<th>Marca</th>
-												<th>Descripción</th>
-												<th>Precio Venta</th>
-												<th>Stock</th>
-												<th>Acciones</th>
-											</tr>
-										</tfoot>
 									</table>
+									<a href="{% url 'vermontaje' %}" class="btn btn-info btn-round waves-effect waves-light" style="width: 100%;">Listado de Montajes</a>
 								</div>
 							</div>
 						</div>

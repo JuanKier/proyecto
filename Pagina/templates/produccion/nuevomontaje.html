@@ -20,7 +20,7 @@
         margin: 1em;
         height: 100%;
         width: 65%;
-        gap: 2em;
+        gap: 1em;
         flex-direction: column;
         background: #f2f2f2;
     }
@@ -50,6 +50,7 @@
         display: flex;
         justify-content: flex-end;
         gap: 0.5em;
+        padding: 1em;
     }
 
     .contenedor{
@@ -80,156 +81,216 @@
             {% csrf_token %}
             <input type="number" name="placa_base_actual" id="placa_base_actual" value="{{parameters.datosplaca.id_placa_base}}" style="display: none;" >
             <div class="input-confirmar" style="grid-template-columns: 1fr;">
-                <div class="form-group form-default">
-                    <label class="float-label">Gabinetes</label>
-                    <select class="form-select mb-3" name="tipo_gabinete" id="tipo_gabinete">
-                        <option value=0>--SELECCIONE UNA OPCION--</option>
-                        {% for lista in parameters.listagabinete %}
-                        <option value="{{lista.id_gab }}" {% if lista.id_gab  == parameters.datos_act.descripcion_gab_id%} selected {% endif %}>
-                            {{lista.descripcion_gab}}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group form-default">
-                    <label class="float-label">Memorias RAM</label>
-                    <select class="form-select mb-3" name="tipo_ram" id="tipo_ram">
-                        <option value=0>--SELECCIONE UNA OPCION--</option>
-                        {% for lista in parameters.listaram %}
-                        <option value="{{lista.id_ram}}" {% if lista.id_ram == parameters.datos_act.descripcion_ram_id%} selected {% endif %}>
-                            {{lista.descripcion_ram}}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="form-group form-default">
-                    <label class="float-label">Procesadores</label>
+                <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
+                    <div class="form-group form-default">
+                    <label class="float-label">Procesadores Compatibles</label>
                     <select class="form-select mb-3" name="tipo_cpu" id="tipo_cpu">
                         <option value=0>--SELECCIONE UNA OPCION--</option>
                         {% for lista in parameters.listacpu %}
-                        <option value="{{lista.id_cpu}}" {% if lista.id_cpu == parameters.datos_act.descripcion_cpu_id%} selected {% endif %}>
+                        <option value="{{lista.id_cpu}}" {% if lista.id_cpu == parameters.datos_act.tipo_cpu_id%} selected {% endif %}>
                             {{lista.descripcion_cpu}}
                         </option>
                         {% endfor %}
                     </select>
+                    </div>
+                    <div class="form-group form-default">
+                        <label class="float-label">Memorias RAM Compatibles</label>
+                        <select class="form-select mb-3" name="tipo_ram" id="tipo_ram">
+                            <option value=0>--SELECCIONE UNA OPCION--</option>
+                            {% for lista in parameters.listaram %}
+                            <option value="{{lista.id_ram}}" {% if lista.id_ram == parameters.datos_act.tipo_ram_id%} selected {% endif %}>
+                                {{lista.descripcion_ram}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
-                <div class="form-group form-default">
-                    <label class="float-label">Perifericos</label>
-                    <select name="tipo_periferico" id="tipo_periferico" multiple>
-                        {% for lista in parameters.listaperiferico %}
-                        <option value="{{lista.id_periferico}}" {% if lista.id_periferico == parameters.datos_act.descripcion_periferico_id%} selected {% endif %}>
-                            {{lista.descripcion_periferico}}
-                        </option>S
-                        {% endfor %}
-                    </select>
+                <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
+                    <div class="form-group form-default">
+                        <label class="float-label">Gabinetes Compatibles</label>
+                        <select class="form-select mb-3" name="tipo_gabinete" id="tipo_gabinete">
+                            <option value=0>--SELECCIONE UNA OPCION--</option>
+                            {% for lista in parameters.listagabinete %}
+                            <option value="{{lista.id_gab}}" {% if lista.id_gab  == parameters.datos_act.tipo_gabinete_id%} selected {% endif %}>
+                                {{lista.descripcion_gab}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group form-default">
+                        <label class="float-label">Placa de Video</label>
+                        <select class="form-select mb-3" name="tipo_placa_video" id="tipo_placa_video">
+                            <option value=0>--SELECCIONE UNA OPCION--</option>
+                            {% for lista in parameters.listaperiferico %}
+                            {% if lista.tipo_periferico == 8 %}
+                            <option value="{{lista.id_periferico}}" {% if lista.id_periferico == parameters.datos_act.tipo_placa_video%} selected {% endif %}>
+                                {{lista.descripcion_periferico}}
+                            </option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
+                    <div class="form-group form-default">
+                        <label class="float-label">Fuente de Poder</label>
+                        <select class="form-select mb-3" name="tipo_fuente" id="tipo_fuente">
+                            <option value=0>--SELECCIONE UNA OPCION--</option>
+                            {% for lista in parameters.listaperiferico %}
+                            {% if lista.tipo_periferico == 1 %}
+                            <option value="{{lista.id_periferico}}" {% if lista.id_periferico == parameters.datos_act.tipo_fuente%} selected {% endif %}>
+                                {{lista.descripcion_periferico}}
+                            </option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group form-default">
+                        <label class="float-label">Almacenamiento</label>
+                        <select class="form-select mb-3" name="tipo_almacenamiento" id="tipo_almacenamiento">
+                            <option value=0>--SELECCIONE UNA OPCION--</option>
+                            {% for lista in parameters.listaperiferico %}
+                            {% if lista.tipo_periferico == 3 %}
+                            <option value="{{lista.id_periferico}}" {% if lista.id_periferico == parameters.datos_act.tipo_almacenamiento%} selected {% endif %}>
+                                {{lista.descripcion_periferico}}
+                            </option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
             </div>
-            <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
-                <div>
-                    <label class="float-label">CI o RUC de Cliente</label>
-                    <span class="form-bar"></span>
-                    <input class="form-control mb-3" type="text" name="ruc_cliente" id="ruc_cliente" 
-                    {% for cliente in parameters.listacliente %}
-                     {% if cliente.codigo_cliente == parameters.datos_act.nombre_cliente_id %} 
-                     value="{{cliente.ruc_cliente}}" 
-                     {% endif %}
-                     {% endfor %} 
-                     onfocusout="traerCliente(this)" required>
+            <div class="input-confirmar" style="grid-template-columns: 1fr;">
+                <div class="input-confirmar" style="grid-template-columns: 1fr;">
+                    <div class="form-group form-default">
+                        <label class="float-label">Perifericos</label>
+                        <select class="form-select mb-3" name="tipo_periferico" id="tipo_periferico">
+                            <option value=0>--SELECCIONE UNA OPCION--</option>
+                            {% for lista in parameters.listaperiferico %}
+                            {% if lista.tipo_periferico != 8 and lista.tipo_periferico != 1 and lista.tipo_periferico != 3 %}
+                            <option value="{{lista.id_periferico}}" {% if lista.id_periferico == parameters.datos_act.id_periferico_id%} selected {% endif %}>
+                                {{lista.descripcion_periferico}}
+                            </option>
+                            {% endif %}
+                            {% endfor %}
+                        </select>
+                    </div>
                 </div>
-                <div>
-                    <label class="float-label">Nombre del Cliente</label>
-                    <label class="form-control mb-3" id="nombre_cliente"> </label>
-                    <input type="text" style="display: none;" id="id_cliente" name="id_cliente">
+                <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
+                    <div>
+                        <label class="float-label">CI o RUC de Cliente</label>
+                        <span class="form-bar"></span>
+                        <input class="form-control mb-3" type="text" name="ruc_cliente" id="ruc_cliente" 
+                        {% for cliente in parameters.listacliente %}
+                         {% if cliente.codigo_cliente == parameters.datos_act.nombre_cliente_id %} 
+                         value="{{cliente.ruc_cliente}}" 
+                         {% endif %}
+                         {% endfor %} 
+                         onfocusout="traerCliente(this)" required>
+                    </div>
+                    <div>
+                        <label class="float-label">Nombre del Cliente</label>
+                        <label class="form-control mb-3" id="nombre_cliente"> </label>
+                        <input type="text" style="display: none;" id="id_cliente" name="id_cliente">
+                    </div>
                 </div>
-            </div>
-            <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
-                <div class="form-group form-default">
-                    <label class="float-label">Empleado</label>
-                    <select class="form-select mb-3" name="empleado" id="empleado">
-                        <option value=0>--SELECCIONE UNA OPCION--</option>
-                        {% for lista in parameters.listausuario %}
-                        <option value="{{lista.id_usuario}}" {% if lista.id_usuario == parameters.datos_act.nombre_completo_usuario_id%} selected {% endif %}>
-                            {{lista.nombre_completo_usuario}}
-                        </option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="form-group form-default mb-3">
-                    <label class="float-label">Horas Trabajadas</label>
-                    <span class="form-bar"></span>
-                    <input type="number" name="horas_mont" class="form-control" required 
-                        value="{{parameters.datos_act.horas_mont}}">
-                </div>
-            </div>
-            
-            <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
-                <div class="form-group form-default mb-3">
-                    <label class="float-label">Fecha de Inicio</label>
-                    <span class="form-bar"></span>
-                    <input type="date" name="inicio_mont" class="form-control" required 
-                        value="{{parameters.datos_act.inicio_mont}}">
-                </div>
-            
-                <div class="form-group form-default mb-3">
-                    <label class="float-label">Fecha de Finalización</label>
-                    <span class="form-bar"></span>
-                    <input type="date" name="fin_mont" class="form-control" required
-                        value="{{parameters.datos_act.fin_mont}}">
-                </div>
-            </div>
-
-            <div class="input-estado">
-                <div class="form-group form-default">
-                    <label class="float-label">Actividades</label>
-                    <span class="form-bar"></span>
-                    <input type="text" name="actividades_mont" class="form-control mb-3" required
-                        value="{{parameters.datos_act.actividades_mont}}">
+                <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
+                    <div class="form-group form-default">
+                        <label class="float-label">Empleado</label>
+                        <select class="form-select mb-3" name="empleado" id="empleado">
+                            <option value=0>--SELECCIONE UNA OPCION--</option>
+                            {% for lista in parameters.listausuario %}
+                            <option value="{{lista.id_usuario}}" {% if lista.id_usuario == parameters.datos_act.nombre_completo_usuario_id%} selected {% endif %}>
+                                {{lista.nombre_completo_usuario}}
+                            </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+    
+                    <div class="form-group form-default mb-3">
+                        <label class="float-label">Horas Trabajadas</label>
+                        <span class="form-bar"></span>
+                        <input type="number" name="horas_mont" class="form-control" required 
+                            value="{{parameters.datos_act.horas_mont}}">
+                    </div>
                 </div>
                 
-                <fieldset class="mb-3">
-                    <div class="row">
-                        <label class="col-form-label col-sm-2 text-sm-end pt-sm-0">Estado</label>
-                        <div class="col-sm-10">
-                            <label class="form-check">
-                                <input name="estado_mont" type="radio" required class="form-check-input" value=1 id="opcion_select" {% if parameters.datos_act.estado_mont == 1 %} checked {% endif %}>
-                                <span class="form-check-label">Recepcionado</span>
-                            </label>
-                            <label class="form-check">
-                                <input name="estado_mont" type="radio" required class="form-check-input" value=2 id="opcion_select" {% if parameters.datos_act.estado_mont == 2 %} checked {% endif %}>
-                                <span class="form-check-label">En proceso</span>
-                            </label>
-                            <label class="form-check">
-                                <input name="estado_mont" type="radio" class="form-check-input" value=3 id="opcion_select" {% if parameters.datos_act.estado_mont == 3 %} checked {% endif %}>
-                                <span class="form-check-label">Terminado</span>
-                            </label>
-                        </div>
+                <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
+                    <div class="form-group form-default mb-3">
+                        <label class="float-label">Fecha de Inicio</label>
+                        <span class="form-bar"></span>
+                        <input type="date" name="inicio_mont" class="form-control" required 
+                            value="{{parameters.datos_act.inicio_mont}}">
                     </div>
-                </fieldset>    
+                
+                    <div class="form-group form-default mb-3">
+                        <label class="float-label">Fecha de Finalización</label>
+                        <span class="form-bar"></span>
+                        <input type="date" name="fin_mont" class="form-control" required
+                            value="{{parameters.datos_act.fin_mont}}">
+                    </div>
+                </div>
+    
+                <div class="input-estado">
+                    <div class="form-group form-default">
+                        <label class="float-label">Actividades</label>
+                        <span class="form-bar"></span>
+                        <input type="text" name="actividades_mont" class="form-control mb-3" required
+                            value="{{parameters.datos_act.actividades_mont}}">
+                    </div>
+                    
+                    <fieldset class="mb-3">
+                        <div class="row">
+                            <label class="col-form-label col-sm-2 text-sm-end pt-sm-0">Estado</label>
+                            <div class="col-sm-10">
+                                <label class="form-check">
+                                    <input name="estado_mont" type="radio" required class="form-check-input" value=1 id="opcion_select" {% if parameters.datos_act.estado_mont == 1 %} checked {% endif %}>
+                                    <span class="form-check-label">Recepcionado</span>
+                                </label>
+                                <label class="form-check">
+                                    <input name="estado_mont" type="radio" required class="form-check-input" value=2 id="opcion_select" {% if parameters.datos_act.estado_mont == 2 %} checked {% endif %}>
+                                    <span class="form-check-label">En proceso</span>
+                                </label>
+                                <label class="form-check">
+                                    <input name="estado_mont" type="radio" class="form-check-input" value=3 id="opcion_select" {% if parameters.datos_act.estado_mont == 3 %} checked {% endif %}>
+                                    <span class="form-check-label">Terminado</span>
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>    
+                </div>
+                <div class="form-group form-default caja-botones">
+                    <button type="submit" class="btn btn-success btn-round waves-effect waves-light"
+                        onclick="return confirm('Estás seguro de añadir este Montaje?')">Grabar</button>
+                    <a href="{% url 'index' %}" class="btn btn-info btn-round waves-effect waves-light">Cancelar</a>
+                </div>
             </div>
-            <div class="form-group form-default caja-botones">
-                <button type="submit" class="btn btn-success btn-round waves-effect waves-light"
-                    onclick="return confirm('Estás seguro de añadir este Montaje?')">Grabar</button>
-                <a href="{% url 'index' %}" class="btn btn-info btn-round waves-effect waves-light">Cancelar</a>
-            </div>
+            
         </form>
     </div>
 </div>
 
 <script src="{%static 'js/app.js'%}"></script>
 <script src="{%static 'js/jquery.chained.js'%}"></script>
-<link rel="stylesheet" type="text/css" href="{%static 'css/multiple-select.css'%}">
-<script src="{%static 'js/multiple-select.js'%}"></script>
+<link href="{%static 'css/select2.css'%}" rel="stylesheet"/>
+<script src="{%static 'js/select2.js'%}"></script>
 
 <script>
-    $(function() {
-        $('#tipo_periferico').change(function() {
-            console.log($(this).val());
-        }).multipleSelect({
-            width: '100%',
-            filter: true
-        });
-    });
+    $(document).ready(function() { $("#tipo_periferico").select2(); });
+    $(document).ready(function() { $("#tipo_placa_video").select2(); });
+    $(document).ready(function() { $("#tipo_fuente").select2(); });
+    $(document).ready(function() { $("#tipo_almacenamiento").select2(); });
+    $(document).ready(function() { $("#tipo_gabinete").select2(); });
+    $(document).ready(function() { $("#tipo_ram").select2(); });
+    $(document).ready(function() { $("#tipo_cpu").select2(); });
+    // $(function() {
+    //     $('#tipo_periferico').change(function() {
+    //         console.log($(this).val());
+    //     }).multipleSelect({
+    //         width: '100%',
+    //         filter: true
+    //     });
+    // });
     //$("#ciudad").chained("#departamento")
     // function llenar_ciudades(){
     //     console.log("HOLA");
