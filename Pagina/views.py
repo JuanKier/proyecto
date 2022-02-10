@@ -1240,7 +1240,7 @@ def mod_cpu(request, cpu_actual=0):
                 cpu_actual.nombre_proveedor_id=request.POST.get('proveedor')
                 cpu_actual.precio_compra_cpu=request.POST.get('precio_compra_cpu')
                 cpu_actual.precio_venta_cpu=request.POST.get('precio_venta_cpu')
-                cpu_actual.tipo_cpu=request.POST.get('tipo_cpu')
+                cpu_actual.tipo_cpu_id=request.POST.get('tipo_cpu')
                 if request.POST.get('imagen_cpu') != "":
                     cpu_actual.imagen_cpu=request.FILES.get('imagen_cpu')
                 else: 
@@ -1317,7 +1317,7 @@ def mod_gab(request, gab_actual=0):
                 gab_actual.nombre_proveedor_id=request.POST.get('proveedor')
                 gab_actual.precio_compra_gab=request.POST.get('precio_compra_gab')
                 gab_actual.precio_venta_gab=request.POST.get('precio_venta_gab')
-                gab_actual.tipo_gabinete=request.POST.get('tipo_gabinete')
+                gab_actual.tipo_gabinete_id=request.POST.get('tipo_gabinete')
                 if request.POST.get('imagen_gab') != "":
                     gab_actual.imagen_gab=request.FILES.get('imagen_gab')
                 else: 

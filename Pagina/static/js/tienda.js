@@ -13,10 +13,10 @@ const shoppingCartItemsContainer = document.querySelector(
 function addToCartClicked(event) {
   const button = event.target;
   const item = button.closest('.item');
-
   const itemTitle = item.querySelector('.item-title').textContent;
   const itemPrice = item.querySelector('.item-price').textContent;
   const itemImage = item.querySelector('.item-image').src;
+  
 
   addItemToShoppingCart(itemTitle, itemPrice, itemImage);
 }
@@ -35,6 +35,7 @@ function addItemToShoppingCart(itemTitle, itemPrice, itemImage) {
       elementQuantity.value++;
       $('.toast').toast('show');
       updateShoppingCartTotal();
+      updateShoppingCartTotalIva();
       return;
     }
   }
@@ -44,7 +45,7 @@ function addItemToShoppingCart(itemTitle, itemPrice, itemImage) {
   <div class="row shoppingCartItem">
         <div class="col-6">
             <div class="shopping-cart-item d-flex align-items-center h-100 border-bottom pb-2 pt-3">
-                <img src=${itemImage} class="shopping-cart-image">
+                <img src=${itemImage} class="shopping-cart-image" style="width="50"; height="50">
                 <h6 class="shopping-cart-item-title shoppingCartItemTitle text-truncate ml-3 mb-0">${itemTitle}</h6>
             </div>
         </div>
@@ -74,6 +75,7 @@ function addItemToShoppingCart(itemTitle, itemPrice, itemImage) {
     .addEventListener('change', quantityChanged);
 
   updateShoppingCartTotal();
+  updateShoppingCartTotalIva();
 }
 
 function updateShoppingCartTotal() {
@@ -87,7 +89,7 @@ function updateShoppingCartTotal() {
       '.shoppingCartItemPrice'
     );
     const shoppingCartItemPrice = Number(
-      shoppingCartItemPriceElement.textContent.replace('€', '')
+      shoppingCartItemPriceElement.textContent.replace('Gs', '')
     );
     const shoppingCartItemQuantityElement = shoppingCartItem.querySelector(
       '.shoppingCartItemQuantity'
@@ -97,22 +99,49 @@ function updateShoppingCartTotal() {
     );
     total = total + shoppingCartItemPrice * shoppingCartItemQuantity;
   });
-  shoppingCartTotal.innerHTML = `${total.toFixed(2)}€`;
+  shoppingCartTotal.innerHTML = `${total.toFixed()} Gs`;
+}
+
+function updateShoppingCartTotalIva() {
+  let total = 0;
+  const shoppingCartTotalIva = document.querySelector('.shoppingCartTotalIva');
+
+  const shoppingCartItems = document.querySelectorAll('.shoppingCartItem');
+
+  shoppingCartItems.forEach((shoppingCartItem) => {
+    const shoppingCartItemPriceElement = shoppingCartItem.querySelector(
+      '.shoppingCartItemPrice'
+    );
+    const shoppingCartItemPrice = Number(
+      shoppingCartItemPriceElement.textContent.replace('Gs', '')
+    );
+    const shoppingCartItemQuantityElement = shoppingCartItem.querySelector(
+      '.shoppingCartItemQuantity'
+    );
+    const shoppingCartItemQuantity = Number(
+      shoppingCartItemQuantityElement.value
+    );
+    total = ((total + shoppingCartItemPrice * shoppingCartItemQuantity)/11)+(total + shoppingCartItemPrice * shoppingCartItemQuantity);
+  });
+  shoppingCartTotalIva.innerHTML = `${total.toFixed()} Gs`;
 }
 
 function removeShoppingCartItem(event) {
   const buttonClicked = event.target;
   buttonClicked.closest('.shoppingCartItem').remove();
   updateShoppingCartTotal();
+  updateShoppingCartTotalIva();
 }
 
 function quantityChanged(event) {
   const input = event.target;
   input.value <= 0 ? (input.value = 1) : null;
   updateShoppingCartTotal();
+  updateShoppingCartTotalIva();
 }
 
 function comprarButtonClicked() {
   shoppingCartItemsContainer.innerHTML = '';
   updateShoppingCartTotal();
+  updateShoppingCartTotalIva();
 }

@@ -121,14 +121,14 @@
                 <div class="form-group form-default">
                     <label class="float-label">Precio Compra</label>
                     <span class="form-bar"></span>
-                    <input type="text" name="precio_compra_repuesto" class="form-control mb-3" required 
+                    <input type="text" name="precio_compra_repuesto" class="form-control mb-3" required id="compra" onfocusout="multiplicar(this)"
                         value="{{parameters.datos_act.precio_compra_repuesto}}"> 
                         <!-- onfocus="this.value = numberWithCommas(this.value)" onfocusout="this.value = numberWithCommas(this.value)"> -->
                 </div>
                 <div class="form-group form-default">
                     <label class="float-label">Precio Venta</label>
                     <span class="form-bar"></span>
-                    <input type="text" name="precio_venta_repuesto" class="form-control mb-3" required
+                    <input type="text" name="precio_venta_repuesto" class="form-control mb-3" required id="venta"
                         value="{{parameters.datos_act.precio_venta_repuesto}}"> 
                         <!-- onfocus="this.value = numberWithCommas(this.value)" onfocusout="this.value = numberWithCommas(this.value)" > -->
                 </div>
@@ -184,6 +184,13 @@
     // }
 </script>
 <script>
+    function multiplicar(event){
+  m1 = document.getElementById("compra").value;
+  m2 = (100-18);
+  r = (m1/m2)*100;
+  x = Math.round(r)
+  document.getElementById("venta").value = x;
+}
     function numberWithCommas(x) {
         return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ".");
     }

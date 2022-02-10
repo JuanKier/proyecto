@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block barra %}
+
 <style>
     .card-header {
         background: #f2f2f2;
@@ -67,29 +68,29 @@
 <body>
 	<script>
         $(document).ready(function () {
-            var table = $('#example').DataTable({
-                fixedHeader: true,
+            var table = $('#item').DataTable({
 				responsive: true
 
             });
         });
+		
     </script>
+
 
 <div class="card-header">
 	<h3>{{parameters.titulo_f}}</h3>
 </div>
+
 <div class="py-4">
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header">
-				<form  style="margin: 1em;border-radius: 10px;" enctype="multipart/form-data" action="#" method="POST" onsubmit="sessionStorage.setItem('1', 1);" style="margin: 1em">
+				<form  style="margin: 1em;border-radius: 10px;" enctype="multipart/form-data" action="#" method="POST" onsubmit="sessionStorage.setItem('1', 1); style="margin: 1em">
 					{% csrf_token %}
 					<div class="input-confirmar">
-						<div>
-							<table id="example" class="table table-striped" style="width:100%">
-								<div class="card-header">
-									<h5 class="card-title">Productos</h5>
-								</div>
+						<section class="store">
+							<table id="item" class="table table-striped" style="width:100%">
+								
 								<thead>
 									<tr>
 										<th>Código</th>
@@ -104,7 +105,7 @@
 								</thead>
 								<tbody>
 									{% for lista in parameters.listaperiferico %}
-									<tr class="items">
+									<tr class="item">
 										<td >{{ lista.cod_periferico }}</td>
 										{% if lista.imagen_periferico != '' %}
 										<td><img class="item-image" src="{{ lista.imagen_periferico.url }}" width="100" height="100"></td>
@@ -126,14 +127,13 @@
 										<td class="item-title">{{ lista.descripcion_periferico }}</td>
 										<td class="item-price">{{ lista.precio_venta_periferico }}</td>
 										<td>{{ lista.stock_periferico }}</td>
-										<td><button class = "items-button btn btn-secondary addToCart">Carrito</button></td>
-
+										<td><button type="button" class = "item-button btn btn-primary addToCart">Carrito</button></td>
 										{% endfor %}
-										{% for lista in parameters.listarepuesto %}
-									<tr>
+									{% for lista in parameters.listarepuesto %}
+									<tr class="item">
 										<td>{{ lista.cod_repuesto }}</td>
 										{% if lista.imagen_repuesto != '' %}
-										<td><img src="{{ lista.imagen_repuesto.url }}" width="100" height="100"></td>
+										<td><img class="item-image" src="{{ lista.imagen_repuesto.url }}" width="100" height="100"></td>
 										{% else %}
 										<td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
 												height="100"></td>
@@ -144,16 +144,16 @@
 										{%if lista.tipo_repuesto == 4 %}<td>Teclado</td>{% endif %}
 										{%if lista.tipo_repuesto == 5 %}<td>Otros</td>{% endif %}
 										<td>{{ lista.marca_repuesto }}</td>
-										<td>{{ lista.descripcion_repuesto }}</td>
-										<td>{{ lista.precio_venta_repuesto }}</td>
+										<td class="item-title">{{ lista.descripcion_repuesto }}</td>
+										<td class="item-price">{{ lista.precio_venta_repuesto }}</td>
 										<td>{{ lista.stock_repuesto }}</td>
-										<td><button class = "items-button btn btn-secondary addToCart">Carrito</button></td>
+										<td><button type="button" class = "item-button btn btn-primary addToCart">Carrito</button></td>
 										{% endfor %}
-										{% for lista in parameters.listacpu %}
-									<tr>
+									{% for lista in parameters.listacpu %}
+									<tr class="item">
 										<td>{{ lista.cod_cpu }}</td>
 										{% if lista.imagen_cpu != '' %}
-										<td><img src="{{ lista.imagen_cpu.url }}" width="100" height="100">
+										<td><img class="item-image" src="{{ lista.imagen_cpu.url }}" width="100" height="100">
 										</td>
 										{% else %}
 										<td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
@@ -161,16 +161,16 @@
 										{% endif %}
 										<td>Procesador</td>
 										<td>{{ lista.marca_cpu }}</td>
-										<td>{{ lista.descripcion_cpu }}</td>
-										<td>{{ lista.precio_venta_cpu }}</td>
+										<td class="item-title">{{ lista.descripcion_cpu }}</td>
+										<td class="item-price">{{ lista.precio_venta_cpu }}</td>
 										<td>{{ lista.stock_cpu }}</td>
-										<td><button class = "items-button btn btn-secondary addToCart">Carrito</button></td>
+										<td><button type="button" class = "item-button btn btn-primary addToCart">Carrito</button></td>
 										{% endfor %}
-										{% for lista in parameters.listagabinete %}
-									<tr>
+									{% for lista in parameters.listagabinete %}
+									<tr class="item">
 										<td>{{ lista.cod_gab }}</td>
 										{% if lista.imagen_gab != '' %}
-										<td><img src="{{ lista.imagen_gab.url }}" width="100" height="100">
+										<td><img class="item-image" src="{{ lista.imagen_gab.url }}" width="100" height="100">
 										</td>
 										{% else %}
 										<td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
@@ -178,32 +178,32 @@
 										{% endif %}
 										<td>Gabinete</td>
 										<td>{{ lista.marca_gab }}</td>
-										<td>{{ lista.descripcion_gab }}</td>
-										<td>{{ lista.precio_venta_gab }}</td>
+										<td class="item-title">{{ lista.descripcion_gab }}</td>
+										<td class="item-price">{{ lista.precio_venta_gab }}</td>
 										<td>{{ lista.stock_gab }}</td>
-										<td><button class = "items-button btn btn-secondary addToCart">Carrito</button></td>
+										<td><button type="button" class = "item-button btn btn-primary addToCart">Carrito</button></td>
 										{% endfor %}
-										{% for lista in parameters.listaplaca %}
-									<tr>
+									{% for lista in parameters.listaplaca %}
+									<tr class="item">
 										<td>{{ lista.cod_placa_base }}</td>
 										{% if lista.imagen_placa_base != '' %}
-										<td><img src="{{ lista.imagen_placa_base.url }}" width="100" height="100"></td>
+										<td><img class="item-image" src="{{ lista.imagen_placa_base.url }}" width="100" height="100"></td>
 										{% else %}
 										<td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
 												height="100"></td>
 										{% endif %}
 										<td>Placa Base</td>
 										<td>{{ lista.marca_placa_base }}</td>
-										<td>{{ lista.descripcion_placa_base }}</td>
-										<td>{{ lista.precio_venta_placa_base }}</td>
+										<td class="item-title">{{ lista.descripcion_placa_base }}</td>
+										<td class="item-price">{{ lista.precio_venta_placa_base }}</td>
 										<td>{{ lista.stock_placa_base }}</td>
-										<td><button class = "items-button btn btn-secondary addToCart">Carrito</button></td>
+										<td><button type="button" class = "item-button btn btn-primary addToCart">Carrito</button></td>
 										{% endfor %}
-										{% for lista in parameters.listaram %}
-									<tr>
+									{% for lista in parameters.listaram %}
+									<tr class="item">
 										<td>{{ lista.cod_ram }}</td>
 										{% if lista.imagen_ram != '' %}
-										<td><img src="{{ lista.imagen_ram.url }}" width="100" height="100">
+										<td><img class="item-image" src="{{ lista.imagen_ram.url }}" width="100" height="100">
 										</td>
 										{% else %}
 										<td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
@@ -211,15 +211,16 @@
 										{% endif %}
 										<td>Memoria RAM</td>
 										<td>{{ lista.marca_ram }}</td>
-										<td>{{ lista.descripcion_ram }}</td>
-										<td>{{ lista.precio_venta_ram }}</td>
+										<td class="item-title">{{ lista.descripcion_ram }}</td>
+										<td class="item-price">{{ lista.precio_venta_ram }}</td>
 										<td>{{ lista.stock_ram }}</td>
-										<td><button class = "items-button btn btn-secondary addToCart">Carrito</button></td>
+										<td><button type="button" class = "item-button btn btn-primary addToCart">Carrito</button></td>
 										{% endfor %}
 									</tr>
 								</tbody>
 							</table>
-						</div>
+						</section>
+
 
 						<div class="col-12 col-xl-6">
 							<div class="card">
@@ -251,19 +252,24 @@
 											<!-- ? END SHOPPING CART ITEMS -->
 								
 											<!-- START TOTAL -->
-											<div class="row">
+											<div class="card-header">
 												<div class="col-12">
 													<div class="shopping-cart-total d-flex align-items-center">
 														<p class="mb-0">Total</p>
-														<p class="ml-4 mb-0 shoppingCartTotal">0€</p>
-														<div class="toast ml-auto bg-info" role="alert" aria-live="assertive" aria-atomic="true"
-															data-delay="2000">
+														<p class="ml-4 mb-0 shoppingCartTotal">0 Gs</p>
+													</div>
+												</div>
+											</div>
+											<div class="card-header">
+												<div class="col-12">
+													<div class="shopping-cart-total d-flex align-items-center">
+														<p class="mb-0">Total IVA Incl.</p>
+														<p class="ml-4 mb-0 shoppingCartTotalIva">0 Gs</p>
+														<div class="toast ml-auto bg-info" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
 															<div class="toast-header">
 																<span>✅</span>
 																<strong class="mr-auto ml-1 text-secondary">Elemento en el carrito</strong>
-																<button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-																	<span aria-hidden="true">&times;</span>
-																</button>
+																<button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
 															</div>
 															<div class="toast-body text-white">
 																Se aumentó correctamente la cantidad
@@ -298,17 +304,9 @@
 												</div>
 											</div>
 											<!-- END MODAL COMPRA -->
-								
-								
 										</div>
 								
 									</section>
-									<!-- END SECTION SHOPPING CART -->
-								
-									<!-- START FOOTER -->
-									<footer class="bg-dark p-3 mt-5">
-										<p class="text-center m-0 text-muted">Tienda video juegos</p>
-									</footer>
 								</div>
 							</div>
 				</form>
@@ -316,29 +314,22 @@
 			</form>
 		</div>
 	</div>
+</div>
 
-
-		<div class="form-group form-default caja-botones">
-			<button type="submit" class="btn btn-success btn-round waves-effect waves-light"
-				onclick="return confirm('Estás seguro de añadir este Montaje?')">Grabar</button>
-			<a href="{% url 'index' %}" class="btn btn-info btn-round waves-effect waves-light">Cancelar</a>
-		</div>
-	</div>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-	integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-	crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
-	integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
-	crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-	integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-	crossorigin="anonymous"></script>
+<script src="{%static 'js/bootstrap.min.js'%}"></script>
 <script src="{%static 'js/app.js'%}"></script>
 <script src="{%static 'js/jquery.chained.js'%}"></script>
 <link href="{%static 'css/select2.css'%}" rel="stylesheet"/>
 <script src="{%static 'js/select2.js'%}"></script>
+<script src="{%static 'js/popper.min.js'%}"></script>
 <script src="{%static 'js/tienda.js'%}"></script>
+
+
+
 <script>
+	setTimeout(function () { 
+		showToastMessage("Guest added successfully test2").fadeOut(4000);
+	});
     $(document).ready(function() { $("#tipo_periferico").select2(); });
     $(document).ready(function() { $("#tipo_placa_video").select2(); });
     $(document).ready(function() { $("#tipo_fuente").select2(); });
@@ -382,36 +373,6 @@
     //         }
     //     {% endfor %}  
     // }
-</script>
-<script>
-
-    {% if  parameters.mant_actual > 0 %}
-    traerCliente(document.getElementById("ruc_cliente"))
-    {% endif %}
-
-
-    function traerCliente(event) { //event es el input donde se carga el valor
-        var flag = false
-        var nCliente = document.getElementById("nombre_cliente") //traigo el label que se va a modificar con el nombre del cliente
-        var inputCliente = document.getElementById("id_cliente")
-        {% for lista in parameters.listacliente %}
-        var ruc_cliente = "{{lista.ruc_cliente}}"   //se trae cedula del cliente
-
-        if (event.value == ruc_cliente) { //se compara si las cedulas de la base de datos coincide con el del input
-            nCliente.innerHTML = "{{lista.nombre_cliente}}"   //si coincide se carga el nombre al label
-            inputCliente.value = "{{lista.codigo_cliente}}"
-            flag = true
-        }
-
-        if (!flag) {
-            nCliente.innerHTML = "No existe ese cliente"//si coincide se muestra el mensaje en el label
-        }
-        {% endfor %}
-
-        if (event.value == '') { //si el input esta vacio el label se vaciara tambien
-            nCliente.innerHTML = " "
-        }
-    }
 </script>
 </body>
 {% endblock %}
