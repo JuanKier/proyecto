@@ -43,6 +43,7 @@ def venta(request):
         listaplaca = Placa_base.objects.all()
         listarepuesto = Repuestos.objects.all()
         listaproveedor = Proveedor.objects.all()
+        listacliente = Cliente.objects.all()
         return validar(request, "venta.html", 
         {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
         "titulo_f":"Nueva Venta", 
@@ -52,6 +53,7 @@ def venta(request):
         "listaram":listaram,
         "listaplaca":listaplaca,
         "listaproveedor":listaproveedor,
+        "listacliente":listacliente,
         "listarepuesto": listarepuesto})
     else:
         return redirect("login")  
