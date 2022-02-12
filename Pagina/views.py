@@ -976,8 +976,7 @@ def perifericomod(request, periferico_actual=0):
 
         if request.method=="POST":
             if periferico_actual==0:
-                perif_nuevo=Perifericos(id_periferico=request.POST.get('id_periferico'),
-                cod_periferico=request.POST.get('cod_periferico'),
+                perif_nuevo=Perifericos(cod_periferico=request.POST.get('cod_periferico'),
                 tipo_periferico=request.POST.get('tipo_periferico'),
                 marca_periferico=request.POST.get('marca_periferico'),
                 descripcion_periferico=request.POST.get("descripcion_periferico"),
@@ -1005,13 +1004,32 @@ def perifericomod(request, periferico_actual=0):
 
                 periferico_actual.save() 
 
+                if (int(periferico_actual.tipo_periferico) == 11):
+                    placa_base_modificar = Placa_base.objects.get(cod_placa_base = periferico_actual.cod_periferico)
+                    placa_base_modificar.marca_placa_base=request.POST.get('marca_periferico')
+                    placa_base_modificar.descripcion_placa_base=request.POST.get('descripcion_periferico')
+                    placa_base_modificar.nombre_proveedor_id=request.POST.get('proveedor')
+                    placa_base_modificar.precio_compra_placa_base=request.POST.get('precio_compra_periferico')
+                    placa_base_modificar.precio_venta_placa_base=request.POST.get('precio_venta_periferico')
+                    placa_base_modificar.stock_placa_base=request.POST.get('stock_periferico')
+                    if request.POST.get('imagen_periferico') != "":
+                        placa_base_modificar.imagen_placa_base=request.FILES.get('imagen_periferico')
+                    else: 
+                        placa_base_modificar.imagen_placa_base = placa_base_modificar.imagen_placa_base
+                    placa_base_modificar.save()
+                    print("HOLA")
+
+
         return redirect('perifericover')
     
     else:
         return redirect("login")
 
 def perifericobor(request, periferico_actual):
+        periferico_datos=Perifericos.objects.get(id_periferico = periferico_actual)
         Perifericos.objects.filter(id_periferico = periferico_actual).delete()
+        if int(periferico_datos.tipo_periferico) == 11:
+            Placa_base.objects.get(cod_placa_base = periferico_datos.cod_periferico).delete()
         return redirect('perifericover')
 
 
@@ -1064,7 +1082,7 @@ def mod_placa_base(request, placa_base_actual=0):
 
         if request.method=="POST":
             if placa_base_actual==0:
-                perif_nuevo=Placa_base(id_placa_base=request.POST.get('id_placa_base'),
+                placa_base_nueva=Placa_base(id_placa_base=request.POST.get('id_placa_base'),
                 cod_placa_base=request.POST.get('cod_placa_base'),
                 marca_placa_base=request.POST.get('marca_placa_base'),
                 descripcion_placa_base=request.POST.get('descripcion_placa_base'),
@@ -1076,8 +1094,19 @@ def mod_placa_base(request, placa_base_actual=0):
                 tipo_gabinete_placa_base_id=request.POST.get('tipo_gabinete_placa_base'),
                 imagen_placa_base=request.FILES.get('imagen_placa_base'),
                 stock_placa_base=request.POST.get('stock_placa_base'))
+                
+                periferico_nueva=Perifericos(cod_periferico=request.POST.get('cod_placa_base'),
+                tipo_periferico=11,
+                marca_periferico=request.POST.get('marca_placa_base'),
+                descripcion_periferico=request.POST.get("descripcion_placa_base"),
+                nombre_proveedor_id=request.POST.get('proveedor'),
+                precio_compra_periferico=request.POST.get('precio_compra_placa_base'),
+                precio_venta_periferico=request.POST.get('precio_venta_placa_base'),
+                imagen_periferico=request.FILES.get('imagen_placa_base'),
+                stock_periferico=request.POST.get('stock_placa_base'))
 
-                perif_nuevo.save()
+                placa_base_nueva.save()
+                periferico_nueva.save()
             else:
                 placa_base_actual=Placa_base.objects.get(id_placa_base=placa_base_actual)
                 placa_base_actual.cod_placa_base=request.POST.get('cod_placa_base')
@@ -1094,8 +1123,22 @@ def mod_placa_base(request, placa_base_actual=0):
                     placa_base_actual.imagen_placa_base=request.FILES.get('imagen_placa_base')
                 else: 
                     placa_base_actual.imagen_placa_base = placa_base_actual.imagen_placa_base
-                
-                placa_base_actual.save() 
+
+                placa_base_actual.save()
+
+
+                periferico_modificar = Perifericos.objects.get(cod_periferico = int(placa_base_actual.cod_placa_base))
+                periferico_modificar.marca_periferico=request.POST.get('marca_placa_base')
+                periferico_modificar.descripcion_periferico=request.POST.get('descripcion_placa_base')
+                periferico_modificar.nombre_proveedor_id=request.POST.get('proveedor')
+                periferico_modificar.precio_compra_periferico=request.POST.get('precio_compra_placa_base')
+                periferico_modificar.precio_venta_periferico=request.POST.get('precio_venta_placa_base')
+                periferico_modificar.stock_periferico=request.POST.get('stock_placa_base')
+                if request.POST.get('imagen_placa_base') != "":
+                    periferico_modificar.imagen_periferico=request.FILES.get('imagen_placa_base')
+                else: 
+                    periferico_modificar.imagen_periferico = periferico_modificar.imagen_periferico
+                periferico_modificar.save()
 
         return redirect('ver_placa_base')
     
@@ -1103,7 +1146,9 @@ def mod_placa_base(request, placa_base_actual=0):
         return redirect("login")
 
 def bor_placa_base(request, placa_base_actual):
-        Perifericos.objects.filter(id_placa_base = placa_base_actual).delete()
+        placa_base_datos = Placa_base.objects.get(id_placa_base = placa_base_actual)
+        Perifericos.objects.get(cod_periferico = int(placa_base_datos.cod_placa_base)).delete()
+        Placa_base.objects.filter(id_placa_base = placa_base_actual).delete()
         return redirect('ver_placa_base')
 
 #--=======================================RAM======================================--

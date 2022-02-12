@@ -16,6 +16,7 @@ function addToCartClicked(event) {
   const itemTitle = item.querySelector('.item-title').textContent;
   const itemPrice = item.querySelector('.item-price').textContent;
   const itemImage = item.querySelector('.item-image').src;
+  document.getElementById("precio").value = itemPrice
   
 
   addItemToShoppingCart(itemTitle, itemPrice, itemImage);
@@ -57,7 +58,7 @@ function addItemToShoppingCart(itemTitle, itemPrice, itemImage) {
         <div class="col-4">
             <div
                 class="shopping-cart-quantity d-flex justify-content-between align-items-center h-100 border-bottom pb-2 pt-3">
-                <input class="shopping-cart-quantity-input shoppingCartItemQuantity" type="number"
+                <input class="shopping-cart-quantity-input shoppingCartItemQuantity" type="number" style="width:2.5em"
                     value="1">
                 <button class="btn btn-danger buttonDelete" type="button">X</button>
             </div>

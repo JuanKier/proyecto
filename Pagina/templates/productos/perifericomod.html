@@ -62,7 +62,7 @@
                 <div class="form-group form-default">
                     <label class="float-label">Código</label>
                     <span class="form-bar"></span>
-                    <input type="text" name="cod_periferico" class="form-control mb-3" required
+                    <input {% if parameters.datos_act.id_periferico > 0 %} readonly {% endif %}  type="text" name="cod_periferico" class="form-control mb-3" required
                         value="{{parameters.datos_act.cod_periferico}}">
                 </div>
                 <div class="form-group form-default">
@@ -80,6 +80,7 @@
                         <option value="8" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 8 %} selected {% endif %}>Placa de Video</option>
                         <option value="9" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 9 %} selected {% endif %}>Impresora</option>
                         <option value="10" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 10 %} selected {% endif %}>Otros</option>
+                        <option value="11" id="opcion_select" {% if parameters.datos_act.tipo_periferico == 11 %} selected {% endif %}>Placa Base</option>
                     </select>
                 </div>
 
