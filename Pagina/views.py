@@ -860,178 +860,6 @@ def bormontaje(request, montaje_actual):
         Montaje.objects.filter(codigo_montaje = montaje_actual).delete()
         return redirect('vermontaje')
 #--========================================PRODUCTOS======================================--
-#--========================================Repuestos======================================--
-
-def repuestover(request):
-    if request.session.get("id_usuario"):
-        listatabla=Repuestos.objects.all()
-        listaproveedor = Proveedor.objects.all()
-        return validar(request, "productos/repuestover.html", 
-        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-        "titulo_f":"Repuestos", "subtitulo_f":"Listado de Repuestos registrados", 
-        "listatabla":listatabla, 
-        "listaproveedor": listaproveedor})
-    else:
-        return redirect("login")
-
-def repuestomod(request, repuesto_actual=0):
-    if request.session.get("id_usuario"):
-        if request.method=="GET":
-            listaproveedor = Proveedor.objects.all()
-            repu_actual=Repuestos.objects.filter(id_repuesto=repuesto_actual).exists()
-            if repu_actual:
-                datos_repuesto=Repuestos.objects.filter(id_repuesto=repuesto_actual).first()
-                return validar(request, "productos/repuestomod.html", 
-                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-                "titulo_f":"Modificar Reparación", 
-                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
-                "datos_act":datos_repuesto, 
-                "repuesto_actual":repuesto_actual,
-                "listaproveedor": listaproveedor})
-            else:
-                return validar(request, "productos/repuestomod.html", 
-                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-                "titulo_f":"Nuevo Repuesto", "subtitulo_f":"Por favor complete todos los datos solicitados", 
-                "repuesto_actual":repuesto_actual,
-                "listaproveedor": listaproveedor})
-
-        if request.method=="POST":
-            if repuesto_actual==0:
-                repuesto_nuevo=Repuestos(id_repuesto=request.POST.get('id_repuesto'),
-                cod_repuesto=request.POST.get('cod_repuesto'),
-                tipo_repuesto=request.POST.get('tipo_repuesto'),
-                marca_repuesto=request.POST.get('marca_repuesto'),
-                descripcion_repuesto=request.POST.get("descripcion_repuesto"),
-                nombre_proveedor_id=request.POST.get('proveedor'),
-                precio_compra_repuesto=request.POST.get('precio_compra_repuesto'),
-                precio_venta_repuesto=request.POST.get('precio_venta_repuesto'),
-                imagen_repuesto=request.FILES.get('imagen_repuesto'),
-                stock_repuesto=request.POST.get('stock_repuesto'))
-
-                repuesto_nuevo.save()
-            else:
-                repuesto_actual=Repuestos.objects.get(id_repuesto=repuesto_actual)
-                repuesto_actual.cod_repuesto=request.POST.get('cod_repuesto')
-                repuesto_actual.tipo_repuesto=request.POST.get('tipo_repuesto')
-                repuesto_actual.marca_repuesto=request.POST.get('marca_repuesto')
-                repuesto_actual.descripcion_repuesto=request.POST.get('descripcion_repuesto')
-                repuesto_actual.nombre_proveedor_id=request.POST.get('proveedor')
-                repuesto_actual.precio_compra_repuesto=request.POST.get('precio_compra_repuesto')
-                repuesto_actual.precio_venta_repuesto=request.POST.get('precio_venta_repuesto')
-                if request.POST.get('imagen_repuesto') != "":
-                    repuesto_actual.imagen_repuesto=request.FILES.get('imagen_repuesto')
-                else: 
-                    repuesto_actual.imagen_repuesto = repuesto_actual.imagen_repuesto
-                repuesto_actual.stock_repuesto = request.POST.get('stock_repuesto')
-
-                repuesto_actual.save() 
-
-        return redirect('repuestover')
-    
-    else:
-        return redirect("login")
-
-def repuestobor(request, repuesto_actual):
-        Repuestos.objects.filter(id_repuesto = repuesto_actual).delete()
-        return redirect('repuestover')
-
-
-
-
-
-#--=======================================Perifericos======================================--
-
-def perifericover(request):
-    if request.session.get("id_usuario"):
-        listatabla=Perifericos.objects.all()
-        listaproveedor = Proveedor.objects.all()
-        return validar(request, "productos/perifericover.html", 
-        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-        "titulo_f":"Perifericos", "subtitulo_f":"Listado de Perifericos registrados", 
-        "listatabla":listatabla, 
-        "listaproveedor": listaproveedor})
-    else:
-        return redirect("login")
-
-def perifericomod(request, periferico_actual=0):
-    if request.session.get("id_usuario"):
-        if request.method=="GET":
-            listaproveedor = Proveedor.objects.all()
-            peri_actual=Perifericos.objects.filter(id_periferico=periferico_actual).exists()
-            if peri_actual:
-                datos_per=Perifericos.objects.filter(id_periferico=periferico_actual).first()
-                return validar(request, "productos/perifericomod.html", 
-                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-                "titulo_f":"Modificar Periférico", 
-                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
-                "datos_act":datos_per, 
-                "periferico_actual":periferico_actual,
-                "listaproveedor": listaproveedor})
-            else:
-                return validar(request, "productos/perifericomod.html", 
-                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-                "titulo_f":"Nuevo Periférico", "subtitulo_f":"Por favor complete todos los datos solicitados", 
-                "periferico_actual":periferico_actual,
-                "listaproveedor": listaproveedor})
-
-        if request.method=="POST":
-            if periferico_actual==0:
-                perif_nuevo=Perifericos(cod_periferico=request.POST.get('cod_periferico'),
-                tipo_periferico=request.POST.get('tipo_periferico'),
-                marca_periferico=request.POST.get('marca_periferico'),
-                descripcion_periferico=request.POST.get("descripcion_periferico"),
-                nombre_proveedor_id=request.POST.get('proveedor'),
-                precio_compra_periferico=request.POST.get('precio_compra_periferico'),
-                precio_venta_periferico=request.POST.get('precio_venta_periferico'),
-                imagen_periferico=request.FILES.get('imagen_periferico'),
-                stock_periferico=request.POST.get('stock_periferico'))
-
-                perif_nuevo.save()
-            else:
-                periferico_actual=Perifericos.objects.get(id_periferico=periferico_actual)
-                periferico_actual.cod_periferico=request.POST.get('cod_periferico')
-                periferico_actual.tipo_periferico=request.POST.get('tipo_periferico')
-                periferico_actual.marca_periferico=request.POST.get('marca_periferico')
-                periferico_actual.descripcion_periferico=request.POST.get('descripcion_periferico')
-                periferico_actual.nombre_proveedor_id=request.POST.get('proveedor')
-                periferico_actual.precio_compra_periferico=request.POST.get('precio_compra_periferico')
-                periferico_actual.precio_venta_periferico=request.POST.get('precio_venta_periferico')
-                if request.POST.get('imagen_periferico') != "":
-                    periferico_actual.imagen_periferico=request.FILES.get('imagen_periferico')
-                else: 
-                    periferico_actual.imagen_periferico = periferico_actual.imagen_periferico
-                periferico_actual.stock_periferico = request.POST.get('stock_periferico')
-
-                periferico_actual.save() 
-
-                if (int(periferico_actual.tipo_periferico) == 11):
-                    placa_base_modificar = Placa_base.objects.get(cod_placa_base = periferico_actual.cod_periferico)
-                    placa_base_modificar.marca_placa_base=request.POST.get('marca_periferico')
-                    placa_base_modificar.descripcion_placa_base=request.POST.get('descripcion_periferico')
-                    placa_base_modificar.nombre_proveedor_id=request.POST.get('proveedor')
-                    placa_base_modificar.precio_compra_placa_base=request.POST.get('precio_compra_periferico')
-                    placa_base_modificar.precio_venta_placa_base=request.POST.get('precio_venta_periferico')
-                    placa_base_modificar.stock_placa_base=request.POST.get('stock_periferico')
-                    if request.POST.get('imagen_periferico') != "":
-                        placa_base_modificar.imagen_placa_base=request.FILES.get('imagen_periferico')
-                    else: 
-                        placa_base_modificar.imagen_placa_base = placa_base_modificar.imagen_placa_base
-                    placa_base_modificar.save()
-                    print("HOLA")
-
-
-        return redirect('perifericover')
-    
-    else:
-        return redirect("login")
-
-def perifericobor(request, periferico_actual):
-        periferico_datos=Perifericos.objects.get(id_periferico = periferico_actual)
-        Perifericos.objects.filter(id_periferico = periferico_actual).delete()
-        if int(periferico_datos.tipo_periferico) == 11:
-            Placa_base.objects.get(cod_placa_base = periferico_datos.cod_periferico).delete()
-        return redirect('perifericover')
-
 
 #--=======================================Placa_Base======================================--
 
@@ -1095,7 +923,7 @@ def mod_placa_base(request, placa_base_actual=0):
                 imagen_placa_base=request.FILES.get('imagen_placa_base'),
                 stock_placa_base=request.POST.get('stock_placa_base'))
                 
-                periferico_nueva=Perifericos(cod_periferico=request.POST.get('cod_placa_base'),
+                periferico_nuevo=Perifericos(cod_periferico=request.POST.get('cod_placa_base'),
                 tipo_periferico=11,
                 marca_periferico=request.POST.get('marca_placa_base'),
                 descripcion_periferico=request.POST.get("descripcion_placa_base"),
@@ -1106,7 +934,7 @@ def mod_placa_base(request, placa_base_actual=0):
                 stock_periferico=request.POST.get('stock_placa_base'))
 
                 placa_base_nueva.save()
-                periferico_nueva.save()
+                periferico_nuevo.save()
             else:
                 placa_base_actual=Placa_base.objects.get(id_placa_base=placa_base_actual)
                 placa_base_actual.cod_placa_base=request.POST.get('cod_placa_base')
@@ -1201,7 +1029,18 @@ def mod_ram(request, ram_actual=0):
                 imagen_ram=request.FILES.get('imagen_ram'),
                 stock_ram=request.POST.get('stock_ram'))
 
+                periferico_nuevo=Perifericos(cod_periferico=request.POST.get('cod_ram'),
+                tipo_periferico=13,
+                marca_periferico=request.POST.get('marca_ram'),
+                descripcion_periferico=request.POST.get('descripcion_ram'),
+                nombre_proveedor_id=request.POST.get('proveedor'),
+                precio_compra_periferico=request.POST.get('precio_compra_ram'),
+                precio_venta_periferico=request.POST.get('precio_venta_ram'),
+                imagen_periferico=request.FILES.get('imagen_ram'),
+                stock_periferico=request.POST.get('stock_ram'))
+
                 ram_nuevo.save()
+                periferico_nuevo.save()
             else:
                 ram_actual=RAM.objects.get(id_ram=ram_actual)
                 ram_actual.cod_ram=request.POST.get('cod_ram')
@@ -1219,12 +1058,27 @@ def mod_ram(request, ram_actual=0):
 
                 ram_actual.save() 
 
+                periferico_modificar = Perifericos.objects.get(cod_periferico = int(ram_actual.cod_ram))
+                periferico_modificar.marca_periferico=request.POST.get('marca_ram')
+                periferico_modificar.descripcion_periferico=request.POST.get('descripcion_ram')
+                periferico_modificar.nombre_proveedor_id=request.POST.get('proveedor')
+                periferico_modificar.precio_compra_periferico=request.POST.get('precio_compra_ram')
+                periferico_modificar.precio_venta_periferico=request.POST.get('precio_venta_ram')
+                periferico_modificar.stock_periferico=request.POST.get('stock_ram')
+                if request.POST.get('imagen_ram') != "":
+                    periferico_modificar.imagen_periferico=request.FILES.get('imagen_ram')
+                else: 
+                    periferico_modificar.imagen_periferico = periferico_modificar.imagen_periferico
+                periferico_modificar.save()
+
         return redirect('ver_ram')
     
     else:
         return redirect("login")
 
 def bor_ram(request, ram_actual):
+        ram_datos = RAM.objects.get(id_ram = ram_actual)
+        Perifericos.objects.get(cod_periferico = int(ram_datos.cod_ram)).delete()
         RAM.objects.filter(id_ram = ram_actual).delete()
         return redirect('ver_ram')
 
@@ -1278,7 +1132,18 @@ def mod_cpu(request, cpu_actual=0):
                 imagen_cpu=request.FILES.get('imagen_cpu'),
                 stock_cpu=request.POST.get('stock_cpu'))
 
+                periferico_nuevo=Perifericos(cod_periferico=request.POST.get('cod_cpu'),
+                tipo_periferico=14,
+                marca_periferico=request.POST.get('marca_cpu'),
+                descripcion_periferico=request.POST.get("descripcion_cpu"),
+                nombre_proveedor_id=request.POST.get('proveedor'),
+                precio_compra_periferico=request.POST.get('precio_compra_cpu'),
+                precio_venta_periferico=request.POST.get('precio_venta_cpu'),
+                imagen_periferico=request.FILES.get('imagen_cpu'),
+                stock_periferico=request.POST.get('stock_cpu'))
+
                 cpu_nuevo.save()
+                periferico_nuevo.save()
             else:
                 cpu_actual=CPU.objects.get(id_cpu=cpu_actual)
                 cpu_actual.cod_cpu=request.POST.get('cod_cpu')
@@ -1296,12 +1161,27 @@ def mod_cpu(request, cpu_actual=0):
 
                 cpu_actual.save() 
 
+                periferico_modificar = Perifericos.objects.get(cod_periferico = int(cpu_actual.cod_cpu))
+                periferico_modificar.marca_periferico=request.POST.get('marca_cpu')
+                periferico_modificar.descripcion_periferico=request.POST.get('descripcion_cpu')
+                periferico_modificar.nombre_proveedor_id=request.POST.get('proveedor')
+                periferico_modificar.precio_compra_periferico=request.POST.get('precio_compra_cpu')
+                periferico_modificar.precio_venta_periferico=request.POST.get('precio_venta_cpu')
+                periferico_modificar.stock_periferico=request.POST.get('stock_cpu')
+                if request.POST.get('imagen_cpu') != "":
+                    periferico_modificar.imagen_periferico=request.FILES.get('imagen_cpu')
+                else: 
+                    periferico_modificar.imagen_periferico = periferico_modificar.imagen_periferico
+                periferico_modificar.save()
+
         return redirect('ver_cpu')
     
     else:
         return redirect("login")
 
 def bor_cpu(request, cpu_actual):
+        cpu_datos = CPU.objects.get(id_cpu=cpu_actual)
+        Perifericos.objects.get(cod_periferico = int(cpu_datos.cod_cpu)).delete()
         CPU.objects.filter(id_cpu = cpu_actual).delete()
         return redirect('ver_cpu')
 
@@ -1355,7 +1235,18 @@ def mod_gab(request, gab_actual=0):
                 imagen_gab=request.FILES.get('imagen_gab'),
                 stock_gab=request.POST.get('stock_gab'))
 
+                periferico_nuevo=Perifericos(cod_periferico=request.POST.get('cod_gab'),
+                tipo_periferico=15,
+                marca_periferico=request.POST.get('marca_gab'),
+                descripcion_periferico=request.POST.get('descripcion_gab'),
+                nombre_proveedor_id=request.POST.get('proveedor'),
+                precio_compra_periferico=request.POST.get('precio_compra_gab'),
+                precio_venta_periferico=request.POST.get('precio_venta_gab'),
+                imagen_periferico=request.FILES.get('imagen_gab'),
+                stock_periferico=request.POST.get('stock_gab'))
+                
                 cpu_nuevo.save()
+                periferico_nuevo.save()
             else:
                 gab_actual=Gabinete.objects.get(id_gab=gab_actual)
                 gab_actual.cod_gab=request.POST.get('cod_gab')
@@ -1373,14 +1264,290 @@ def mod_gab(request, gab_actual=0):
 
                 gab_actual.save() 
 
+
+                periferico_modificar = Perifericos.objects.get(cod_periferico = int(gab_actual.cod_gab))
+                periferico_modificar.marca_periferico=request.POST.get('marca_gab')
+                periferico_modificar.descripcion_periferico=request.POST.get('descripcion_gab')
+                periferico_modificar.nombre_proveedor_id=request.POST.get('proveedor')
+                periferico_modificar.precio_compra_periferico=request.POST.get('precio_compra_gab')
+                periferico_modificar.precio_venta_periferico=request.POST.get('precio_venta_gab')
+                periferico_modificar.stock_periferico=request.POST.get('stock_gab')
+                if request.POST.get('imagen_gab') != "":
+                    periferico_modificar.imagen_periferico=request.FILES.get('imagen_gab')
+                else: 
+                    periferico_modificar.imagen_periferico = periferico_modificar.imagen_periferico
+                periferico_modificar.save()
+
         return redirect('ver_gab')
     
     else:
         return redirect("login")
 
 def bor_gab(request, gab_actual):
+        gab_datos = Gabinete.objects.get(id_gab = gab_actual)
+        Perifericos.objects.get(cod_periferico = int(gab_datos.cod_gab)).delete()
         Gabinete.objects.filter(id_gab = gab_actual).delete()
         return redirect('ver_gab')
+
+#--========================================Repuestos======================================--
+
+def repuestover(request):
+    if request.session.get("id_usuario"):
+        listatabla=Repuestos.objects.all()
+        listaproveedor = Proveedor.objects.all()
+        return validar(request, "productos/repuestover.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Repuestos", "subtitulo_f":"Listado de Repuestos registrados", 
+        "listatabla":listatabla, 
+        "listaproveedor": listaproveedor})
+    else:
+        return redirect("login")
+
+def repuestomod(request, repuesto_actual=0):
+    if request.session.get("id_usuario"):
+        if request.method=="GET":
+            listaproveedor = Proveedor.objects.all()
+            repu_actual=Repuestos.objects.filter(id_repuesto=repuesto_actual).exists()
+            if repu_actual:
+                datos_repuesto=Repuestos.objects.filter(id_repuesto=repuesto_actual).first()
+                return validar(request, "productos/repuestomod.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Modificar Reparación", 
+                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                "datos_act":datos_repuesto, 
+                "repuesto_actual":repuesto_actual,
+                "listaproveedor": listaproveedor})
+            else:
+                return validar(request, "productos/repuestomod.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Nuevo Repueso", "subtitulo_f":"Por favor complete todos los datos solicitados", 
+                "repuesto_actual":repuesto_actual,
+                "listaproveedor": listaproveedor})
+
+        if request.method=="POST":
+            if repuesto_actual==0:
+                repuesto_nuevo=Repuestos(id_repuesto=request.POST.get('id_repuesto'),
+                cod_repuesto=request.POST.get('cod_repuesto'),
+                tipo_repuesto=request.POST.get('tipo_repuesto'),
+                marca_repuesto=request.POST.get('marca_repuesto'),
+                descripcion_repuesto=request.POST.get("descripcion_repuesto"),
+                nombre_proveedor_id=request.POST.get('proveedor'),
+                precio_compra_repuesto=request.POST.get('precio_compra_repuesto'),
+                precio_venta_repuesto=request.POST.get('precio_venta_repuesto'),
+                imagen_repuesto=request.FILES.get('imagen_repuesto'),
+                stock_repuesto=request.POST.get('stock_repuesto'))
+
+                periferico_nuevo=Perifericos(cod_periferico=request.POST.get('cod_repuesto'),
+                tipo_periferico=12,
+                marca_periferico=request.POST.get('marca_repuesto'),
+                descripcion_periferico=request.POST.get("descripcion_repuesto"),
+                nombre_proveedor_id=request.POST.get('proveedor'),
+                precio_compra_periferico=request.POST.get('precio_compra_repuesto'),
+                precio_venta_periferico=request.POST.get('precio_venta_repuesto'),
+                imagen_periferico=request.FILES.get('imagen_repuesto'),
+                stock_periferico=request.POST.get('stock_repuesto'))
+
+                repuesto_nuevo.save()
+                periferico_nuevo.save()
+            else:
+                repuesto_actual=Repuestos.objects.get(id_repuesto=repuesto_actual)
+                repuesto_actual.cod_repuesto=request.POST.get('cod_repuesto')
+                repuesto_actual.tipo_repuesto=request.POST.get('tipo_repuesto')
+                repuesto_actual.marca_repuesto=request.POST.get('marca_repuesto')
+                repuesto_actual.descripcion_repuesto=request.POST.get('descripcion_repuesto')
+                repuesto_actual.nombre_proveedor_id=request.POST.get('proveedor')
+                repuesto_actual.precio_compra_repuesto=request.POST.get('precio_compra_repuesto')
+                repuesto_actual.precio_venta_repuesto=request.POST.get('precio_venta_repuesto')
+                if request.POST.get('imagen_repuesto') != "":
+                    repuesto_actual.imagen_repuesto=request.FILES.get('imagen_repuesto')
+                else: 
+                    repuesto_actual.imagen_repuesto = repuesto_actual.imagen_repuesto
+                repuesto_actual.stock_repuesto = request.POST.get('stock_repuesto')
+
+                repuesto_actual.save() 
+
+                periferico_modificar = Perifericos.objects.get(cod_periferico = int(periferico_actual.cod_periferico))
+                periferico_modificar.marca_periferico=request.POST.get('marca_repuesto')
+                periferico_modificar.descripcion_periferico=request.POST.get('descripcion_repuesto')
+                periferico_modificar.nombre_proveedor_id=request.POST.get('proveedor')
+                periferico_modificar.precio_compra_periferico=request.POST.get('precio_compra_repuesto')
+                periferico_modificar.precio_venta_periferico=request.POST.get('precio_venta_repuesto')
+                periferico_modificar.stock_periferico=request.POST.get('stock_repuesto')
+                if request.POST.get('imagen_repuesto') != "":
+                    periferico_modificar.imagen_periferico=request.FILES.get('imagen_repuesto')
+                else: 
+                    periferico_modificar.imagen_periferico = periferico_modificar.imagen_periferico
+                periferico_modificar.save()
+
+        return redirect('repuestover')
+    
+    else:
+        return redirect("login")
+
+def repuestobor(request, repuesto_actual):
+        repuesto_datos = Repuestos.objects.get(id_repuesto = repuesto_actual)
+        Perifericos.objects.get(cod_periferico = int(repuesto_datos.cod_repuesto)).delete()
+        Repuestos.objects.filter(id_repuesto = repuesto_actual).delete()
+        return redirect('repuestover')
+
+
+#--=======================================Perifericos======================================--
+
+def perifericover(request):
+    if request.session.get("id_usuario"):
+        listatabla=Perifericos.objects.all()
+        listaproveedor = Proveedor.objects.all()
+        return validar(request, "productos/perifericover.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Perifericos", "subtitulo_f":"Listado de Perifericos registrados", 
+        "listatabla":listatabla, 
+        "listaproveedor": listaproveedor})
+    else:
+        return redirect("login")
+
+def perifericomod(request, periferico_actual=0):
+    if request.session.get("id_usuario"):
+        if request.method=="GET":
+            listaproveedor = Proveedor.objects.all()
+            peri_actual=Perifericos.objects.filter(id_periferico=periferico_actual).exists()
+            if peri_actual:
+                datos_per=Perifericos.objects.filter(id_periferico=periferico_actual).first()
+                return validar(request, "productos/perifericomod.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Modificar Periférico", 
+                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                "datos_act":datos_per, 
+                "periferico_actual":periferico_actual,
+                "listaproveedor": listaproveedor})
+            else:
+                return validar(request, "productos/perifericomod.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Nuevo Periférico", "subtitulo_f":"Por favor complete todos los datos solicitados", 
+                "periferico_actual":periferico_actual,
+                "listaproveedor": listaproveedor})
+
+        if request.method=="POST":
+            if periferico_actual==0:
+                perif_nuevo=Perifericos(cod_periferico=request.POST.get('cod_periferico'),
+                tipo_periferico=request.POST.get('tipo_periferico'),
+                marca_periferico=request.POST.get('marca_periferico'),
+                descripcion_periferico=request.POST.get("descripcion_periferico"),
+                nombre_proveedor_id=request.POST.get('proveedor'),
+                precio_compra_periferico=request.POST.get('precio_compra_periferico'),
+                precio_venta_periferico=request.POST.get('precio_venta_periferico'),
+                imagen_periferico=request.FILES.get('imagen_periferico'),
+                stock_periferico=request.POST.get('stock_periferico'))
+
+                perif_nuevo.save()
+            else:
+                periferico_actual=Perifericos.objects.get(id_periferico=periferico_actual)
+                periferico_actual.cod_periferico=request.POST.get('cod_periferico')
+                periferico_actual.tipo_periferico=request.POST.get('tipo_periferico')
+                periferico_actual.marca_periferico=request.POST.get('marca_periferico')
+                periferico_actual.descripcion_periferico=request.POST.get('descripcion_periferico')
+                periferico_actual.nombre_proveedor_id=request.POST.get('proveedor')
+                periferico_actual.precio_compra_periferico=request.POST.get('precio_compra_periferico')
+                periferico_actual.precio_venta_periferico=request.POST.get('precio_venta_periferico')
+                if request.POST.get('imagen_periferico') != "":
+                    periferico_actual.imagen_periferico=request.FILES.get('imagen_periferico')
+                else: 
+                    periferico_actual.imagen_periferico = periferico_actual.imagen_periferico
+                periferico_actual.stock_periferico = request.POST.get('stock_periferico')
+
+                periferico_actual.save() 
+
+                if (int(periferico_actual.tipo_periferico) == 11):
+                    placa_base_modificar = Placa_base.objects.get(cod_placa_base = periferico_actual.cod_periferico)
+                    placa_base_modificar.marca_placa_base=request.POST.get('marca_periferico')
+                    placa_base_modificar.descripcion_placa_base=request.POST.get('descripcion_periferico')
+                    placa_base_modificar.nombre_proveedor_id=request.POST.get('proveedor')
+                    placa_base_modificar.precio_compra_placa_base=request.POST.get('precio_compra_periferico')
+                    placa_base_modificar.precio_venta_placa_base=request.POST.get('precio_venta_periferico')
+                    placa_base_modificar.stock_placa_base=request.POST.get('stock_periferico')
+                    if request.POST.get('imagen_periferico') != "":
+                        placa_base_modificar.imagen_placa_base=request.FILES.get('imagen_periferico')
+                    else: 
+                        placa_base_modificar.imagen_placa_base = placa_base_modificar.imagen_placa_base
+                    placa_base_modificar.save()
+                    print("HOLA")
+
+                if (int(repuesto_actual.tipo_periferico) == 12):
+                    repuesto_modificar = Repuestos.objects.get(cod_repuesto = periferico_actual.cod_periferico)
+                    repuesto_modificar.marca_repuesto=request.POST.get('marca_periferico')
+                    repuesto_modificar.descripcion_repuesto=request.POST.get('descripcion_periferico')
+                    repuesto_modificar.nombre_proveedor_id=request.POST.get('proveedor')
+                    repuesto_modificar.precio_compra_repuesto=request.POST.get('precio_compra_periferico')
+                    repuesto_modificar.precio_venta_repuesto=request.POST.get('precio_venta_periferico')
+                    repuesto_modificar.stock_repuesto=request.POST.get('stock_periferico')
+                    if request.POST.get('imagen_periferico') != "":
+                        repuesto_modificar.imagen_repuesto=request.FILES.get('imagen_periferico')
+                    else: 
+                        repuesto_modificar.imagen_repuesto = repuesto_modificar.imagen_repuesto
+                    repuesto_modificar.save()
+
+                if (int(ram_actual.tipo_periferico) == 13):
+                    ram_modificar = RAM.objects.get(cod_ram = periferico_actual.cod_periferico)
+                    ram_modificar.marca_ram=request.POST.get('marca_periferico')
+                    ram_modificar.descripcion_ram=request.POST.get('descripcion_periferico')
+                    ram_modificar.nombre_proveedor_id=request.POST.get('proveedor')
+                    ram_modificar.precio_compra_ram=request.POST.get('precio_compra_periferico')
+                    ram_modificar.precio_venta_ram=request.POST.get('precio_venta_periferico')
+                    ram_modificar.stock_ram=request.POST.get('stock_periferico')
+                    if request.POST.get('imagen_periferico') != "":
+                        ram_modificar.imagen_ram=request.FILES.get('imagen_periferico')
+                    else: 
+                        ram_modificar.imagen_ram = ram_modificar.imagen_ram
+                    ram_modificar.save()
+
+                if (int(ram_actual.tipo_periferico) == 14):
+                    cpu_modificar = CPU.objects.get(cod_cpu = periferico_actual.cod_periferico)
+                    cpu_modificar.marca_cpu=request.POST.get('marca_periferico')
+                    cpu_modificar.descripcion_cpu=request.POST.get('descripcion_periferico')
+                    cpu_modificar.nombre_proveedor_id=request.POST.get('proveedor')
+                    cpu_modificar.precio_compra_cpu=request.POST.get('precio_compra_periferico')
+                    cpu_modificar.precio_venta_cpu=request.POST.get('precio_venta_periferico')
+                    cpu_modificar.stock_cpu=request.POST.get('stock_periferico')
+                    if request.POST.get('imagen_periferico') != "":
+                        cpu_modificar.imagen_cpu=request.FILES.get('imagen_periferico')
+                    else: 
+                        cpu_modificar.imagen_cpu = cpu_modificar.imagen_cpu
+                    cpu_modificar.save()
+                
+                if (int(gab_actual.tipo_periferico) == 15):
+                    gab_modificar = Gabinete.objects.get(cod_gab = periferico_actual.cod_periferico)
+                    gab_modificar.marca_gab=request.POST.get('marca_periferico')
+                    gab_modificar.descripcion_gab=request.POST.get('descripcion_periferico')
+                    gab_modificar.nombre_proveedor_id=request.POST.get('proveedor')
+                    gab_modificar.precio_compra_gab=request.POST.get('precio_compra_periferico')
+                    gab_modificar.precio_venta_gab=request.POST.get('precio_venta_periferico')
+                    gab_modificar.stock_gab=request.POST.get('stock_periferico')
+                    if request.POST.get('imagen_periferico') != "":
+                        gab_modificar.imagen_gab=request.FILES.get('imagen_periferico')
+                    else: 
+                        gab_modificar.imagen_gab = gab_modificar.imagen_gab
+                    gab_modificar.save()
+
+
+        return redirect('perifericover')
+    
+    else:
+        return redirect("login")
+
+def perifericobor(request, periferico_actual):
+        periferico_datos=Perifericos.objects.get(id_periferico = periferico_actual)
+        Perifericos.objects.filter(id_periferico = periferico_actual).delete()
+        if int(periferico_datos.tipo_periferico) == 11:
+            Placa_base.objects.get(cod_placa_base = periferico_datos.cod_periferico).delete()
+        if int(periferico_datos.tipo_periferico) == 12:
+            Repuestos.objects.get(cod_repuesto = periferico_datos.cod_periferico).delete()
+        if int(periferico_datos.tipo_periferico) == 13:
+            RAM.objects.get(cod_ram = periferico_datos.cod_periferico).delete()
+        if int(periferico_datos.tipo_periferico) == 14:
+            CPU.objects.get(cod_cpu = periferico_datos.cod_periferico).delete()
+        if int(periferico_datos.tipo_periferico) == 15:
+            Gabinete.objects.get(cod_gab = periferico_datos.cod_periferico).delete()
+        return redirect('perifericover')
+
         
 #--=======================================Listado_General======================================--
 
