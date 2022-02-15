@@ -167,7 +167,7 @@
                         <select class="form-select mb-3" name="tipo_periferico" id="tipo_periferico">
                             <option value=0>--SELECCIONE UNA OPCION--</option>
                             {% for lista in parameters.listaperiferico %}
-                            {% if lista.tipo_periferico != 8 and lista.tipo_periferico != 1 and lista.tipo_periferico != 3 %}
+                            {% if lista.tipo_periferico != 8 and lista.tipo_periferico != 1 and lista.tipo_periferico != 3 and lista.tipo_periferico != 11 and lista.tipo_periferico != 12 and lista.tipo_periferico != 13 and lista.tipo_periferico != 14 and lista.tipo_periferico != 15 %}
                             <option value="{{lista.id_periferico}}" {% if lista.id_periferico == parameters.datos_act.id_periferico_id%} selected {% endif %}>
                                 {{lista.descripcion_periferico}}
                             </option>
@@ -220,7 +220,7 @@
                         <label class="float-label">Fecha de Inicio</label>
                         <span class="form-bar"></span>
                         <input type="date" name="inicio_mont" class="form-control" required 
-                            value="{{parameters.datos_act.inicio_mont}}">
+                            value="{{parameters.fecha_act}}">
                     </div>
                 
                     <div class="form-group form-default mb-3">

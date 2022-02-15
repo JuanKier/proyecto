@@ -123,97 +123,15 @@
 										{%if lista.tipo_periferico == 8 %}<td>Placa de Video</td>{% endif %}
 										{%if lista.tipo_periferico == 9 %}<td>Impresora</td>{% endif %}
 										{%if lista.tipo_periferico == 10 %}<td>Otros</td>{% endif %}
+										{%if lista.tipo_periferico == 11 %}<td>Placa Base</td>{% endif %}
+										{%if lista.tipo_periferico == 12 %}<td>Repuesto</td>{% endif %}
+										{%if lista.tipo_periferico == 13 %}<td>Memoria RAM</td>{% endif %}
+										{%if lista.tipo_periferico == 14 %}<td>Procesador</td>{% endif %}
+										{%if lista.tipo_periferico == 15 %}<td>Gabinete</td>{% endif %}
 										<td>{{ lista.marca_periferico }}</td>
 										<td class="item-title">{{ lista.descripcion_periferico }}</td>
 										<td class="item-price">{{ lista.precio_venta_periferico }}</td>
 										<td>{{ lista.stock_periferico }}</td>
-										<td><button type="button" class = "item-button btn btn-primary addToCart">Carrito</button></td>
-										{% endfor %}
-									{% for lista in parameters.listarepuesto %}
-									<tr class="item">
-										<td>{{ lista.cod_repuesto }}</td>
-										{% if lista.imagen_repuesto != '' %}
-										<td><img class="item-image" src="{{ lista.imagen_repuesto.url }}" width="100" height="100"></td>
-										{% else %}
-										<td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
-												height="100"></td>
-										{% endif %}
-										{%if lista.tipo_repuesto == 1 %}<td>Batería</td>{% endif %}
-										{%if lista.tipo_repuesto == 2 %}<td>Cargador</td>{% endif %}
-										{%if lista.tipo_repuesto == 3 %}<td>Pantalla</td>{% endif %}
-										{%if lista.tipo_repuesto == 4 %}<td>Teclado</td>{% endif %}
-										{%if lista.tipo_repuesto == 5 %}<td>Otros</td>{% endif %}
-										<td>{{ lista.marca_repuesto }}</td>
-										<td class="item-title">{{ lista.descripcion_repuesto }}</td>
-										<td class="item-price">{{ lista.precio_venta_repuesto }}</td>
-										<td>{{ lista.stock_repuesto }}</td>
-										<td><button type="button" class = "item-button btn btn-primary addToCart">Carrito</button></td>
-										{% endfor %}
-									{% for lista in parameters.listacpu %}
-									<tr class="item">
-										<td>{{ lista.cod_cpu }}</td>
-										{% if lista.imagen_cpu != '' %}
-										<td><img class="item-image" src="{{ lista.imagen_cpu.url }}" width="100" height="100">
-										</td>
-										{% else %}
-										<td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
-												height="100"></td>
-										{% endif %}
-										<td>Procesador</td>
-										<td>{{ lista.marca_cpu }}</td>
-										<td class="item-title">{{ lista.descripcion_cpu }}</td>
-										<td class="item-price">{{ lista.precio_venta_cpu }}</td>
-										<td>{{ lista.stock_cpu }}</td>
-										<td><button type="button" class = "item-button btn btn-primary addToCart">Carrito</button></td>
-										{% endfor %}
-									{% for lista in parameters.listagabinete %}
-									<tr class="item">
-										<td>{{ lista.cod_gab }}</td>
-										{% if lista.imagen_gab != '' %}
-										<td><img class="item-image" src="{{ lista.imagen_gab.url }}" width="100" height="100">
-										</td>
-										{% else %}
-										<td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
-												height="100"></td>
-										{% endif %}
-										<td>Gabinete</td>
-										<td>{{ lista.marca_gab }}</td>
-										<td class="item-title">{{ lista.descripcion_gab }}</td>
-										<td class="item-price">{{ lista.precio_venta_gab }}</td>
-										<td>{{ lista.stock_gab }}</td>
-										<td><button type="button" class = "item-button btn btn-primary addToCart">Carrito</button></td>
-										{% endfor %}
-									{% for lista in parameters.listaplaca %}
-									<tr class="item">
-										<td>{{ lista.cod_placa_base }}</td>
-										{% if lista.imagen_placa_base != '' %}
-										<td><img class="item-image" src="{{ lista.imagen_placa_base.url }}" width="100" height="100"></td>
-										{% else %}
-										<td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
-												height="100"></td>
-										{% endif %}
-										<td>Placa Base</td>
-										<td>{{ lista.marca_placa_base }}</td>
-										<td class="item-title">{{ lista.descripcion_placa_base }}</td>
-										<td class="item-price">{{ lista.precio_venta_placa_base }}</td>
-										<td>{{ lista.stock_placa_base }}</td>
-										<td><button type="button" class = "item-button btn btn-primary addToCart">Carrito</button></td>
-										{% endfor %}
-									{% for lista in parameters.listaram %}
-									<tr class="item">
-										<td>{{ lista.cod_ram }}</td>
-										{% if lista.imagen_ram != '' %}
-										<td><img class="item-image" src="{{ lista.imagen_ram.url }}" width="100" height="100">
-										</td>
-										{% else %}
-										<td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
-												height="100"></td>
-										{% endif %}
-										<td>Memoria RAM</td>
-										<td>{{ lista.marca_ram }}</td>
-										<td class="item-title">{{ lista.descripcion_ram }}</td>
-										<td class="item-price">{{ lista.precio_venta_ram }}</td>
-										<td>{{ lista.stock_ram }}</td>
 										<td><button type="button" class = "item-button btn btn-primary addToCart">Carrito</button></td>
 										{% endfor %}
 									</tr>

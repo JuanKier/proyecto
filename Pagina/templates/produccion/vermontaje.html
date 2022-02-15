@@ -19,7 +19,7 @@
         <div class="card-header">
             
             <div class="form-group form-default" style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="margin: 0">Montajes</h3><a href="#"><button class="btn btn-success btn-round waves-effect waves-light">Nuevo Montaje</button></a>
+                <h3 style="margin: 0">Montajes</h3><a href="javascript:mostrar_modal()" class="btn waves-effect waves-light btn-success btn-icon">Nuevo Montaje</a>
             </div>
             <div class="py-4">
                 <div class="col-md-12">
@@ -95,11 +95,79 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>.
+            <div class="modal fade" id="modal_placas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Seleccionar Placa Base</h5>
+                            <button onclick="cerrar_modal()" type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table id="example" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Código</th>
+                                        <th>Imagen</th>
+                                        <th>Tamaño</th>
+                                        <th>Marca</th>
+                                        <th>Descripción</th>
+                                        <th>Precio Venta</th>
+                                        <th>Stock</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for lista in parameters.listaplaca %}
+                                    <tr>
+                                        <td>{{ lista.cod_placa_base }}</td>
+                                        {% if lista.imagen_placa_base %}
+                                        <td><img src="{{ lista.imagen_placa_base.url }}" width="100" height="100"></td>
+                                        {% endif %}
+                                        <td>
+                                            {%for lista3 in parameters.listagabinete%}
+                                            {% if lista3.id_tipo_gabinete == lista.tipo_gabinete_placa_base_id%}
+                                            {{lista3.desc_tipo_gabinete}}
+                                            {%endif%}
+                                            {%endfor%}
+                                        </td>
+                                        <td>{{ lista.marca_placa_base }}</td>
+                                        <td>{{ lista.descripcion_placa_base }}</td>
+                                        <td>{{ lista.precio_venta_placa_base }}</td>
+                                        <td>{{ lista.stock_placa_base }}</td>
+                                        <td>
+                                            <div class="icon-btn">
+                                                <a href="{% url 'nuevomontaje' lista.id_placa_base 0 %}"
+                                                    class="btn waves-effect waves-light btn-info btn-icon"
+                                                    style="color: white;" data-toggle="tooltip" data-placement="top" title=""
+                                                    data-original-title="Modificar Registro">Seleccionar</a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
         </div>
     </div>
     <script src="{%static 'js/app.js'%}"></script>
     <script>
+        function mostrar_modal() {
+        	$(document).ready(function () {
+            $('#modal_placas').modal('show');
+        	});
+    	}
+
+		function cerrar_modal() {
+        	$(document).ready(function () {
+            $('#modal_placas').modal('hide');
+        	});
+    	}
+
         function alerta() {
             if (sessionStorage.getItem('1') == 1) {
                 Swal.fire({

@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from Pagina.models import *
+from datetime import date
 
 # Create your views here.
 
@@ -37,24 +38,14 @@ def index(request):
 def venta(request):
     if request.session.get("id_usuario"):
         listaperiferico = Perifericos.objects.all()
-        listagabinete = Gabinete.objects.all()
-        listacpu = CPU.objects.all()
-        listaram = RAM.objects.all()
-        listaplaca = Placa_base.objects.all()
-        listarepuesto = Repuestos.objects.all()
         listaproveedor = Proveedor.objects.all()
         listacliente = Cliente.objects.all()
         return validar(request, "venta.html", 
         {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
         "titulo_f":"Nueva Venta", 
-        "listagabinete":listagabinete,
         "listaperiferico":listaperiferico,
-        "listacpu":listacpu,
-        "listaram":listaram,
-        "listaplaca":listaplaca,
         "listaproveedor":listaproveedor,
-        "listacliente":listacliente,
-        "listarepuesto": listarepuesto})
+        "listacliente":listacliente,})
     else:
         return redirect("login")  
 
@@ -760,7 +751,7 @@ def vermontaje(request):
     else:
         return redirect("login")
 
-def nuevomontaje (request, placa_base_actual, montaje_actual=0):
+def nuevomontaje (request, placa_base_actual=0, montaje_actual=0):
     if request.session.get("id_usuario"):
         if request.method == "GET":
             listamontaje=Montaje.objects.all()
@@ -793,7 +784,8 @@ def nuevomontaje (request, placa_base_actual, montaje_actual=0):
                 "listacliente": listacliente,
                 "listaperiferico":listaperiferico,
                 "listamontaje":listamontaje,
-                "listausuario": listausuario})
+                "listausuario": listausuario,
+                "fecha_act": date.today().isoformat()})
             else:
                 return validar(request, "produccion/nuevomontaje.html", 
                         {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
@@ -808,7 +800,8 @@ def nuevomontaje (request, placa_base_actual, montaje_actual=0):
                         "datosplaca":datosplaca,
                         "listausuario":listausuario,
                         "listacliente":listacliente,
-                        "listaperiferico":listaperiferico})
+                        "listaperiferico":listaperiferico,
+                        "fecha_act": date.today().isoformat()})
 
         if request.method=="POST":
             print(request.POST.get('placa_base_actual'))
@@ -1469,9 +1462,8 @@ def perifericomod(request, periferico_actual=0):
                     else: 
                         placa_base_modificar.imagen_placa_base = placa_base_modificar.imagen_placa_base
                     placa_base_modificar.save()
-                    print("HOLA")
 
-                if (int(repuesto_actual.tipo_periferico) == 12):
+                if (int(periferico_actual.tipo_periferico) == 12):
                     repuesto_modificar = Repuestos.objects.get(cod_repuesto = periferico_actual.cod_periferico)
                     repuesto_modificar.marca_repuesto=request.POST.get('marca_periferico')
                     repuesto_modificar.descripcion_repuesto=request.POST.get('descripcion_periferico')
@@ -1485,7 +1477,7 @@ def perifericomod(request, periferico_actual=0):
                         repuesto_modificar.imagen_repuesto = repuesto_modificar.imagen_repuesto
                     repuesto_modificar.save()
 
-                if (int(ram_actual.tipo_periferico) == 13):
+                if (int(periferico_actual.tipo_periferico) == 13):
                     ram_modificar = RAM.objects.get(cod_ram = periferico_actual.cod_periferico)
                     ram_modificar.marca_ram=request.POST.get('marca_periferico')
                     ram_modificar.descripcion_ram=request.POST.get('descripcion_periferico')
@@ -1499,7 +1491,7 @@ def perifericomod(request, periferico_actual=0):
                         ram_modificar.imagen_ram = ram_modificar.imagen_ram
                     ram_modificar.save()
 
-                if (int(ram_actual.tipo_periferico) == 14):
+                if (int(periferico_actual.tipo_periferico) == 14):
                     cpu_modificar = CPU.objects.get(cod_cpu = periferico_actual.cod_periferico)
                     cpu_modificar.marca_cpu=request.POST.get('marca_periferico')
                     cpu_modificar.descripcion_cpu=request.POST.get('descripcion_periferico')
@@ -1513,7 +1505,7 @@ def perifericomod(request, periferico_actual=0):
                         cpu_modificar.imagen_cpu = cpu_modificar.imagen_cpu
                     cpu_modificar.save()
                 
-                if (int(gab_actual.tipo_periferico) == 15):
+                if (int(periferico_actual.tipo_periferico) == 15):
                     gab_modificar = Gabinete.objects.get(cod_gab = periferico_actual.cod_periferico)
                     gab_modificar.marca_gab=request.POST.get('marca_periferico')
                     gab_modificar.descripcion_gab=request.POST.get('descripcion_periferico')
