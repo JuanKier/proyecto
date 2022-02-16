@@ -186,7 +186,7 @@
                         value="{{cliente.ruc_cliente}}" 
                         {% endif %}
                         {% endfor %} 
-                        onfocusout="traerCliente(this)" required>
+                        onfocusout="traerCliente(this)" onload="traerCliente(this)" required>
                     </div>
                     <div>
                         <label class="float-label">Nombre del Cliente</label>

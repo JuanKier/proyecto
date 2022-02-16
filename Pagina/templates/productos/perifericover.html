@@ -75,8 +75,8 @@
                                     {%endif%}
                                     {%endfor%}
                                 </td>
-                                <td>{{ lista.precio_compra_periferico }}</td>
-                                <td>{{ lista.precio_venta_periferico }}</td>
+                                <td class="precio">{{ lista.precio_compra_periferico }}</td>
+                                <td class="precio">{{ lista.precio_venta_periferico }}</td>
                                 <td>{{ lista.stock_periferico }}</td>
                                 <td>
                                     <div class="icon-btn">
@@ -131,6 +131,17 @@
             }
         }
         window.onload = alerta()
+
+        function formatText(data) {
+            data = document.getElementsByClassName(data)
+            var value
+            for(let i = 0; i < data.length; i++) {
+                value = data[i].innerText
+                value = parseFloat(value).toLocaleString('es')
+                data[i].innerText = value
+            }
+        }       
+        formatText("precio") //formatear numeros
     </script>
 </body>
 
