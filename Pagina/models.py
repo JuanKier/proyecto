@@ -182,3 +182,26 @@ class Montaje(models.Model):
     nombre_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE, null=True)
     nombre_completo_usuario = models.ForeignKey(Usuario, on_delete=models.CASCADE, null=True)
     estado_mont = models.IntegerField(default=1, null=True)
+
+
+class timbrado(models.Model):
+    nro_timbrado = models.IntegerField(primary_key=True)
+    id_proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
+    fch_vencimiento_timbrado = models.DateField()
+
+class factura_compra(models.Model):
+    id_factura_compra = models.AutoField(primary_key=True)
+    codigo_proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
+    nro_timbrado = models.ForeignKey(timbrado, on_delete=models.CASCADE)
+    nro_factura_compra = models.IntegerField()
+    fch_factura_compra = models.DateField()
+    condicion_factura_compra = models.IntegerField()
+    iva10_factura_compra = models.FloatField()
+    total_factura_compra = models.FloatField()
+
+class factura_compra_detalle(models.Model):
+    id_factura_compra_detalle = models.AutoField(primary_key=True)
+    id_factura_compra = models.ForeignKey(factura_compra, on_delete=models.CASCADE)
+    id_periferico = models.ForeignKey(Perifericos, on_delete=models.CASCADE)
+    cant_periferico = models.IntegerField()
+    subtotal_periferico = models.FloatField()

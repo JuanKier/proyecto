@@ -84,54 +84,47 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header">
-				<form  style="margin: 1em;border-radius: 10px;" enctype="multipart/form-data" action="#" method="POST" onsubmit="sessionStorage.setItem('1', 1)"; style="margin: 1em">
+				<form style="margin: 1em;border-radius: 10px;" enctype="multipart/form-data" action="#" method="POST" onsubmit="handleSubmit(this)"; style="margin: 1em">
 					{% csrf_token %}
 					<input type="text" id="precio" name="precio"> 
 					<div class="card" style="padding: 0.5em;">
-						<h1 class="text-center" style="padding: 0.5em;">VENTA</h1>
+						<h1 class="text-center" style="padding: 0.5em;">COMPRA</h1>
 						<div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
 							<div>
-								<label class="float-label">CI o RUC de Cliente</label>
+								<label class="float-label">RUC del Proveedor</label>
 								<span class="form-bar"></span>
-								<input class="form-control mb-3" type="text" name="ruc_cliente" id="ruc_cliente" 
-								{% for cliente in parameters.listacliente %}
-								{% if cliente.codigo_cliente == parameters.datos_act.nombre_cliente_id %} 
-								value="{{cliente.ruc_cliente}}" 
+								<input class="form-control mb-3" type="text" name="ruc_proveedor" id="ruc_proveedor" 
+								{% for proveedor in parameters.listaproveedor %}
+								{% if proveedor.codigo_proveedor == parameters.datos_act.nombre_proveedor_id %} 
+								value="{{proveedor.ruc_proveedor}}" 
 								{% endif %}
 								{% endfor %} 
-								onfocusout="traerCliente(this)" required>
+								onfocusout="traerProveedor(this)" required>
 							</div>
 			
 							<div class="form-group form-default mb-3">
-								<label class="float-label">Fecha de Venta</label>
+								<label class="float-label">Fecha de Compra</label>
 								<span class="form-bar"></span>
 								<input type="date" name="" class="form-control" required readonly
 									value="{{parameters.fecha_act}}">
 							</div>
 							<div>
-								<label class="float-label">Nombre del Cliente</label>
-								<label class="form-control mb-3" id="nombre_cliente" readonly> </label>
-								<input type="text" style="display: none;" id="id_cliente" name="id_cliente">
+								<label class="float-label">Razón Social del Proveedor</label>
+								<label class="form-control mb-3" id="razon_social_proveedor" readonly> </label>
+								<input type="text" style="display: none;" id="codigo_proveedor" name="codigo_proveedor"> 
 							</div>
 							<div>
-								<label class="float-label">Teléfono Cliente</label>
-								<label class="form-control mb-3" id="telefono_cliente" readonly> </label>
-								<input type="text" style="display: none;" id="id_cliente" name="id_cliente">
+								<label class="float-label">Teléfono Proveedor</label>
+								<label class="form-control mb-3" id="telefono_proveedor" readonly> </label>
+								<input type="text" style="display: none;" id="codigo_proveedor" name="codigo_proveedor">
 							</div>
 							<div>
-								<label class="float-label">Direccion del Cliente</label>
-								<label class="form-control mb-3" id="direccion_cliente" readonly> </label>
-								<input type="text" style="display: none;" id="id_cliente" name="id_cliente">
-							</div>
-							<div>
-								<label class="float-label">Ciudad del Cliente</label>
-								<label class="form-control mb-3" id="nombre_ciudad" readonly> </label>
-								<input type="text" style="display: none;" id="id_cliente" name="id_cliente">
+								<label class="float-label">Direccion del Proveedor</label>
+								<label class="form-control mb-3" id="direccion_proveedor" readonly> </label>
+								<input type="text" style="display: none;" id="codigo_proveedor" name="codigo_proveedor">
 							</div>
 						</div>
 					</div>
-					
-
 					<div class="input-confirmar card">
 						<section class="store">
 							<table id="item" class="table table-striped" style="width:100%">
@@ -303,31 +296,25 @@
 
 
 	 {% if  parameters.mant_actual > 0 %}
-        traerCliente(document.getElementById("ruc_cliente"))
+        traerProveedor(document.getElementById("ruc_proveedor"))
     {% endif %}
 
 
-    function traerCliente(event) { //event es el input donde se carga el valor
+    function traerProveedor(event) { //event es el input donde se carga el valor
         var flag = false
-        var nCliente = document.getElementById("nombre_cliente") //traigo el label que se va a modificar con el nombre del cliente
-		var tCliente = document.getElementById("telefono_cliente")
-		var dCliente = document.getElementById("direccion_cliente")
-		var cCliente = document.getElementById("nombre_ciudad")
-        var inputCliente = document.getElementById("id_cliente")
+        var nCliente = document.getElementById("razon_social_proveedor") //traigo el label que se va a modificar con el nombre del cliente
+		var tCliente = document.getElementById("telefono_proveedor")
+		var dCliente = document.getElementById("direccion_proveedor")
+        var inputCliente = document.getElementById("codigo_proveedor")
 
-        {% for lista in parameters.listacliente %}
-        var ruc_cliente = "{{lista.ruc_cliente}}"   //se trae cedula del cliente
+        {% for lista in parameters.listaproveedor %}
+        var ruc_proveedor = "{{lista.ruc_proveedor}}"   //se trae cedula del cliente
 
-        if (event.value == ruc_cliente) { //se compara si las cedulas de la base de datos coincide con el del input
-            nCliente.innerHTML = "{{lista.nombre_cliente}}"   //si coincide se carga el nombre al label
-			tCliente.innerHTML = "{{lista.telefono_cliente}}"
-			dCliente.innerHTML = "{{lista.direccion_cliente}}"
-			{% for lista1 in parameters.listaciudad %}
-				{% if lista1.codigo_ciudad == lista.nombre_ciudad_id %}
-					cCliente.innerHTML = "{{lista1.nombre_ciudad}}"
-				{% endif %}
-			{% endfor %}
-            inputCliente.value = "{{lista.codigo_cliente}}"
+        if (event.value == ruc_proveedor) { //se compara si las cedulas de la base de datos coincide con el del input
+            nCliente.innerHTML = "{{lista.razon_social_proveedor}}"   //si coincide se carga el nombre al label
+			tCliente.innerHTML = "{{lista.telefono_proveedor}}"
+			dCliente.innerHTML = "{{lista.direccion_proveedor}}"
+            inputCliente.value = "{{lista.codigo_proveedor}}"
             flag = true
         }
 
@@ -335,7 +322,6 @@
             nCliente.innerHTML = "No existe ese cliente"//si coincide se muestra el mensaje en el label
 			tCliente.innerHTML = "No existe ese cliente"
 			dCliente.innerHTML = "No existe ese cliente"
-			cCliente.innerHTML = "No existe ese cliente"
 
         }
         {% endfor %}
@@ -344,9 +330,31 @@
             nCliente.innerHTML = " "
 			tCliente.innerHTML = " "
 			dCliente.innerHTML = " "
-			cCliente.innerHTML = " "
         }
     }
+
+	function handleSubmit(e) {
+		e.preventDefault()
+		sessionStorage.setItem('1', 1)
+
+		$.ajax({
+			url: "{% url 'compra' %}",
+			type: 'POST',
+			data:{
+				'codigo_proveedor': '{{parameters.datos_act.nombre_proveedor_id}}',
+				'timbrado_id': "",
+				'nro_factura': "",
+				'condicion': 0,
+				'iva10': '',
+				'total': '',
+				'csrfmiddlewaretoken': '{{csrf_token}}'
+			},
+			success: 
+			function(data){
+				
+			}
+		})
+	}
     // $(function() {
     //     $('#tipo_periferico').change(function() {
     //         console.log($(this).val());

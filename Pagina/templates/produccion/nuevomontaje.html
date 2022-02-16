@@ -182,11 +182,11 @@
                         <span class="form-bar"></span>
                         <input class="form-control mb-3" type="text" name="ruc_cliente" id="ruc_cliente" 
                         {% for cliente in parameters.listacliente %}
-                         {% if cliente.codigo_cliente == parameters.datos_act.nombre_cliente_id %} 
-                         value="{{cliente.ruc_cliente}}" 
-                         {% endif %}
-                         {% endfor %} 
-                         onfocusout="traerCliente(this)" required>
+                        {% if cliente.codigo_cliente == parameters.datos_act.nombre_cliente_id %} 
+                        value="{{cliente.ruc_cliente}}" 
+                        {% endif %}
+                        {% endfor %} 
+                        onfocusout="traerCliente(this)" required>
                     </div>
                     <div>
                         <label class="float-label">Nombre del Cliente</label>

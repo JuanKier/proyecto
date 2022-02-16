@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from Pagina.models import *
 from datetime import date
+from django.http import HttpResponse, JsonResponse, response
 
 # Create your views here.
 
@@ -34,20 +35,80 @@ def index(request):
         return validar(request, "index.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Usuarios", "subtitulo_f":"Listado de Usuarios registrados", "listatabla":listatabla, "listagabinete":listagabinete,"listaproveedor": listaproveedor})
     else:
         return redirect("login")
-     
-def venta(request):
-    if request.session.get("id_usuario"):
+        
+def compra(request):
+    if request.method == "GET":
         listaperiferico = Perifericos.objects.all()
         listaproveedor = Proveedor.objects.all()
         listacliente = Cliente.objects.all()
+        return validar(request, "compra.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Nueva Compra", 
+        "listaperiferico":listaperiferico,
+        "listaproveedor":listaproveedor,
+        "listacliente":listacliente,
+        "fecha_act": date.today().isoformat()})
+    elif request.method == "POST":
+        id_ultima_factura=0
+
+        factura_compra_nueva=factura_compra(
+        codigo_proveedor_id=request.POST.get('codigo_proveedor'), 
+        nro_timbrado_id=request.POST.get('timbrado_id'), 
+        tipo_usuario=request.POST.get('tipo_usuario'), 
+        nro_factura_compra=request.POST.get('nro_factura'), 
+        fch_factura=date.date.today().isoformat(), 
+        condicion_factura_compra=request.POST.get('condicion'),
+        iva10_factura_compra=request.POST.get('iva10'),
+        total_factura_compra=request.POST.get('total'))
+        factura_compra_nueva.save()
+
+    error = 'No hay error!'
+    response = JsonResponse({'error':error})
+    response.status_code = 201
+    return response
+
+def compra_detalle(request):
+    if request.method == "POST":
+        id_ultima_factura=factura_compra.objects.all().last().id_factura_compra
+
+        factura_compra_deta=factura_compra_detalle(id_factura_compra_id=int(id_ultima_factura), 
+        id_periferico_id=request.POST.get('codigo_proveedor'),
+        nro_timbrado_id=request.POST.get('timbrado_id'),
+        cant_periferico=request.POST.get('cantidad'),
+        subtotal_periferico=request.POST.get('subtotal'))
+        factura_compra_deta.save()
+
+    error = 'No hay error!'
+    response = JsonResponse({'error':error})
+    response.status_code = 201
+    return response
+     
+def venta(request):
+
+    if request.method == "GET":
+        listaperiferico = Perifericos.objects.all()
+        listaproveedor = Proveedor.objects.all()
+        listacliente = Cliente.objects.all()
+        listaciudad = Ciudad.objects.all()
         return validar(request, "venta.html", 
         {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
         "titulo_f":"Nueva Venta", 
         "listaperiferico":listaperiferico,
         "listaproveedor":listaproveedor,
-        "listacliente":listacliente,})
-    else:
-        return redirect("login")  
+        "listacliente":listacliente,
+        "listaciudad":listaciudad,
+        "fecha_act": date.today().isoformat()})
+
+    elif request.method == "POST":
+        factura_venta_nueva=Usuario(nombre_usuario=request.POST.get('nombre_usuario'), 
+        password_usuario=request.POST.get('password_usuario'), 
+        nombre_completo_usuario=request.POST.get('nombre_completo_usuario'), 
+        tipo_usuario=request.POST.get('tipo_usuario'), 
+        ci_usuario=request.POST.get('ci_usuario'), 
+        telefono_usuario=request.POST.get('telefono_usuario'), 
+        direccion_usuario=request.POST.get('direccion_usuario'))
+        
+        factura_venta_nueva.save()
 
 def salir(request):
     request.session.flush()
@@ -65,7 +126,7 @@ def produccion(request):
     else:
         return redirect("login")
 
-#--=======================================Usuario======================================--
+#--======================================= Usuario ======================================--
 
 def verusuario(request):
     if request.session.get("id_usuario"):
@@ -120,7 +181,7 @@ def borusuario(request, usu_actual):
         Usuario.objects.filter(id_usuario=usu_actual).delete()
         return redirect('verusuario')
 
-#--=======================================Cliente======================================--
+#--======================================= Cliente ======================================--
 
 def vercliente(request):
     if request.session.get("id_usuario"):
@@ -200,7 +261,7 @@ def borcliente(request, cliente_actual):
         Cliente.objects.filter(codigo_cliente = cliente_actual).delete()
         return redirect('vercliente')
 
-#--=======================================Proveedor======================================--
+#--======================================= Proveedor ======================================--
 
 def verproveedor(request):
     if request.session.get("id_usuario"):
@@ -252,8 +313,8 @@ def borproveedor(request, proveedor_actual):
         Proveedor.objects.filter(codigo_proveedor = proveedor_actual).delete()
         return redirect('verproveedor')
 
-#--=======================================Maintenance======================================--
-#--=======================================Departamentos======================================--
+#--======================================= Maintenance ======================================--
+#--======================================= Departamentos ======================================--
 
 def verdepartamento(request):
     if request.session.get("id_usuario"):
@@ -297,7 +358,7 @@ def bordepartamento(request, departamento_actual):
         Departamento.objects.filter(codigo_departamento = departamento_actual).delete()
         return redirect('verdepartamento')
 
-#--=======================================Ciudades======================================--
+#--======================================= Ciudades ======================================--
 
 def verciudad(request):
     if request.session.get("id_usuario"):
@@ -353,7 +414,7 @@ def borciudad(request, ciudad_actual):
         Ciudad.objects.filter(codigo_ciudad = ciudad_actual).delete()
         return redirect('verciudad')
 
-#--=======================================Nacionalidades======================================--
+#--======================================= Nacionalidades ======================================--
 
 
 def vernacionalidad(request):
@@ -411,7 +472,7 @@ def bornacionalidad(request, nacionalidad_actual):
         codigo_nacionalidad=nacionalidad_actual).delete()
     return redirect('vernacionalidad')
 
-#--=======================================Tipos_Ram======================================--
+#--======================================= Tipos_Ram ======================================--
 
 def vertipo_ram(request):
     if request.session.get("id_usuario"):
@@ -462,7 +523,7 @@ def bortipo_ram(request, tipo_ram_actual):
         Tipo_Ram.objects.filter(id_tipo_ram = tipo_ram_actual).delete()
         return redirect('vertipo_ram')
 
-#--=======================================Tipos_CPU======================================--
+#--======================================= Tipos_CPU ======================================--
 
 def vertipo_cpu(request):
     if request.session.get("id_usuario"):
@@ -513,7 +574,7 @@ def bortipo_cpu(request, tipo_cpu_actual):
         Tipo_Cpu.objects.filter(id_tipo_cpu = tipo_cpu_actual).delete()
         return redirect('vertipo_cpu')
 
-#--=======================================Tipos_CPU======================================--
+#--======================================= Tipos_CPU ======================================--
 
 def vertipo_gabinete(request):
     if request.session.get("id_usuario"):
@@ -564,8 +625,8 @@ def bortipo_gabinete(request, tipo_cpu_actual):
         Tipo_Gabinete.objects.filter(id_tipo_cpu = tipo_cpu_actual).delete()
         return redirect('vertipo_gabinete')
 
-#--=========================================SERVICIOS========================================--
-#--=======================================Mantenimiento======================================--
+#--========================================= SERVICIOS ========================================--
+#--======================================= Mantenimiento ======================================--
 
 def vermant(request):
     if request.session.get("id_usuario"):
@@ -644,7 +705,7 @@ def bormant(request, mant_actual):
         Mantenimiento.objects.filter(codigo_mant = mant_actual).delete()
         return redirect('vermant')
 
-#--=======================================Reparacion======================================--
+#--======================================= Reparacion ======================================--
 
 def verrep(request):
     if request.session.get("id_usuario"):
@@ -723,7 +784,7 @@ def borrep(request, rep_actual):
         Reparacion.objects.filter(codigo_rep = rep_actual).delete()
         return redirect('verrep')
 
-#--=======================================Montaje======================================--
+#--======================================= Montaje ======================================--
 
 def vermontaje(request):
     if request.session.get("id_usuario"):
@@ -852,9 +913,9 @@ def nuevomontaje (request, placa_base_actual=0, montaje_actual=0):
 def bormontaje(request, montaje_actual):
         Montaje.objects.filter(codigo_montaje = montaje_actual).delete()
         return redirect('vermontaje')
-#--========================================PRODUCTOS======================================--
-
-#--=======================================Placa_Base======================================--
+        
+#--======================================== PRODUCTOS ======================================--
+#--======================================= Placa_Base ======================================--
 
 def ver_placa_base(request):
         listatabla = Placa_base.objects.all()
@@ -972,7 +1033,7 @@ def bor_placa_base(request, placa_base_actual):
         Placa_base.objects.filter(id_placa_base = placa_base_actual).delete()
         return redirect('ver_placa_base')
 
-#--=======================================RAM======================================--
+#--======================================= RAM ======================================--
 
 def ver_ram(request):
         listatabla = RAM.objects.all()
@@ -1075,7 +1136,7 @@ def bor_ram(request, ram_actual):
         RAM.objects.filter(id_ram = ram_actual).delete()
         return redirect('ver_ram')
 
-#--=======================================CPU======================================--
+#--======================================= CPU ======================================--
 
 def ver_cpu(request):
         listatabla = CPU.objects.all()
@@ -1178,7 +1239,7 @@ def bor_cpu(request, cpu_actual):
         CPU.objects.filter(id_cpu = cpu_actual).delete()
         return redirect('ver_cpu')
 
-#--=======================================Gabinetes======================================--
+#--======================================= Gabinetes ======================================--
 
 def ver_gab(request):
         listatabla = Gabinete.objects.all()
@@ -1282,7 +1343,7 @@ def bor_gab(request, gab_actual):
         Gabinete.objects.filter(id_gab = gab_actual).delete()
         return redirect('ver_gab')
 
-#--========================================Repuestos======================================--
+#--======================================== Repuestos ======================================--
 
 def repuestover(request):
     if request.session.get("id_usuario"):
@@ -1384,7 +1445,7 @@ def repuestobor(request, repuesto_actual):
         return redirect('repuestover')
 
 
-#--=======================================Perifericos======================================--
+#--======================================= Perifericos ======================================--
 
 def perifericover(request):
     if request.session.get("id_usuario"):
@@ -1541,7 +1602,7 @@ def perifericobor(request, periferico_actual):
         return redirect('perifericover')
 
         
-#--=======================================Listado_General======================================--
+#--======================================= Listado_General ======================================--
 
 def ver_productos(request):
         listaperiferico = Perifericos.objects.all()
@@ -1562,7 +1623,7 @@ def ver_productos(request):
         "listaproveedor":listaproveedor,
         "listarepuesto": listarepuesto})
 
-#--=======================================Inventario======================================--
+#--======================================= Inventario ======================================--
 
 def inventario(request):
         listaperiferico = Perifericos.objects.all()
@@ -1583,7 +1644,7 @@ def inventario(request):
         "listaproveedor":listaproveedor,
         "listarepuesto": listarepuesto})
  
-#--=======================================Validación======================================--
+#--======================================= Validación ======================================--
 def validar(request, pageSuccess, parameters={}):
     if request.session.get("id_usuario"):
         if (request.session.get("tipo_usuario") == 2) and ((pageSuccess == 'users/verusuario.html') or (pageSuccess == 'maintenance/tipo_cpu/vertipo_cpu.html') or (pageSuccess == 'maintenance/tipo_ram/vertipo_ram.html') or (pageSuccess == 'maintenance/tipo_gabinete/vertipo_gabinete.html')):

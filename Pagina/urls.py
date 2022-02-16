@@ -102,8 +102,14 @@ urlpatterns = [
     path('mod_gab/<int:gab_actual>', views.mod_gab, name='mod_gab'),
     path('bor_gab/<int:gab_actual>', views.bor_gab, name='bor_gab'),
 
+
+# ----------------------------------------VENTA Y COMPRA---------------------------------------------------
     #--VENTA
     path('venta', views.venta, name='venta'),
+
+    #--COMPRA
+    path('compra', views.compra, name='compra'),
+    path('compra_detalle}', views.compra_detalle, name='compra_detalle'),
 
     
     path('ver_productos', views.ver_productos, name='ver_productos'),
