@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block barra %}
+
+<body>
+    <script>
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                fixedHeader: true,
+                responsive: true
+            });
+        });
+    </script>
+
+    <div class="col-md-3 col-xl-2">
+    </div>
+    <div class="card">
+        <div class="card-header">
+            
+            <div class="form-group form-default" style="display: flex; justify-content: space-between; align-items: center;">
+                <h3 style="margin: 0">Timbrados de Proveedores</h3><a href="{% url 'modtimbrado_prov' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nuevo Timbrado</button></a>
+            </div>
+            <div class="py-4">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <table id="example" class="table table-striped" style="width:100%">
+                                <thead>
+                                    <tr>
+                                        <th>Nro. Timbrado</th>
+                                        <th>Proveedor</th>
+                                        <th>Fecha de Vencimiento</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for lista in parameters.listatabla %}
+                                    <tr>
+                                        <td>{{ lista.nro_timbrado }}</td>
+                                        <td>
+                                            {%for lista1 in parameters.listaproveedor%}
+                                            {% if lista1.codigo_proveedor == lista.codigo_proveedor_id%}
+                                            {{lista1.razon_social_proveedor}}
+                                            {%endif%}
+                                            {%endfor%}
+                                        </td>
+                                        <td>{{ lista.fch_vencimiento }}</td>
+                                        <td><div class="icon-btn">
+                                                <a href="{% url 'modtimbrado_prov' lista.nro_timbrado %}"
+                                                    class="btn waves-effect waves-light btn-warning btn-icon"
+                                                    style="color: white;" data-toggle="tooltip" data-placement="top"
+                                                    title="" data-original-title="Modificar Registro"><i
+                                                        data-feather="edit"></i></a>
+                                                <a href="{% url 'bortimbrado_prov' lista.nro_timbrado %}"
+                                                    onclick="return confirm('Eliminar el registro?')"
+                                                    class="btn waves-effect waves-light btn-danger btn-icon"
+                                                    style="color: white;" data-toggle="tooltip" data-placement="top"
+                                                    title="" data-original-title="Eliminar Registro"><i
+                                                        data-feather="trash-2"></i></a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{%static 'js/app.js'%}"></script>
+    <script>
+        function alerta() {
+            if (sessionStorage.getItem('1') == 1) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Aviso',
+                    text: 'Registro guardado existosamente.',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                })
+                sessionStorage.setItem('1', 0)
+            }
+        }
+        window.onload = alerta()
+    </script>
+    </main>
+</body>
+
+    {% endblock %}

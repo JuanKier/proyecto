@@ -74,130 +74,12 @@
                                     {%endif%}
                                     {%endfor%}
                                 </td>
-                                <td>{{ lista.precio_compra_periferico }}</td>
-                                <td>{{ lista.precio_venta_periferico }}</td>
+                                <td class="precio">{{ lista.precio_compra_periferico }}</td>
+                                <td class="precio">{{ lista.precio_venta_periferico }}</td>
                                 <td>{{ lista.stock_periferico }}</td>
                                 
                             {% endfor %}
-                            {% for lista in parameters.listarepuesto %}
-                            <tr>
-                                <td>{{ lista.cod_repuesto }}</td>
-                                {% if lista.imagen_repuesto != '' %}
-                                        <td><img src="{{ lista.imagen_repuesto.url }}" width="100" height="100"></td>
-                                {% else %}
-                                        <td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100" height="100"></td>   
-                                {% endif %}
-                                    {%if lista.tipo_repuesto == 1 %}<td>Batería</td>{% endif %} 
-                                    {%if lista.tipo_repuesto == 2 %}<td>Cargador</td>{% endif %}
-                                    {%if lista.tipo_repuesto == 3 %}<td>Pantalla</td>{% endif %}
-                                    {%if lista.tipo_repuesto == 4 %}<td>Teclado</td>{% endif %}
-                                    {%if lista.tipo_repuesto == 5 %}<td>Otros</td>{% endif %} 
-                                <td>{{ lista.marca_repuesto }}</td>
-                                <td>{{ lista.descripcion_repuesto }}</td>
-                                <td>
-                                    {%for lista1 in parameters.listaproveedor%}
-                                    {% if lista1.codigo_proveedor == lista.nombre_proveedor_id%}
-                                    {{lista1.nombre_proveedor}}
-                                    {%endif%}
-                                    {%endfor%}
-                                </td>
-                                <td>{{ lista.precio_compra_repuesto }}</td>
-                                <td>{{ lista.precio_venta_repuesto }}</td>
-                                <td>{{ lista.stock_repuesto }}</td>
-                                
-                            {% endfor %}
-                            {% for lista in parameters.listacpu %}
-                            <tr>
-                                <td>{{ lista.cod_cpu }}</td>
-                                {% if lista.imagen_cpu != '' %}
-                                        <td><img src="{{ lista.imagen_cpu.url }}" width="100" height="100"></td>
-                                {% else %}
-                                        <td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100" height="100"></td>   
-                                {% endif %}
-                                <td>Procesador</td>
-                                <td>{{ lista.marca_cpu }}</td>
-                                <td>{{ lista.descripcion_cpu }}</td>
-                                <td>
-                                    {%for lista1 in parameters.listaproveedor%}
-                                    {% if lista1.codigo_proveedor == lista.nombre_proveedor_id%}
-                                    {{lista1.nombre_proveedor}}
-                                    {%endif%}
-                                    {%endfor%}
-                                </td>
-                                <td>{{ lista.precio_compra_cpu }}</td>
-                                <td>{{ lista.precio_venta_cpu }}</td>
-                                <td>{{ lista.stock_cpu }}</td>
-                                
-                            {% endfor %}
-                            {% for lista in parameters.listagabinete %}
-                            <tr>
-                                <td>{{ lista.cod_gab }}</td>
-                                {% if lista.imagen_gab != '' %}
-                                        <td><img src="{{ lista.imagen_gab.url }}" width="100" height="100"></td>
-                                {% else %}
-                                        <td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100" height="100"></td>   
-                                {% endif %}
-                                <td>Gabinete</td>
-                                <td>{{ lista.marca_gab }}</td>
-                                <td>{{ lista.descripcion_gab }}</td>
-                                <td>
-                                    {%for lista1 in parameters.listaproveedor%}
-                                    {% if lista1.codigo_proveedor == lista.nombre_proveedor_id%}
-                                    {{lista1.nombre_proveedor}}
-                                    {%endif%}
-                                    {%endfor%}
-                                </td>
-                                <td>{{ lista.precio_compra_gab }}</td>
-                                <td>{{ lista.precio_venta_gab }}</td>
-                                <td>{{ lista.stock_gab }}</td>
-                                
-                            {% endfor %}
-                            {% for lista in parameters.listaplaca %}
-                            <tr>
-                                <td>{{ lista.cod_placa_base }}</td>
-                                {% if lista.imagen_placa_base != '' %}
-                                        <td><img src="{{ lista.imagen_placa_base.url }}" width="100" height="100"></td>
-                                {% else %}
-                                        <td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100" height="100"></td>   
-                                {% endif %}
-                                <td>Placa Base</td>
-                                <td>{{ lista.marca_placa_base }}</td>
-                                <td>{{ lista.descripcion_placa_base }}</td>
-                                <td>
-                                    {%for lista2 in parameters.listaproveedor%}
-                                    {% if lista2.codigo_proveedor == lista.nombre_proveedor_id%}
-                                    {{lista2.nombre_proveedor}}
-                                    {%endif%}
-                                    {%endfor%}
-                                </td>
-                                <td>{{ lista.precio_compra_placa_base }}</td>
-                                <td>{{ lista.precio_venta_placa_base }}</td>
-                                <td>{{ lista.stock_placa_base }}</td>
-                                
-                            {% endfor %}
-                            {% for lista in parameters.listaram %}
-                            <tr>
-                                <td>{{ lista.cod_ram }}</td>
-                                {% if lista.imagen_ram != '' %}
-                                        <td><img src="{{ lista.imagen_ram.url }}" width="100" height="100"></td>
-                                {% else %}
-                                        <td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100" height="100"></td>   
-                                {% endif %}
-                                <td>Memoria RAM</td>
-                                <td>{{ lista.marca_ram }}</td>
-                                <td>{{ lista.descripcion_ram }}</td>
-                                <td>
-                                    {%for lista1 in parameters.listaproveedor%}
-                                    {% if lista1.codigo_proveedor == lista.nombre_proveedor_id%}
-                                    {{lista1.nombre_proveedor}}
-                                    {%endif%}
-                                    {%endfor%}
-                                </td>
-                                <td>{{ lista.precio_compra_ram }}</td>
-                                <td>{{ lista.precio_venta_ram }}</td>
-                                <td>{{ lista.stock_ram }}</td>
-                                
-                            {% endfor %}
+                            
                             </tr>
                         </tbody>
                         <tfoot>
@@ -236,6 +118,17 @@
             }
         }
         window.onload = alerta()
+
+        function formatText(data) {
+            data = document.getElementsByClassName(data)
+            var value
+            for(let i = 0; i < data.length; i++) {
+                value = data[i].innerText
+                value = parseFloat(value).toLocaleString('es')
+                data[i].innerText = value
+            }
+        }       
+        formatText("precio") //formatear numeros
     </script>
 </body>
 

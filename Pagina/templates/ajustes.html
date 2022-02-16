@@ -1,0 +1,101 @@
+{%extends "base.html"%}
+{%load static%}
+{%block barra%}
+
+<body>
+	<body>
+	<style>
+	.display-4 {
+    	font-size: 2rem;
+	}
+	</style>
+	<p id="msjError" style="display: none">
+		{% if mensaje %}
+			<p class="message-error" hidden>{{mensaje}}</p>
+		{% endif %}
+	</p>
+					<div class="row mb-2 mb-xl-3">
+							<h1><strong>Página</strong> de Ajustes</h1>
+							<div>		
+								<div class="tab-content">
+									<div class="row py-4">
+										<div class="col-sm-4 mb-3 mb-md-0">
+											<div class="card text-center h-100">
+												<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'vertimbrado_prov' %}">
+													<div>
+														
+														<span class="display-4">Timbrados Proveedor</span>
+													</div>
+													<img class="img-responsive mt-2" width="150" height="150" src="{%static 'img/icons/limpieza.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
+													<h6>Listado de Timbrados Proveedor</h6>
+													<!-- <ul class="list-unstyled">
+														<li class="mb-2">
+															1 users
+														</li>
+														<li class="mb-2">
+															5 projects
+														</li>
+														<li class="mb-2">
+															5 GB storage
+														</li>
+													</ul> -->
+												</a>
+											</div>
+										</div>
+										<div class="col-sm-4 mb-3 mb-md-0">
+											<div class="card text-center h-100">
+												<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'verrep' %}">
+													<div>
+													
+														<span class="display-4">Reparación</span>
+													</div>
+													<img class="img-responsive mt-2" width="150" height="150" src="{%static 'img/icons/reparacion1.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
+													<h6>Listado de Reparaciones</h6>
+												</a>
+											</div>
+										</div>
+										<div class="col-sm-4 mb-3 mb-md-0">
+											<div class="card text-center h-100">
+												<a href="javascript:mostrar_modal()" class="card-body d-flex flex-column btn btn-lg btn-outline-primary">
+													<div>
+														
+														<span class="display-4">Montaje</span>
+													</div>
+													<img class="img-responsive mt-2" width="150" height="150" src="{%static 'img/icons/montaje.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
+													<h6>Nuevo Montaje</h6>
+												</a>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+					</div>
+										
+
+	<script src="{%static 'js/app.js'%}"></script>
+	<script>
+		function mostrar_modal() {
+        	$(document).ready(function () {
+            $('#modal_placas').modal('show');
+        	});
+    	}
+
+		function cerrar_modal() {
+        	$(document).ready(function () {
+            $('#modal_placas').modal('hide');
+        	});
+    	}
+		
+        var mensaje = document.getElementsByClassName("message-error")
+        setTimeout(showAlert, 200) 
+        function showAlert() {
+            if(mensaje[0]){
+                alert(mensaje[0].innerHTML)
+            }
+        }
+    </script>
+
+</body>
+
+{%endblock%}

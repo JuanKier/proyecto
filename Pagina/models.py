@@ -186,7 +186,7 @@ class Montaje(models.Model):
 
 class timbrado(models.Model):
     nro_timbrado = models.IntegerField(primary_key=True)
-    id_proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
+    codigo_proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
     fch_vencimiento_timbrado = models.DateField()
 
 class factura_compra(models.Model):

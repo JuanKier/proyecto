@@ -4,6 +4,7 @@ from Pagina import views
 
 urlpatterns = [
     path('index', views.index, name='index'),
+    path('ajustes', views.ajustes, name='ajustes'),
     path('', views.login, name='login'),
     path('salir', views.salir, name='salir'),
     path('produccion', views.produccion, name='produccion'),
@@ -51,6 +52,11 @@ urlpatterns = [
     path('vertipo_gabinete', views.vertipo_gabinete, name='vertipo_gabinete'),
     path('modtipo_gabinete/<int:tipo_gabinete_actual>', views.modtipo_gabinete, name='modtipo_gabinete'),
     path('bortipo_gabinete/<int:tipo_gabinete_actual>', views.bortipo_gabinete, name='bortipo_gabinete'),
+    
+        #--Timbrados Proveedor
+    path('vertimbrado_prov', views.vertimbrado_prov, name='vertimbrado_prov'),
+    path('modtimbrado_prov/<int:timbrado_actual>', views.modtimbrado_prov, name='modtimbrado_prov'),
+    path('bortimbrado_prov/<int:timbrado_actual>', views.bortimbrado_prov, name='bortimbrado_prov'),
 
 # ----------------------------------------PRODUCCION---------------------------------------------------
     
