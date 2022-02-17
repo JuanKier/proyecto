@@ -16,7 +16,7 @@
 	</p>
 					<div class="row mb-2 mb-xl-3">
 							<h1><strong>Página</strong> de Inicio - <strong> EncarPC</strong></h1>
-							<div class="row">
+							<div class="row py-4" style="justify-content: center;">
 								<div class="col-lg-4">
 									<div class="card">
 										<div class="card-body">
@@ -124,89 +124,89 @@
 									</div>
 								</div>
 							</div>
-									<div class="tab-content">
-											<div class="row py-4">
-												<div class="col-sm-4 mb-3 mb-md-0">
-													<div class="card text-center h-100">
-														<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'ver_productos' %}">
-															<div>
-																
-																<span class="display-4">Productos</span>
-															</div>
-															<img class="img-responsive mt-2" width="150" height="150" src="{%static 'img/icons/ordenador.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
-															<h6>Listado de Productos</h6>
-														</a>
-													</div>
-												</div>
-												<div class="col-sm-4 mb-3 mb-md-0">
-													<div class="card text-center h-100">
-														<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'verrep' %}">
-															<div>
-																
-																<span class="display-4">Compras</span>
-															</div>
-															<img class="img-responsive mt-2" width="150" height="150" src="{%static 'img/icons/camion.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
-															<h6>Listado de Compras</h6>
-														</a>
-													</div>
-												</div>
-												<div class="col-sm-4 mb-3 mb-md-0">
-													<div class="card text-center h-100">
-														<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'venta'%}">
-															<div>
-																
-																<span class="display-4">Ventas</span>
-															</div>
-															<img class="img-responsive mt-2" width="150" height="150" src="{%static 'img/icons/venta.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
-															<h6>Listado de Ventas</h6>
-														</a>
-														
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="tab-content">
+								<div class="tab-content">
 										<div class="row py-4">
 											<div class="col-sm-4 mb-3 mb-md-0">
 												<div class="card text-center h-100">
-													<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'inventario' %}">
+													<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'ver_productos' %}">
 														<div>
 															
-															<span class="display-4">Inventario</span>
+															<span class="display-4">Productos</span>
 														</div>
-														<img class="img-responsive mt-2" width="150" height="150" src="{%static 'img/icons/inventario.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
-														<h6>Inventario de Productos</h6>
+														<img class="img-responsive mt-2" width="150" height="150" src="{%static 'img/icons/ordenador.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
+														<h6>Listado de Productos</h6>
 													</a>
 												</div>
 											</div>
 											<div class="col-sm-4 mb-3 mb-md-0">
 												<div class="card text-center h-100">
-													<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'vercliente' %}">
+													<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'verrep' %}">
 														<div>
 															
-															<span class="display-4">Clientes</span>
+															<span class="display-4">Compras</span>
 														</div>
-														<img class="img-responsive mt-2" width="150" height="150" src="{%static 'img/icons/cliente.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
-														<h6>Listado de Clientes</h6>
+														<img class="img-responsive mt-2" width="150" height="150" src="{%static 'img/icons/camion.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
+														<h6>Listado de Compras</h6>
 													</a>
 												</div>
 											</div>
 											<div class="col-sm-4 mb-3 mb-md-0">
 												<div class="card text-center h-100">
-													<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'verusuario' %}">
+													<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'venta'%}">
 														<div>
 															
-															<span class="display-4">Usuarios</span>
+															<span class="display-4">Ventas</span>
 														</div>
-														<img class="img-responsive mt-2" width="150" height="150" src="{%static 'img/icons/usuario.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
-														<h6>Listado de Usuarios Registrados</h6>
+														<img class="img-responsive mt-2" width="150" height="150" src="{%static 'img/icons/venta.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
+														<h6>Listado de Ventas</h6>
 													</a>
 													
 												</div>
 											</div>
 										</div>
 									</div>
+								</div>
+								<div class="tab-content">
+									<div class="row py-4">
+										<div class="col-sm-4 mb-3 mb-md-0">
+											<div class="card text-center h-100">
+												<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'inventario' %}">
+													<div>
+														
+														<span class="display-4">Inventario</span>
+													</div>
+													<img class="img-responsive mt-2" width="150" height="150" src="{%static 'img/icons/inventario.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
+													<h6>Inventario de Productos</h6>
+												</a>
+											</div>
+										</div>
+										<div class="col-sm-4 mb-3 mb-md-0">
+											<div class="card text-center h-100">
+												<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'vercliente' %}">
+													<div>
+														
+														<span class="display-4">Clientes</span>
+													</div>
+													<img class="img-responsive mt-2" width="150" height="150" src="{%static 'img/icons/cliente.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
+													<h6>Listado de Clientes</h6>
+												</a>
+											</div>
+										</div>
+										<div class="col-sm-4 mb-3 mb-md-0">
+											<div class="card text-center h-100">
+												<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'verusuario' %}">
+													<div>
+														
+														<span class="display-4">Usuarios</span>
+													</div>
+													<img class="img-responsive mt-2" width="150" height="150" src="{%static 'img/icons/usuario.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
+													<h6>Listado de Usuarios Registrados</h6>
+												</a>
+												
+											</div>
+										</div>
+									</div>
+								</div>
 
 						<div class="modal fade" id="modal_placas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 						<div class="modal-dialog modal-dialog-centered modal-lg" role="document">

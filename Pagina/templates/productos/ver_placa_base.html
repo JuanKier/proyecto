@@ -3,11 +3,67 @@
 {%load static%}
 
 <body>
+    <style>
+        .dataTables_length{
+            display: contents;
+        }
+
+        .dt-buttons{
+            display: contents;
+            position: absolute;
+            justify-items: center;
+        }
+        
+        .dataTables_filter{
+            display: contents;
+            gap: 2em;
+        }
+    </style>
     <script>
         $(document).ready(function () {
             var table = $('#example').DataTable({
-                fixedHeader: true,
-                responsive: true
+                "language": {
+                "emptyTable":     "La tabla se encuentra vacia.",
+                "info":           "Mostrando _END_ de _MAX_ registros",
+                "infoEmpty":      "",
+                "infoFiltered":   "",
+                "infoPostFix":    "",
+                "thousands":      ",",
+                "lengthMenu":     "Mostrar _MENU_ registros ㅤㅤㅤㅤㅤㅤAcciones:",
+                "loadingRecords": "Cargando...",
+                "processing":     "Procesando...",
+                "search":         "ㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤㅤBuscar: ",
+                "zeroRecords":    "No se obtuvo ninguna coincidencia",
+                oPaginate: {
+                    sNext: '<i class="fa fa-forward"></i>',
+                    sPrevious: '<i class="fa fa-backward"></i>',
+                    sFirst: '<i class="fa fa-step-backward"></i>',
+                    sLast: '<i class="fa fa-step-forward"></i>',
+                },
+            },
+                fixedHeader: false,
+                responsive: true,
+                dom: 'lBfrtip',
+                buttons: [
+                    {
+	        			extend:    'excelHtml5',
+	        			text:      '<i class="fas fa-file-excel"></i> ',
+	        			titleAttr: 'Exportar a Excel',
+	        			className: 'btn btn-success'
+	        		},
+	        		{
+	        			extend:    'pdfHtml5',
+	        			text:      '<i class="fas fa-file-pdf"></i> ',
+	        			titleAttr: 'Exportar a PDF',
+	        			className: 'btn btn-danger'
+	        		},
+                    {
+	        			extend:    'print',
+	        			text:      '<i class="fa fa-print"></i> ',
+	        			titleAttr: 'Imprimir',
+	        			className: 'btn btn-info'
+	        		},
+                ],
             });
         });
     </script>
@@ -18,93 +74,102 @@
                 <div class="card-header">
                     
                     <div class="form-group form-default" style="display: flex; justify-content: space-between; align-items: center;">
-                        <h3 style="margin: 0">Lista de Placas Base</h3><a href="{% url 'mod_placa_base' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nuevo Periférico</button></a>
+                        <h3 style="margin: 0">Lista de Placas Base</h3><a href="{% url 'mod_placa_base' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nueva Placa Base</button></a>
                     </div>
                     <div class="py-4">
                         <div class="col-md-12">
                             <div class="card">
-                <div class="card-body">
-                    <table id="example" class="table table-striped" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Imagen</th>
-                                <th>Tamaño</th>
-                                <th>Marca</th>
-                                <th>Descripción</th>
-                                <th>Proveedor</th>
-                                <th>Precio Compra</th>
-                                <th>Precio Venta</th>
-                                <th>Stock</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for lista in parameters.listatabla %}
-                            <tr>
-                                <td>{{ lista.cod_placa_base }}</td>
-                                {% if lista.imagen_placa_base != '' %}
-                                        <td><img src="{{ lista.imagen_placa_base.url }}" width="100" height="100"></td>
-                                {% else %}
-                                        <td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100" height="100"></td>   
-                                {% endif %}
-                                <td>
-                                    {%for lista1 in parameters.listagabinete%}
-                                    {% if lista1.id_tipo_gabinete == lista.tipo_gabinete_placa_base_id%}
-                                    {{lista1.desc_tipo_gabinete}}
-                                    {%endif%}
-                                    {%endfor%}
-                                </td>
-                                <td>{{ lista.marca_placa_base }}</td>
-                                <td>{{ lista.descripcion_placa_base }}</td>
-                                <td>
-                                    {%for lista2 in parameters.listaproveedor%}
-                                    {% if lista2.codigo_proveedor == lista.nombre_proveedor_id%}
-                                    {{lista2.nombre_proveedor}}
-                                    {%endif%}
-                                    {%endfor%}
-                                </td>
-                                <td class="precio">{{ lista.precio_compra_placa_base }}</td>
-                                <td class="precio">{{ lista.precio_venta_placa_base }}</td>
-                                <td>{{ lista.stock_placa_base }}</td>
-                                <td>
-                                    <div class="icon-btn">
-                                        <a href="{% url 'mod_placa_base' lista.id_placa_base %}"
-                                            class="btn waves-effect waves-light btn-warning btn-icon"
-                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Modificar Registro"><i data-feather="edit"></i></a>
-                                        <a href="{% url 'bor_placa_base' lista.id_placa_base %}"
-                                            onclick="return confirm('Eliminar el registro?')"
-                                            class="btn waves-effect waves-light btn-danger btn-icon"
-                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Eliminar Registro"><i data-feather="trash-2"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>Código</th>
-                                <th>Imagen</th>
-                                <th>Tamaño</th>
-                                <th>Marca</th>
-                                <th>Descripción</th>
-                                <th>Proveedor</th>
-                                <th>Precio Compra</th>
-                                <th>Precio Venta</th>
-                                <th>Stock</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </tfoot>
-                    </table>
-
-                </div>
-            </div>
-        </div>
-    </div>
+                                <div class="card-body">
+                                    <table id="example" class="table table-striped" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Código</th>
+                                                <th>Imagen</th>
+                                                <th>Tamaño</th>
+                                                <th>Marca</th>
+                                                <th>Descripción</th>
+                                                <th>Proveedor</th>
+                                                <th>Precio Compra</th>
+                                                <th>Precio Venta</th>
+                                                <th>Stock</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for lista in parameters.listatabla %}
+                                            <tr>
+                                                <td>{{ lista.cod_placa_base }}</td>
+                                                {% if lista.imagen_placa_base != '' %}
+                                                <td><img src="{{ lista.imagen_placa_base.url }}" width="100" height="100"></td>
+                                                {% else %}
+                                                <td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100" height="100">
+                                                </td>
+                                                {% endif %}
+                                                <td>
+                                                    {%for lista1 in parameters.listagabinete%}
+                                                    {% if lista1.id_tipo_gabinete == lista.tipo_gabinete_placa_base_id%}
+                                                    {{lista1.desc_tipo_gabinete}}
+                                                    {%endif%}
+                                                    {%endfor%}
+                                                </td>
+                                                <td>{{ lista.marca_placa_base }}</td>
+                                                <td>{{ lista.descripcion_placa_base }}</td>
+                                                <td>
+                                                    {%for lista2 in parameters.listaproveedor%}
+                                                    {% if lista2.codigo_proveedor == lista.nombre_proveedor_id%}
+                                                    {{lista2.nombre_proveedor}}
+                                                    {%endif%}
+                                                    {%endfor%}
+                                                </td>
+                                                <td class="precio">{{ lista.precio_compra_placa_base }}</td>
+                                                <td class="precio">{{ lista.precio_venta_placa_base }}</td>
+                                                <td>{{ lista.stock_placa_base }}</td>
+                                                <td>
+                                                    <div class="icon-btn">
+                                                        <a href="{% url 'mod_placa_base' lista.id_placa_base %}"
+                                                            class="btn waves-effect waves-light btn-warning btn-icon" style="color: white;"
+                                                            data-toggle="tooltip" data-placement="top" title=""
+                                                            data-original-title="Modificar Registro"><i data-feather="edit"></i></a>
+                                                        <a href="{% url 'bor_placa_base' lista.id_placa_base %}"
+                                                            onclick="return confirm('Eliminar el registro?')"
+                                                            class="btn waves-effect waves-light btn-danger btn-icon" style="color: white;"
+                                                            data-toggle="tooltip" data-placement="top" title=""
+                                                            data-original-title="Eliminar Registro"><i data-feather="trash-2"></i></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Código</th>
+                                                <th>Imagen</th>
+                                                <th>Tamaño</th>
+                                                <th>Marca</th>
+                                                <th>Descripción</th>
+                                                <th>Proveedor</th>
+                                                <th>Precio Compra</th>
+                                                <th>Precio Venta</th>
+                                                <th>Stock</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </tfoot>
+                                    </table>
+                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
     <script src="{%static 'js/app.js'%}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'js/Buttons-2.2.2/css/buttons.bootstrap5.min.css' %}"/>
+    <script type="text/javascript" src="{% static 'js/JSZip-2.5.0/jszip.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/pdfmake-0.1.36/pdfmake.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/pdfmake-0.1.36/vfs_fonts.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/dataTables.buttons.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/buttons.bootstrap5.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/buttons.html5.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/buttons.print.min.js' %}"></script>
     <script>
         function alerta() {
             if (sessionStorage.getItem('1') == 1) {

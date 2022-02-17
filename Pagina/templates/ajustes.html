@@ -6,7 +6,7 @@
 	<body>
 	<style>
 	.display-4 {
-    	font-size: 2rem;
+    	font-size: 1.5rem;
 	}
 	</style>
 	<p id="msjError" style="display: none">
@@ -19,6 +19,7 @@
 							<div>		
 								<div class="tab-content">
 									<div class="row py-4">
+										<h4><strong>Timbrados</strong></h2>
 										<div class="col-sm-4 mb-3 mb-md-0">
 											<div class="card text-center h-100">
 												<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'verrep' %}">
@@ -26,7 +27,7 @@
 													
 														<span class="display-4">Timbrados EncarPC</span>
 													</div>
-													<img class="img-responsive mt-2" width="150" height="150" src="{%static 'img/icons/factura_venta.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
+													<img class="img-responsive mt-2" width="100" height="100" src="{%static 'img/icons/factura_venta.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
 													<h6>Gestionar Timbrados de la Empresa</h6>
 												</a>
 											</div>
@@ -38,7 +39,7 @@
 														
 														<span class="display-4">Timbrados Proveedor</span>
 													</div>
-													<img class="img-responsive mt-2" width="150" height="150" src="{%static 'img/icons/factura.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
+													<img class="img-responsive mt-2" width="100" height="100" src="{%static 'img/icons/factura.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
 													<h6>Gestionar Timbrados Proveedor</h6>
 												</a>
 											</div>
@@ -46,12 +47,98 @@
 										
 										<div class="col-sm-4 mb-3 mb-md-0">
 											<div class="card text-center h-100">
-												<a href="javascript:mostrar_modal()" class="card-body d-flex flex-column btn btn-lg btn-outline-primary">
+												<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'verciudad' %}">
 													<div>
 														
-														<span class="display-4">Montaje</span>
+														<span class="display-4">xx</span>
 													</div>
-													<img class="img-responsive mt-2" width="150" height="150" src="{%static 'img/icons/montaje.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
+													<img class="img-responsive mt-2" width="100" height="100" src="{%static 'img/icons/.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
+													<h6>Nuevo Montaje</h6>
+												</a>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-content">
+									<div class="row py-4">
+										<h4><strong>Ubicación</strong></h2>
+										<div class="col-sm-4 mb-3 mb-md-0">
+											<div class="card text-center h-100">
+												<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'verdepartamento' %}">
+													<div>
+													
+														<span class="display-4">Departamentos</span>
+													</div>
+													<img class="img-responsive mt-2" width="100" height="100" src="{%static 'img/icons/departamento.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
+													<h6>Gestionar Timbrados de la Empresa</h6>
+												</a>
+											</div>
+										</div>
+										<div class="col-sm-4 mb-3 mb-md-0">
+											<div class="card text-center h-100">
+												<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'verciudad' %}">
+													<div>
+														
+														<span class="display-4">Ciudades</span>
+													</div>
+													<img class="img-responsive mt-2" width="100" height="100" src="{%static 'img/icons/ciudad.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
+													<h6>Gestionar Timbrados Proveedor</h6>
+												</a>
+											</div>
+										</div>
+										
+										<div class="col-sm-4 mb-3 mb-md-0">
+											<div class="card text-center h-100">
+												<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'vernacionalidad' %}">
+													<div>
+														
+														<span class="display-4">Nacionalidades</span>
+													</div>
+													<img class="img-responsive mt-2" width="100" height="100" src="{%static 'img/icons/nacionalidad.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
+													<h6>Nuevo Montaje</h6>
+												</a>
+												
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="tab-content">
+									<div class="row py-4">
+										<h4><strong>Tipos de Componentes</strong></h2>
+										<div class="col-sm-4 mb-3 mb-md-0">
+											<div class="card text-center h-100">
+												<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'vertipo_cpu' %}">
+													<div>
+													
+														<span class="display-4">Tipos de CPU</span>
+													</div>
+													<img class="img-responsive mt-2" width="100" height="100" src="{%static 'img/icons/factura_venta.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
+													<h6>Gestionar Timbrados de la Empresa</h6>
+												</a>
+											</div>
+										</div>
+										<div class="col-sm-4 mb-3 mb-md-0">
+											<div class="card text-center h-100">
+												<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'vertipo_ram' %}">
+													<div>
+														
+														<span class="display-4">Tipos de RAM</span>
+													</div>
+													<img class="img-responsive mt-2" width="100" height="100" src="{%static 'img/icons/factura.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
+													<h6>Gestionar Timbrados Proveedor</h6>
+												</a>
+											</div>
+										</div>
+										
+										<div class="col-sm-4 mb-3 mb-md-0">
+											<div class="card text-center h-100">
+												<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'vertipo_gabinete' %}">
+													<div>
+														
+														<span class="display-4">Tipos de Gabinete</span>
+													</div>
+													<img class="img-responsive mt-2" width="100" height="100" src="{%static 'img/icons/montaje.png'%}" style="align-content: center; display: flex; margin: auto;"></img>
 													<h6>Nuevo Montaje</h6>
 												</a>
 												
