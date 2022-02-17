@@ -76,17 +76,12 @@
     </script>
 
 
-<div class="card-header">
-	<h3>{{parameters.titulo_f}}</h3>
-</div>
-
 <div class="py-4">
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header">
 				<form  style="margin: 1em;border-radius: 10px;" enctype="multipart/form-data" action="#" method="POST" onsubmit="sessionStorage.setItem('1', 1)"; style="margin: 1em">
 					{% csrf_token %}
-					<input type="text" id="precio" name="precio"> 
 					<div class="card" style="padding: 0.5em;">
 						<h1 class="text-center" style="padding: 0.5em;">VENTA</h1>
 						<div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
@@ -155,7 +150,7 @@
 										{% if lista.imagen_periferico != '' %}
 										<td><img class="item-image" src="{{ lista.imagen_periferico.url }}" width="100" height="100"></td>
 										{% else %}
-										<td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
+										<td><img class="item-image" src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
 												height="100"></td>
 										{% endif %}
 										{%if lista.tipo_periferico == 1 %}<td>Fuente</td>{% endif %}

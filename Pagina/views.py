@@ -32,7 +32,18 @@ def index(request):
         listatabla=Placa_base.objects.all()
         listagabinete = Tipo_Gabinete.objects.all()
         listaproveedor = Proveedor.objects.all()
-        return validar(request, "index.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), "titulo_f":"Usuarios", "subtitulo_f":"Listado de Usuarios registrados", "listatabla":listatabla, "listagabinete":listagabinete,"listaproveedor": listaproveedor})
+        contador_mant= Mantenimiento.objects.filter(estado_mant = 3).count()
+        contador_rep= Reparacion.objects.filter(estado_rep = 3).count()
+        contador_mont= Montaje.objects.filter(estado_mont = 3).count()
+        return validar(request, "index.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Usuarios", 
+        "subtitulo_f":"Listado de Usuarios registrados", 
+        "listatabla":listatabla, 
+        "listagabinete":listagabinete,
+        "contador_mant":contador_mant,
+        "contador_rep":contador_rep,
+        "contador_mont":contador_mont,
+        "listaproveedor": listaproveedor})
     else:
         return redirect("login")
 
@@ -50,12 +61,14 @@ def compra(request):
         listaperiferico = Perifericos.objects.all()
         listaproveedor = Proveedor.objects.all()
         listacliente = Cliente.objects.all()
+        listatimbrado = timbrado.objects.all()
         return validar(request, "compra.html", 
         {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
         "titulo_f":"Nueva Compra", 
         "listaperiferico":listaperiferico,
         "listaproveedor":listaproveedor,
         "listacliente":listacliente,
+        "listatimbrado": listatimbrado,
         "fecha_act": date.today().isoformat()})
     elif request.method == "POST":
         id_ultima_factura=0

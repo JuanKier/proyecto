@@ -14,9 +14,8 @@ function addToCartClicked(event) {
   const button = event.target;
   const item = button.closest('.item');
   const itemTitle = item.querySelector('.item-title').textContent;
-  const itemPrice = item.querySelector('.item-price').textContent;
+  const itemPrice = item.querySelector('.item-price').innerText.replaceAll(".","");
   const itemImage = item.querySelector('.item-image').src;
-  document.getElementById("precio").value = itemPrice
   
 
   addItemToShoppingCart(itemTitle, itemPrice, itemImage);
@@ -66,6 +65,7 @@ function addItemToShoppingCart(itemTitle, itemPrice, itemImage) {
     </div>`;
   shoppingCartRow.innerHTML = shoppingCartContent;
   shoppingCartItemsContainer.append(shoppingCartRow);
+
 
   shoppingCartRow
     .querySelector('.buttonDelete')

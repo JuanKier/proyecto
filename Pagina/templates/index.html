@@ -16,9 +16,63 @@
 	</p>
 					<div class="row mb-2 mb-xl-3">
 							<h1><strong>Página</strong> de Inicio - <strong> EncarPC</strong></h1>
+							<div class="row">
+								<div class="col-lg-4">
+									<div class="card">
+										<div class="card-body">
+											<div class="row">
+												<div class="col mt-0">
+													<h5 class="card-title">Mantenimientos Finalizados</h5>
+												</div>
+												<div class="col-auto">
+														<div class="stat text-primary">
+															<img src="{%static 'img/icons/limpieza.png'%}" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></img>
+														</div>
+												</div>
+											</div>
+											<h1 class="mt-1 mb-3" style="justify-content: center; display: flex">{{parameters.contador_mant}}</h1>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-4">
+									<div class="card">
+										<div class="card-body">
+											<div class="row">
+												<div class="col mt-0">
+													<h5 class="card-title">Reparaciones Finalizadas</h5>
+												</div>
+												<div class="col-auto">
+													<div class="stat text-primary">
+														<img src="{%static 'img/icons/reparacion1.png'%}" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></img>
+													</div>
+												</div>
+											</div>
+											<h1 class="mt-1 mb-3" style="justify-content: center; display: flex">{{parameters.contador_rep}}</h1>
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-4">
+									<div class="card">
+										<div class="card-body">
+											<div class="row">
+												<div class="col mt-0">
+													<h5 class="card-title">Montajes Finalizados</h5>
+												</div>
+												<div class="col-auto">
+													<div class="stat text-primary">
+														<img src="{%static 'img/icons/montaje.png'%}" width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></img>
+													</div>
+												</div>
+											</div>
+											<h1 class="mt-1 mb-3" style="justify-content: center; display: flex">{{parameters.contador_mont}}</h1>
+										</div>
+									</div>
+								</div>
+							</div>
 							<div>		
 								<div class="tab-content">
 									<div class="row py-4">
+										
 										<div class="col-sm-4 mb-3 mb-md-0">
 											<div class="card text-center h-100">
 												<a class="card-body d-flex flex-column btn btn-lg btn-outline-primary" href="{%url 'vermant' %}">

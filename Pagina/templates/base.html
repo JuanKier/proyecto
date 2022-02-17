@@ -62,11 +62,13 @@
 				  <a href="#" data-bs-toggle="dropdown" aria-expanded="false" class="nav-icon pe-md-0 dropdown-toggle">
 					<i class="align-middle me-2 fas fa-fw fa-user"></i><span class="text-dark" style="font-size: 16px;">{{nombre_usuario}}<i class="align-middle mr-1" data-feather="chevron-down"></i></span>
 				  </a>
-								<div class="dropdown-menu dropdown-menu-right">
-									<a class="dropdown-item" href="{%url 'verusuario'%}"><i class="align-middle mr-1" data-feather="users"></i> Usuarios</a>
-									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="{%url 'salir'%}">Salir</a>
-								</div>
+				  <div class="dropdown-menu dropdown-menu-right">
+					<a class="dropdown-item" href="{%url 'verusuario'%}"><i class="align-middle me-2 fas fa-fw fa-user"></i> Usuarios</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="{%url 'ajustes'%}"><i class="align-middle me-2 fas fa-fw fa-cog"></i> Ajustes</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="{%url 'salir'%}">Salir</a>
+				</div>
 							</li>
 						</ul>
 					</div>

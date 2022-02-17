@@ -76,24 +76,19 @@
     </script>
 
 
-<div class="card-header">
-	<h3>{{parameters.titulo_f}}</h3>
-</div>
-
 <div class="py-4">
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header">
 				<form style="margin: 1em;border-radius: 10px;" enctype="multipart/form-data" action="#" method="POST" onsubmit="handleSubmit(this)"; style="margin: 1em">
 					{% csrf_token %}
-					<input type="text" id="precio" name="precio"> 
 					<div class="card" style="padding: 0.5em;">
 						<h1 class="text-center" style="padding: 0.5em;">COMPRA</h1>
-						<div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
+						<div class="input-confirmar" style="grid-template-columns: 1fr 1fr 1fr;">
 							<div>
 								<label class="float-label">RUC del Proveedor</label>
 								<span class="form-bar"></span>
-								<input class="form-control mb-3" type="text" name="ruc_proveedor" id="ruc_proveedor" 
+								<input class="form-control mb-3" type="text" name="ruc_proveedor" id="ruc_proveedor" placeholder="Ingrese RUC del Proveedor"
 								{% for proveedor in parameters.listaproveedor %}
 								{% if proveedor.codigo_proveedor == parameters.datos_act.nombre_proveedor_id %} 
 								value="{{proveedor.ruc_proveedor}}" 
@@ -101,17 +96,30 @@
 								{% endfor %} 
 								onfocusout="traerProveedor(this)" required>
 							</div>
-			
+							<div class="form-group form-default">
+								<label class="float-label">Nro. de Timbrado</label>
+								<select class="form-select" name="nacionalidad" id="timbrado">
+									<option value=0>--SELECCIONE UNA OPCION--</option>
+								</select>
+							</div>
+							<div class="form-group form-default mb-3">
+								<label class="float-label">Fecha de Vencimiento Timbrado</label>
+								<span class="form-bar"></span>
+								<input type="date" name="" class="form-control" id="fch_timbrado" required readonly
+									value="">
+							</div>
+						</div>
+						<div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
+							<div>
+								<label class="float-label">Razón Social del Proveedor</label>
+								<label class="form-control mb-3" id="razon_social_proveedor" readonly> </label>
+								<input type="text" style="display: none;" id="codigo_proveedor" name="codigo_proveedor"> 
+							</div>
 							<div class="form-group form-default mb-3">
 								<label class="float-label">Fecha de Compra</label>
 								<span class="form-bar"></span>
 								<input type="date" name="" class="form-control" required readonly
 									value="{{parameters.fecha_act}}">
-							</div>
-							<div>
-								<label class="float-label">Razón Social del Proveedor</label>
-								<label class="form-control mb-3" id="razon_social_proveedor" readonly> </label>
-								<input type="text" style="display: none;" id="codigo_proveedor" name="codigo_proveedor"> 
 							</div>
 							<div>
 								<label class="float-label">Teléfono Proveedor</label>
@@ -148,7 +156,7 @@
 										{% if lista.imagen_periferico != '' %}
 										<td><img class="item-image" src="{{ lista.imagen_periferico.url }}" width="100" height="100"></td>
 										{% else %}
-										<td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
+										<td><img class="item-image" src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100"
 												height="100"></td>
 										{% endif %}
 										{%if lista.tipo_periferico == 1 %}<td>Fuente</td>{% endif %}
@@ -168,7 +176,7 @@
 										{%if lista.tipo_periferico == 15 %}<td>Gabinete</td>{% endif %}
 										<td>{{ lista.marca_periferico }}</td>
 										<td class="item-title">{{ lista.descripcion_periferico }}</td>
-										<td class="item-price">{{ lista.precio_venta_periferico }}</td>
+										<td class="item-price precio">{{ lista.precio_venta_periferico }}</td>
 										<td>{{ lista.stock_periferico }}</td>
 										<td><button type="button" class = "item-button btn btn-primary addToCart">Carrito</button></td>
 										{% endfor %}
@@ -283,9 +291,6 @@
 
 
 <script>
-	setTimeout(function () { 
-		showToastMessage("Guest added successfully test2").fadeOut(4000);
-	});
     $(document).ready(function() { $("#tipo_periferico").select2(); });
     $(document).ready(function() { $("#tipo_placa_video").select2(); });
     $(document).ready(function() { $("#tipo_fuente").select2(); });
@@ -299,6 +304,33 @@
         traerProveedor(document.getElementById("ruc_proveedor"))
     {% endif %}
 
+	function formatearFecha(msg) {
+		let meses = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre']
+		let fecha = msg.split(' de ')
+
+		if(fecha[0].length > 1) {
+			var dia = fecha[0]
+		} else {
+			var dia = `0${fecha[0]}`
+		}
+
+		var mes = ''
+
+		var anio = fecha[2]
+
+		for(let i = 0; i < meses.length; i++) {
+			if(meses[i] == fecha[1]) {
+				if(i + 1 < 10) {
+				mes = `0${i + 1}`
+				} else {
+				mes = `${i + 1}`
+				}
+			}
+		}
+    
+    	return `${anio}-${mes}-${dia}`
+	}
+
 
     function traerProveedor(event) { //event es el input donde se carga el valor
         var flag = false
@@ -306,16 +338,41 @@
 		var tCliente = document.getElementById("telefono_proveedor")
 		var dCliente = document.getElementById("direccion_proveedor")
         var inputCliente = document.getElementById("codigo_proveedor")
+		var selectTimbrado = document.getElementById("timbrado")
+		var fchTimbrado = document.getElementById("fch_timbrado")
+		var id_proveedor = ""
 
         {% for lista in parameters.listaproveedor %}
         var ruc_proveedor = "{{lista.ruc_proveedor}}"   //se trae cedula del cliente
+		id_proveedor = "{{lista.codigo_proveedor}}"
 
         if (event.value == ruc_proveedor) { //se compara si las cedulas de la base de datos coincide con el del input
             nCliente.innerHTML = "{{lista.razon_social_proveedor}}"   //si coincide se carga el nombre al label
 			tCliente.innerHTML = "{{lista.telefono_proveedor}}"
 			dCliente.innerHTML = "{{lista.direccion_proveedor}}"
             inputCliente.value = "{{lista.codigo_proveedor}}"
+			var id_timbrado = ""
+			{% for timbrado in parameters.listatimbrado %}
+			id_timbrado = "{{timbrado.codigo_proveedor_id}}"
+				if(id_timbrado == id_proveedor) {
+					const option = document.createElement('option');
+					option.className = "opcion_select"
+					option.value = "{{timbrado.nro_timbrado}}";
+					option.innerText = "{{timbrado.nro_timbrado}}";
+					selectTimbrado.appendChild(option);
+
+				}
+			{% endfor %}
             flag = true
+			selectTimbrado.addEventListener("change", (evt) => {
+				{% for timbrado in parameters.listatimbrado %}
+					if("{{timbrado.nro_timbrado}}" == evt.target.value){
+						fchTimbrado.value = formatearFecha("{{timbrado.fch_vencimiento_timbrado}}")
+					} 
+					
+				{% endfor %}
+			})
+
         }
 
         if (!flag) {
@@ -355,6 +412,32 @@
 			}
 		})
 	}
+
+	function alerta() {
+            if (sessionStorage.getItem('1') == 1) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Aviso',
+                    text: 'Registro guardado existosamente.',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                })
+                sessionStorage.setItem('1', 0)
+            }
+        }
+        window.onload = alerta()
+
+        function formatText(data) {
+            data = document.getElementsByClassName(data)
+            var value
+            for(let i = 0; i < data.length; i++) {
+                value = data[i].innerText
+                value = parseFloat(value).toLocaleString('es')
+                data[i].innerText = value
+            }
+        }       
+        formatText("precio") //formatear numeros
     // $(function() {
     //     $('#tipo_periferico').change(function() {
     //         console.log($(this).val());
