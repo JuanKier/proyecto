@@ -80,7 +80,7 @@
 	<div class="col-md-12">
 		<div class="card">
 			<div class="card-header">
-				<form style="margin: 1em;border-radius: 10px;" enctype="multipart/form-data" action="#" method="POST" onsubmit="handleSubmit(this)"; style="margin: 1em">
+				<form style="margin: 1em;border-radius: 10px;" enctype="multipart/form-data" id="formCompra" action="#" method="POST" onsubmit="return false"; style="margin: 1em">
 					{% csrf_token %}
 					<div class="card" style="padding: 0.5em;">
 						<h1 class="text-center" style="padding: 0.5em;">COMPRA</h1>
@@ -89,11 +89,6 @@
 								<label class="float-label">RUC del Proveedor</label>
 								<span class="form-bar"></span>
 								<input class="form-control mb-3" type="text" name="ruc_proveedor" id="ruc_proveedor" placeholder="Ingrese RUC del Proveedor"
-								{% for proveedor in parameters.listaproveedor %}
-								{% if proveedor.codigo_proveedor == parameters.datos_act.nombre_proveedor_id %} 
-								value="{{proveedor.ruc_proveedor}}" 
-								{% endif %}
-								{% endfor %} 
 								onfocusout="traerProveedor(this)" required>
 							</div>
 							<div class="form-group form-default">
@@ -109,7 +104,11 @@
 									value="">
 							</div>
 						</div>
-						<div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
+						<div class="input-confirmar" style="grid-template-columns: 1fr 1fr 1fr;">
+							<div>
+								<label class="float-label">Nro. Factura</label>
+								<input type="number" id="nro_factura" class="form-control mb-3" name="nro_factura" required> 
+							</div>
 							<div>
 								<label class="float-label">Razón Social del Proveedor</label>
 								<label class="form-control mb-3" id="razon_social_proveedor" readonly> </label>
@@ -118,7 +117,7 @@
 							<div class="form-group form-default mb-3">
 								<label class="float-label">Fecha de Compra</label>
 								<span class="form-bar"></span>
-								<input type="date" name="" class="form-control" required readonly
+								<input type="date" id="fch_compra" name="fch_compra" class="form-control" required readonly
 									value="{{parameters.fecha_act}}">
 							</div>
 							<div>
@@ -152,7 +151,7 @@
 								<tbody>
 									{% for lista in parameters.listaperiferico %}
 									<tr class="item">
-										<td >{{ lista.cod_periferico }}</td>
+										<td class="item-id">{{ lista.cod_periferico }}</td>
 										{% if lista.imagen_periferico != '' %}
 										<td><img class="item-image" src="{{ lista.imagen_periferico.url }}" width="100" height="100"></td>
 										{% else %}
@@ -220,7 +219,7 @@
 												<div class="col-12">
 													<div class="shopping-cart-total d-flex align-items-center">
 														<p class="mb-0">Total</p>
-														<p class="ml-4 mb-0 shoppingCartTotal">0 Gs</p>
+														<p class="ml-4 mb-0 shoppingCartTotal" id="total">0 Gs</p>
 													</div>
 												</div>
 											</div>
@@ -228,7 +227,7 @@
 												<div class="col-12">
 													<div class="shopping-cart-total d-flex align-items-center">
 														<p class="mb-0">Total IVA Incl.</p>
-														<p class="ml-4 mb-0 shoppingCartTotalIva">0 Gs</p>
+														<p class="ml-4 mb-0 shoppingCartTotalIva" id="iva10">0 Gs</p>
 														<div class="toast ml-auto bg-info" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
 															<div class="toast-header">
 																<span>✅</span>
@@ -240,7 +239,7 @@
 															</div>
 														</div>
 														<button class="btn btn-success ml-auto comprarButton" type="button" data-toggle="modal"
-															data-target="#comprarModal">Comprar</button>
+															data-target="#comprarModal" id="btnCargar">Comprar</button>
 													</div>
 												</div>
 											</div>
@@ -390,28 +389,65 @@
         }
     }
 
-	function handleSubmit(e) {
-		e.preventDefault()
+	//DATOS FACTURA COMPRA DETALLE
+	var unidades = document.getElementsByClassName("shoppingCartItem")
+	var codigos = document.getElementsByClassName("idDeUnidad")
+	var cantidades = document.getElementsByClassName("cantidadDeUnidad")
+	var precios = document.getElementsByClassName("precioDeUnidad")
+
+	document.getElementById("btnCargar").addEventListener("click", () => {
 		sessionStorage.setItem('1', 1)
+
+		//DATOS FACTURA COMPRA
+		var ruc_proveedor = document.getElementById("ruc_proveedor").value
+		var timbrado = document.getElementById("timbrado").value
+		var nro_factura = document.getElementById("nro_factura").value
+		var iva10 = document.getElementById("iva10").innerText.replaceAll(" Gs", "")
+		var total = document.getElementById("total").innerText.replaceAll(" Gs", "")
+		var id_proveedor = ""
+
+		{% for proveedor in parameters.listaproveedor %}
+			if("{{proveedor.ruc_proveedor}}" == ruc_proveedor ) {
+				id_proveedor = "{{proveedor.codigo_proveedor}}"
+			}
+		{% endfor %}
 
 		$.ajax({
 			url: "{% url 'compra' %}",
 			type: 'POST',
 			data:{
-				'codigo_proveedor': '{{parameters.datos_act.nombre_proveedor_id}}',
-				'timbrado_id': "",
-				'nro_factura': "",
+				'codigo_proveedor': id_proveedor,
+				'timbrado_id': timbrado,
+				'nro_factura': nro_factura,
 				'condicion': 0,
-				'iva10': '',
-				'total': '',
+				'iva10': iva10,
+				'total': total,
 				'csrfmiddlewaretoken': '{{csrf_token}}'
 			},
 			success: 
 			function(data){
-				
+
+				console.log(unidades.length)
+				for(let i=0; i < unidades.length; i++) {
+					console.log("HOLA")
+					$.ajax({
+						url: "{% url 'compra_detalle' %}",
+						type: 'POST',
+						data:{
+							'id_periferico_id': codigos[i].innerText,
+							'cantidad': cantidades[i].value,
+							'subtotal': parseInt(cantidades[i].value) * parseInt(precios[i].innerText),
+							'csrfmiddlewaretoken': '{{csrf_token}}'
+						},
+						success: 
+						function(data){
+							console.log("Yuju!")
+						}
+					})
+				}
 			}
 		})
-	}
+	})
 
 	function alerta() {
             if (sessionStorage.getItem('1') == 1) {
@@ -422,6 +458,7 @@
                     showConfirmButton: false,
                     timer: 1500
                 }).then(() => {
+
                 })
                 sessionStorage.setItem('1', 0)
             }

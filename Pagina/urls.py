@@ -58,6 +58,16 @@ urlpatterns = [
     path('modtimbrado_prov/<int:timbrado_actual>', views.modtimbrado_prov, name='modtimbrado_prov'),
     path('bortimbrado_prov/<int:timbrado_actual>', views.bortimbrado_prov, name='bortimbrado_prov'),
 
+        #--Timbrados Venta
+    path('vertimbrado_venta', views.vertimbrado_venta, name='vertimbrado_venta'),
+    path('modtimbrado_venta/<int:timbrado_venta_actual>', views.modtimbrado_venta, name='modtimbrado_venta'),
+    path('bortimbrado_venta/<int:timbrado_venta_actual>', views.bortimbrado_venta, name='bortimbrado_venta'),
+
+        #--Talonarios Venta
+    path('vertalonario_venta', views.vertalonario_venta, name='vertalonario_venta'),
+    path('modtalonario_venta/<int:talonario_venta_actual>', views.modtalonario_venta, name='modtalonario_venta'),
+    path('bortalonario_venta/<int:talonario_venta_actual>', views.bortalonario_venta, name='bortalonario_venta'),
+
 # ----------------------------------------PRODUCCION---------------------------------------------------
     
     #--Mantenimiento
@@ -119,9 +129,6 @@ urlpatterns = [
 
     
     path('ver_productos', views.ver_productos, name='ver_productos'),
-    path('inventario', views.inventario, name='inventario'),
-
-    path('inventario', views.inventario, name='inventario'),
-  
+    path('inventario', views.inventario, name='inventario')
 ]
 

@@ -56,82 +56,6 @@ def ajustes(request):
     else:
         return redirect("login")
         
-def compra(request):
-    if request.method == "GET":
-        listaperiferico = Perifericos.objects.all()
-        listaproveedor = Proveedor.objects.all()
-        listacliente = Cliente.objects.all()
-        listatimbrado = timbrado.objects.all()
-        return validar(request, "compra.html", 
-        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-        "titulo_f":"Nueva Compra", 
-        "listaperiferico":listaperiferico,
-        "listaproveedor":listaproveedor,
-        "listacliente":listacliente,
-        "listatimbrado": listatimbrado,
-        "fecha_act": date.today().isoformat()})
-    elif request.method == "POST":
-        id_ultima_factura=0
-
-        factura_compra_nueva=factura_compra(
-        codigo_proveedor_id=request.POST.get('codigo_proveedor'), 
-        nro_timbrado_id=request.POST.get('timbrado_id'), 
-        tipo_usuario=request.POST.get('tipo_usuario'), 
-        nro_factura_compra=request.POST.get('nro_factura'), 
-        fch_factura=date.date.today().isoformat(), 
-        condicion_factura_compra=request.POST.get('condicion'),
-        iva10_factura_compra=request.POST.get('iva10'),
-        total_factura_compra=request.POST.get('total'))
-        factura_compra_nueva.save()
-
-    error = 'No hay error!'
-    response = JsonResponse({'error':error})
-    response.status_code = 201
-    return response
-
-def compra_detalle(request):
-    if request.method == "POST":
-        id_ultima_factura=factura_compra.objects.all().last().id_factura_compra
-
-        factura_compra_deta=factura_compra_detalle(id_factura_compra_id=int(id_ultima_factura), 
-        id_periferico_id=request.POST.get('codigo_proveedor'),
-        nro_timbrado_id=request.POST.get('timbrado_id'),
-        cant_periferico=request.POST.get('cantidad'),
-        subtotal_periferico=request.POST.get('subtotal'))
-        factura_compra_deta.save()
-
-    error = 'No hay error!'
-    response = JsonResponse({'error':error})
-    response.status_code = 201
-    return response
-     
-def venta(request):
-
-    if request.method == "GET":
-        listaperiferico = Perifericos.objects.all()
-        listaproveedor = Proveedor.objects.all()
-        listacliente = Cliente.objects.all()
-        listaciudad = Ciudad.objects.all()
-        return validar(request, "venta.html", 
-        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-        "titulo_f":"Nueva Venta", 
-        "listaperiferico":listaperiferico,
-        "listaproveedor":listaproveedor,
-        "listacliente":listacliente,
-        "listaciudad":listaciudad,
-        "fecha_act": date.today().isoformat()})
-
-    elif request.method == "POST":
-        factura_venta_nueva=Usuario(nombre_usuario=request.POST.get('nombre_usuario'), 
-        password_usuario=request.POST.get('password_usuario'), 
-        nombre_completo_usuario=request.POST.get('nombre_completo_usuario'), 
-        tipo_usuario=request.POST.get('tipo_usuario'), 
-        ci_usuario=request.POST.get('ci_usuario'), 
-        telefono_usuario=request.POST.get('telefono_usuario'), 
-        direccion_usuario=request.POST.get('direccion_usuario'))
-        
-        factura_venta_nueva.save()
-
 def salir(request):
     request.session.flush()
     return redirect("./") 
@@ -1691,6 +1615,7 @@ def modtimbrado_prov(request, timbrado_actual=0):
             if timb_actual:
                 datos_timbrado = timbrado.objects.filter(
                     nro_timbrado=timbrado_actual).first()
+                datos_timbrado.fch_vencimiento_timbrado=str(datos_timbrado.fch_vencimiento_timbrado)
                 return validar(request, "maintenance/timbrados/compra/modtimbrado_prov.html",
                                {"nombre_completo_usuario": request.session.get("nombre_completo_usuario"),
                                 "titulo_f": "Modificar Ciudad",
@@ -1714,7 +1639,7 @@ def modtimbrado_prov(request, timbrado_actual=0):
             else:
                 timbrado_actual = timbrado.objects.get(nro_timbrado=timbrado_actual)
                 timbrado_actual.codigo_proveedor_id = request.POST.get('proveedor')
-                timbrado_actual.fch_vencimiento_timbrado = request.get('fch_vencimiento')
+                timbrado_actual.fch_vencimiento_timbrado = request.POST.get('fch_vencimiento')
                 timbrado_actual.save()
                 
 
@@ -1727,6 +1652,196 @@ def bortimbrado_prov(request, timbrado_actual):
         timbrado.objects.filter(nro_timbrado = timbrado_actual).delete()
         return redirect('vertimbrado_prov')
  
+#--======================================= Timbrados Venta ======================================--
+
+def vertimbrado_venta(request):
+    listatabla = timbrado_venta.objects.all()
+    return validar(request, "maintenance/timbrados/venta/vertimbrado_venta.html", 
+        {
+            "listatabla": listatabla,
+        })
+
+def modtimbrado_venta(request, timbrado_venta_actual = 0):
+    listatabla = timbrado_venta.objects.all()
+    listafacturaventa = factura_venta.objects.all()
+
+    if request.method == "GET":
+        timbra_actual=timbrado_venta.objects.filter(nro_timbrado_venta=timbrado_venta_actual).exists()
+        if timbra_actual:
+            datos_timbrado=timbrado_venta.objects.filter(nro_timbrado_venta=timbrado_venta_actual).first()
+            datos_timbrado.fch_vencimiento_timbrado_venta=str(datos_timbrado.fch_vencimiento_timbrado_venta)
+            return validar(request, "maintenance/timbrados/venta/modtimbrado_venta.html", {
+                "listatabla": listatabla,
+                "listafacturaventa": listafacturaventa,
+                "titulo": "Modificar Timbrado Venta",
+                "datos_act": datos_timbrado,
+                "timbrado_venta_actual": timbrado_venta_actual
+            })
+        else:
+            return validar(request, "maintenance/timbrados/venta/modtimbrado_venta.html", {
+                "listatabla": listatabla,
+                "listafacturaventa": listafacturaventa,
+                "titulo": "Carga Timbrado Venta",
+                "timbrado_venta_actual": timbrado_venta_actual
+            })
+    if request.method == "POST":
+        if timbrado_venta_actual == 0:
+            timbrado_venta_nuevo=timbrado_venta(
+                nro_timbrado_venta=request.POST.get('nro_timbrado'),
+                fch_vencimiento_timbrado_venta=request.POST.get('fch_vencimiento')
+            )
+            timbrado_venta_nuevo.save()
+        else:
+            timbrado_venta_actual=timbrado_venta.objects.get(nro_timbrado_venta=timbrado_venta_actual)
+            timbrado_venta_actual.fch_vencimiento_timbrado_venta = request.POST.get('fch_vencimiento')
+            timbrado_venta_actual.save()
+
+        return redirect('vertimbrado_venta')
+
+def bortimbrado_venta(request, timbrado_venta_actual):
+        timbrado_venta.objects.filter(nro_timbrado_venta = timbrado_venta_actual).delete()
+        return redirect('vertimbrado_venta')
+
+#--======================================= Talonarios Venta ======================================--
+
+def vertalonario_venta(request):
+    listatabla = factura_venta.objects.all()
+    listatimbrado = timbrado_venta.objects.all()
+    return validar(request, "maintenance/timbrados/venta/vertalonario_venta.html", 
+        {
+            "listatabla": listatabla,
+            "listatimbrado": listatimbrado
+        })
+
+def modtalonario_venta(request, talonario_venta_actual = 0):
+    listatabla = factura_venta.objects.all()
+    listatimbrado = timbrado_venta.objects.all()
+
+    if request.method == "GET":
+        talo_actual=factura_venta.objects.filter(id_factura_venta=talonario_venta_actual).exists()
+        if talo_actual:
+            datos_talonario=factura_venta.objects.filter(id_factura_venta=talonario_venta_actual).first()
+            # datos_timbrado.fch_vencimiento_timbrado_venta=str(datos_timbrado.fch_vencimiento_timbrado_venta)
+            return validar(request, "maintenance/timbrados/venta/modtalonario_venta.html", {
+                "listatabla": listatabla,
+                "listatimbrado": listatimbrado,
+                "titulo": "Modificar Talonario Venta",
+                "datos_act": datos_talonario,
+                "talonario_venta_actual": talonario_venta_actual
+            })
+        else:
+            return validar(request, "maintenance/timbrados/venta/modtalonario_venta.html", {
+                "listatabla": listatabla,
+                "listatimbrado": listatimbrado,
+                "titulo": "Carga Talonario Venta",
+                "talonario_venta_actual": talonario_venta_actual
+            })
+    if request.method == "POST":
+        if talonario_venta_actual == 0:
+            talonario_venta_nuevo=factura_venta(
+                nro_timbrado_venta_id=request.POST.get('nro_timbrado'),
+                nro_inicio_factura_venta=request.POST.get('nro_inicio_factura_venta'),
+                nro_actual_factura_venta=request.POST.get('nro_actual_factura_venta'),
+                nro_fin_factura_venta=request.POST.get('nro_fin_factura_venta'),
+            )
+            talonario_venta_nuevo.save()
+        else:
+            talonario_venta_actual=factura_venta.objects.get(id_factura_venta=talonario_venta_actual)
+            talonario_venta_actual.nro_timbrado_venta_id = request.POST.get('nro_timbrado')
+            talonario_venta_actual.nro_inicio_factura_venta = request.POST.get('nro_inicio_factura_venta')
+            talonario_venta_actual.nro_actual_factura_venta = request.POST.get('nro_actual_factura_venta')
+            talonario_venta_actual.nro_fin_factura_venta = request.POST.get('nro_fin_factura_venta')
+            talonario_venta_actual.save()
+
+        return redirect('vertalonario_venta')
+
+def bortalonario_venta(request, talonario_venta_actual):
+        factura_venta.objects.filter(id_factura_venta = talonario_venta_actual).delete()
+        return redirect('vertalonario_venta')
+ 
+#--======================================= Compra ======================================--
+
+def compra(request):
+    if request.method == "GET":
+        listaperiferico = Perifericos.objects.all()
+        listaproveedor = Proveedor.objects.all()
+        listacliente = Cliente.objects.all()
+        listatimbrado = timbrado.objects.all()
+        return validar(request, "compra.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Nueva Compra", 
+        "listaperiferico":listaperiferico,
+        "listaproveedor":listaproveedor,
+        "listacliente":listacliente,
+        "listatimbrado": listatimbrado,
+        "fecha_act": date.today().isoformat()})
+    elif request.method == "POST":
+        id_ultima_factura=0
+
+        factura_compra_nueva=factura_compra(
+        codigo_proveedor_id=request.POST.get('codigo_proveedor'), 
+        nro_timbrado_id=request.POST.get('timbrado_id'), 
+        nro_factura_compra=request.POST.get('nro_factura'), 
+        fch_factura_compra=date.today().isoformat(), 
+        condicion_factura_compra=request.POST.get('condicion'),
+        iva10_factura_compra=request.POST.get('iva10'),
+        total_factura_compra=request.POST.get('total'))
+        factura_compra_nueva.save()
+
+
+    error = 'No hay error!'
+    response = JsonResponse({'error':error})
+    response.status_code = 201
+    return response
+
+def compra_detalle(request):
+    if request.method == "POST":
+        id_ultima_factura=factura_compra.objects.all().last().id_factura_compra
+
+        codiguito_periferico = request.POST.get('id_periferico_id')
+
+        id_periferico=Perifericos.objects.get(cod_periferico = codiguito_periferico).id_periferico
+
+        factura_compra_deta=factura_compra_detalle(id_factura_compra_id=int(id_ultima_factura), 
+        id_periferico_id=id_periferico,
+        cant_periferico=request.POST.get('cantidad'),
+        subtotal_periferico=request.POST.get('subtotal'))
+        factura_compra_deta.save()
+
+    error = 'No hay error!'
+    response = JsonResponse({'error':error})
+    response.status_code = 201
+    return response
+
+#--======================================= Venta ======================================--
+#      
+def venta(request):
+
+    if request.method == "GET":
+        listaperiferico = Perifericos.objects.all()
+        listaproveedor = Proveedor.objects.all()
+        listacliente = Cliente.objects.all()
+        listaciudad = Ciudad.objects.all()
+        return validar(request, "venta.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Nueva Venta", 
+        "listaperiferico":listaperiferico,
+        "listaproveedor":listaproveedor,
+        "listacliente":listacliente,
+        "listaciudad":listaciudad,
+        "fecha_act": date.today().isoformat()})
+
+    elif request.method == "POST":
+        factura_venta_nueva=Usuario(nombre_usuario=request.POST.get('nombre_usuario'), 
+        password_usuario=request.POST.get('password_usuario'), 
+        nombre_completo_usuario=request.POST.get('nombre_completo_usuario'), 
+        tipo_usuario=request.POST.get('tipo_usuario'), 
+        ci_usuario=request.POST.get('ci_usuario'), 
+        telefono_usuario=request.POST.get('telefono_usuario'), 
+        direccion_usuario=request.POST.get('direccion_usuario'))
+        
+        factura_venta_nueva.save()
+
 #--======================================= Validación ======================================--
 def validar(request, pageSuccess, parameters={}):
     if request.session.get("id_usuario"):

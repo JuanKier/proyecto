@@ -2,9 +2,38 @@
 {%block barra%}
 {%load static%}
 <body>
+    <style>
+        .dataTables_length{
+            display: contents;
+        }
+
+        .dt-buttons{
+            display: contents;
+        }
+        
+    </style>
     <script>
         $(document).ready(function () {
             var table = $('#example').DataTable({
+                "language": {
+                "emptyTable":     "La tabla se encuentra vacia.",
+                "info":           "Mostrando _END_ de _MAX_ registros",
+                "infoEmpty":      "",
+                "infoFiltered":   "",
+                "infoPostFix":    "",
+                "thousands":      ",",
+                "lengthMenu":     "Mostrar _MENU_ registrosㅤㅤㅤㅤㅤㅤAcciones:",
+                "loadingRecords": "Cargando...",
+                "processing":     "Procesando...",
+                "search":         "Buscar: ",
+                "zeroRecords":    "No se obtuvo ninguna coincidencia",
+                oPaginate: {
+                    sNext: '<i class="fa fa-forward"></i>',
+                    sPrevious: '<i class="fa fa-backward"></i>',
+                    sFirst: '<i class="fa fa-step-backward"></i>',
+                    sLast: '<i class="fa fa-step-forward"></i>',
+                },
+            },
                 fixedHeader: true,
                 responsive: true,
                 dom: 'lBfrtip',
@@ -27,7 +56,7 @@
 	        			titleAttr: 'Imprimir',
 	        			className: 'btn btn-info'
 	        		},
-                ]
+                ],
             });
         });
     </script>

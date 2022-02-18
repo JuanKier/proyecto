@@ -69,7 +69,7 @@
         <div class="card-header">
             
             <div class="form-group form-default" style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="margin: 0">Lista de Mantenimientos</h3><a href="{% url 'modmant' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nuevo Mantenimiento</button></a>
+                <h3 style="margin: 0">Timbrados de EncarPC</h3><a href="{% url 'modtimbrado_venta' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nuevo Timbrado</button></a>
             </div>
             <div class="py-4">
                 <div class="col-md-12">
@@ -78,55 +78,23 @@
                             <table id="example" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
-                                        <th>Equipo</th>
-                                        <th>Descripción</th>
-                                        <th>Cliente</th>
-                                        <th>Empleado</th>
-                                        <th>Inicio</th>
-                                        <th>Fin</th>
-                                        <th>Horas</th>
-                                        <th>Actividades</th>
-                                        <th>Estado</th>
+                                        <th>Nro. Timbrado</th>
+                                        <th>Fecha de Vencimiento</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {% for lista in parameters.listatabla %}
                                     <tr>
-                                            {%if lista.equipo_mant == 1 %}<td>PC</td>{% endif %} 
-                                            {%if lista.equipo_mant == 2 %}<td>Notebook</td>{% endif %}
-                                            {%if lista.equipo_mant == 3 %}<td>Consola</td>{% endif %}
-                                            {%if lista.equipo_mant == 4 %}<td>Periferico</td>{% endif %}
-                                        <td>{{ lista.desc_equipo_mant }}</td>
-                                        <td>
-                                            {%for lista1 in parameters.listacliente%}
-                                            {% if lista1.codigo_cliente == lista.nombre_cliente_id%}
-                                                {{lista1.nombre_cliente}}
-                                            {%endif%}
-                                            {%endfor%}
-                                        </td>
-                                        <td>
-                                            {%for lista2 in parameters.listausuario%}
-                                            {% if lista2.id_usuario == lista.nombre_completo_usuario_id%}
-                                            {{lista2.nombre_completo_usuario}}
-                                            {%endif%}
-                                            {%endfor%}
-                                        </td>
-                                        <td>{{ lista.inicio_mant }}</td>
-                                        <td>{{ lista.fin_mant }}</td>
-                                        <td>{{ lista.horas_mant }}</td>
-                                        <td>{{ lista.actividades_mant }}</td>
-                                            {%if lista.estado_mant == 1 %}<td><span class="badge bg-danger">Recibido</span></td>{% endif %} 
-                                            {%if lista.estado_mant == 2 %}<td><span class="badge bg-warning">En proceso</span></td>{% endif %}
-                                            {%if lista.estado_mant == 3 %}<td><span class="badge bg-success">Terminado</span></td>{% endif %}
-                                        <td>
-                                            <div class="icon-btn">
-                                                <a href="{% url 'modmant' lista.codigo_mant %}"
+                                        <td>{{ lista.nro_timbrado_venta }}</td>
+                                        <td>{{ lista.fch_vencimiento_timbrado_venta }}</td>
+                                        <td><div class="icon-btn">
+                                                <a href="{% url 'modtimbrado_venta' lista.nro_timbrado_venta %}"
                                                     class="btn waves-effect waves-light btn-warning btn-icon"
                                                     style="color: white;" data-toggle="tooltip" data-placement="top"
                                                     title="" data-original-title="Modificar Registro"><i
                                                         data-feather="edit"></i></a>
-                                                <a href="{% url 'bormant' lista.codigo_mant %}"
+                                                <a href="{% url 'bortimbrado_venta' lista.nro_timbrado_venta %}"
                                                     onclick="return confirm('Eliminar el registro?')"
                                                     class="btn waves-effect waves-light btn-danger btn-icon"
                                                     style="color: white;" data-toggle="tooltip" data-placement="top"

@@ -13,15 +13,16 @@ const shoppingCartItemsContainer = document.querySelector(
 function addToCartClicked(event) {
   const button = event.target;
   const item = button.closest('.item');
+  const itemId = item.querySelector('.item-id').textContent;
   const itemTitle = item.querySelector('.item-title').textContent;
   const itemPrice = item.querySelector('.item-price').innerText.replaceAll(".","");
   const itemImage = item.querySelector('.item-image').src;
   
 
-  addItemToShoppingCart(itemTitle, itemPrice, itemImage);
+  addItemToShoppingCart(itemId, itemTitle, itemPrice, itemImage);
 }
 
-function addItemToShoppingCart(itemTitle, itemPrice, itemImage) {
+function addItemToShoppingCart(itemId ,itemTitle, itemPrice, itemImage) {
   const elementsTitle = shoppingCartItemsContainer.getElementsByClassName(
     'shoppingCartItemTitle'
   );
@@ -43,6 +44,7 @@ function addItemToShoppingCart(itemTitle, itemPrice, itemImage) {
   const shoppingCartRow = document.createElement('div');
   const shoppingCartContent = `
   <div class="row shoppingCartItem">
+    <p class="idDeUnidad" style="display: none">${itemId}</p>
         <div class="col-6">
             <div class="shopping-cart-item d-flex align-items-center h-100 border-bottom pb-2 pt-3">
                 <img src=${itemImage} class="shopping-cart-image" style="width="50"; height="50">
@@ -51,13 +53,13 @@ function addItemToShoppingCart(itemTitle, itemPrice, itemImage) {
         </div>
         <div class="col-2">
             <div class="shopping-cart-price d-flex align-items-center h-100 border-bottom pb-2 pt-3">
-                <p class="item-price mb-0 shoppingCartItemPrice">${itemPrice}</p>
+                <p class="item-price mb-0 shoppingCartItemPrice precioDeUnidad">${itemPrice}</p>
             </div>
         </div>
         <div class="col-4">
             <div
                 class="shopping-cart-quantity d-flex justify-content-between align-items-center h-100 border-bottom pb-2 pt-3">
-                <input class="shopping-cart-quantity-input shoppingCartItemQuantity" type="number" style="width:2.5em"
+                <input class="shopping-cart-quantity-input shoppingCartItemQuantity cantidadDeUnidad" type="number" style="width:2.5em"
                     value="1">
                 <button class="btn btn-danger buttonDelete" type="button">X</button>
             </div>
@@ -142,7 +144,9 @@ function quantityChanged(event) {
 }
 
 function comprarButtonClicked() {
-  shoppingCartItemsContainer.innerHTML = '';
-  updateShoppingCartTotal();
-  updateShoppingCartTotalIva();
+  setTimeout(() => {
+    shoppingCartItemsContainer.innerHTML = '';
+    updateShoppingCartTotal();
+    updateShoppingCartTotalIva();
+  }, 1000)
 }
