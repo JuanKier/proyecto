@@ -1904,6 +1904,36 @@ def venta_detalle(request):
     response.status_code = 201
     return response
 
+#--======================================= Historial de Ventas ======================================--
+
+def historial_ventas(request):
+    listaperiferico = Perifericos.objects.all()
+    listacliente = Cliente.objects.all()
+    listaventa = factura_venta.objects.all()
+    return validar(request, "historial_ventas.html", 
+    {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+    "titulo_f":"Nueva Compra", 
+    "listaperiferico":listaperiferico,
+    "listacliente":listacliente,
+    "listaventa": listaventa,
+    "fecha_act": date.today().isoformat()})
+
+def historial_ventas_detalle(request, id_factura_venta):
+    listafactura = factura_venta.objects.all()
+    datos_factura = factura_venta.objects.get(id_factura_venta = id_factura_venta)
+    print(datos_factura.total_factura_venta)
+    listaperiferico = Perifericos.objects.all()
+    listacliente = Cliente.objects.all()
+    listadetalle = factura_venta_detalle.objects.all()
+    return validar(request, "historial_ventas_detalle.html", 
+    {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+    "titulo_f":"Nueva Compra", 
+    "listaperiferico":listaperiferico,
+    "listacliente":listacliente,
+    "listadetalle": listadetalle,
+    "listafactura": listafactura, 
+    "datos_factura":datos_factura,
+    "fecha_act": date.today().isoformat()})
 
 #--======================================= Validación ======================================--
 def validar(request, pageSuccess, parameters={}):

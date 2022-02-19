@@ -123,6 +123,8 @@ urlpatterns = [
     #--VENTA
     path('venta', views.venta, name='venta'),
     path('venta_detalle', views.venta_detalle, name='venta_detalle'),
+    path('historial_ventas', views.historial_ventas, name='historial_ventas'),
+    path('historial_ventas_detalle/<int:id_factura_venta>', views.historial_ventas_detalle, name='historial_ventas_detalle'),
 
     #--COMPRA
     path('compra', views.compra, name='compra'),

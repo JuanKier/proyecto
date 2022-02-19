@@ -63,27 +63,54 @@
     .titulo{
         margin-top: 1em;
     }
+	
+	.toast {
+  		width: 100%;
+	}
 
 </style>
 <body>
 	<script>
         $(document).ready(function () {
             var table = $('#item').DataTable({
-				"lengthMenu": [[5 ,10, 25, 50, -1], [5, 10, 25, 50, "Todo"]]
+                "language": {
+                "emptyTable":     "La tabla se encuentra vacia.",
+                "info":           "Mostrando _END_ de _MAX_ registros",
+                "infoEmpty":      "",
+                "infoFiltered":   "",
+                "infoPostFix":    "",
+                "thousands":      ",",
+                "lengthMenu":     "Mostrar _MENU_ registros",
+                "loadingRecords": "Cargando...",
+                "processing":     "Procesando...",
+                "search":         "Buscar: ",
+                "zeroRecords":    "No se obtuvo ninguna coincidencia",
+                oPaginate: {
+                    sNext: '<i class="fa fa-forward"></i>',
+                    sPrevious: '<i class="fa fa-backward"></i>',
+                    sFirst: '<i class="fa fa-step-backward"></i>',
+                    sLast: '<i class="fa fa-step-forward"></i>',
+                },
+            },
+                fixedHeader: true,
             });
         });
-		
     </script>
 
 
 <div class="py-4">
 	<div class="col-md-12">
-		<div class="card">
-			<div class="card-header">
+		<div class="card-header">
 				<form  style="margin: 1em;border-radius: 10px;" enctype="multipart/form-data" action="#" method="POST" onsubmit="sessionStorage.setItem('1', 1)"; style="margin: 1em">
 					{% csrf_token %}
 					<div class="card" style="padding: 0.5em;">
-						<h1 class="text-center" style="padding: 0.5em;">VENTA</h1>
+						<div style="display: flex; justify-content: space-between; gap: 1em;">
+							<form>
+								<a class="img-responsive mt-2" onclick="history.back()"><img src="{%static 'img/icons/back.png'%}" width="50" height="50"></a>
+							</form>
+							<h1 class="text-center" style="padding: 0.5em;">NUEVA VENTA</h1>
+							<a href="{% url 'historial_ventas' %}"><button type="button" class="btn btn-success btn-round waves-effect waves-light">Historial de Ventas</button></a>
+						</div>
 						<div class="input-confirmar" style="grid-template-columns: 1fr 1fr 1fr;">
 							<div>
 								<label class="float-label">CI o RUC de Cliente</label>
@@ -106,20 +133,6 @@
 									{% endfor %}
 								</select>
 							</div>
-			
-							<div class="form-group form-default mb-3">
-								<label class="float-label">Nro. Factura</label>
-								<span class="form-bar"></span>
-								<input type="text" name="nro_factura" class="form-control" id="nro_factura" required readonly>
-							</div>
-
-							<div class="form-group form-default mb-3">
-								<label class="float-label">Fecha de Venta</label>
-								<span class="form-bar"></span>
-								<input type="date" name="" class="form-control" required readonly
-									value="{{parameters.fecha_act}}">
-							</div>
-
 
 							<div class="form-group form-default mb-3">
 								<label class="float-label">Fecha de Vencimiento Timbrado</label>
@@ -127,12 +140,29 @@
 								<input type="date" name="" class="form-control" id="fch_timbrado" required readonly
 									value="">
 							</div>
-
+						</div>
+						<div class="input-confirmar" style="grid-template-columns: 1fr 1fr 1fr; width: 100%;">
 							<div>
 								<label class="float-label">Nombre del Cliente</label>
 								<label class="form-control mb-3" id="nombre_cliente" readonly> </label>
 								<input type="text" style="display: none;" id="id_cliente" name="id_cliente">
 							</div>
+
+							<div class="form-group form-default mb-3">
+								<label class="float-label">Nro. Factura</label>
+								<span class="form-bar"></span>
+								<input type="text" name="nro_factura" class="form-control" id="nro_factura" required readonly>
+							</div>
+						
+							<div class="form-group form-default mb-3">
+								<label class="float-label">Fecha de Venta</label>
+								<span class="form-bar"></span>
+								<input type="date" name="" class="form-control" required readonly
+									value="{{parameters.fecha_act}}">
+							</div>
+
+						</div>
+						<div class="input-confirmar" style="grid-template-columns: 1fr 1fr 1fr; width: 100%;">
 							<div>
 								<label class="float-label">Teléfono Cliente</label>
 								<label class="form-control mb-3" id="telefono_cliente" readonly> </label>
@@ -148,6 +178,8 @@
 								<label class="form-control mb-3" id="nombre_ciudad" readonly> </label>
 								<input type="text" style="display: none;" id="id_cliente" name="id_cliente">
 							</div>
+						</div>
+							
 						</div>
 					</div>
 					
@@ -210,7 +242,7 @@
 								<div class="card-header">
 									<section class="shopping-cart">
 										<div class="container">
-											<h1 class="text-center">CARRITO</h1>
+											<h1 class="text-center">DETALLE</h1>
 											<hr>
 											<div class="row">
 												<div class="col-6">
@@ -246,7 +278,7 @@
 											<div class="card-header">
 												<div class="col-12">
 													<div class="shopping-cart-total d-flex align-items-center">
-														<p class="mb-0">Total IVA Incl.</p>
+														<p class="mb-0">Total IVA</p>
 														<p class="ml-4 mb-0 shoppingCartTotalIva" id="iva10">0 Gs</p>
 														<div class="toast ml-auto bg-info" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
 															<div class="toast-header">
@@ -293,7 +325,6 @@
 								</div>
 							</div>
 				</form>
-			</div>
 			</form>
 		</div>
 	</div>
@@ -306,6 +337,14 @@
 <script src="{%static 'js/select2.js'%}"></script>
 <script src="{%static 'js/popper.min.js'%}"></script>
 <script src="{%static 'js/tienda.js'%}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'js/Buttons-2.2.2/css/buttons.bootstrap5.min.css' %}"/>
+<script type="text/javascript" src="{% static 'js/JSZip-2.5.0/jszip.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/pdfmake-0.1.36/pdfmake.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/pdfmake-0.1.36/vfs_fonts.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/buttons.bootstrap5.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/buttons.html5.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/buttons.print.min.js' %}"></script>
 
 
 

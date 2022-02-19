@@ -64,24 +64,45 @@
         margin-top: 1em;
     }
 
+	.toast {
+  		width: 100%;
+	}
 </style>
 <body>
 	<script>
         $(document).ready(function () {
             var table = $('#item').DataTable({
-				"lengthMenu": [[5 ,10, 25, 50, -1], [5, 10, 25, 50, "Todo"]]
+                "language": {
+                "emptyTable":     "La tabla se encuentra vacia.",
+                "info":           "Mostrando _END_ de _MAX_ registros",
+                "infoEmpty":      "",
+                "infoFiltered":   "",
+                "infoPostFix":    "",
+                "thousands":      ",",
+                "lengthMenu":     "Mostrar _MENU_ registros",
+                "loadingRecords": "Cargando...",
+                "processing":     "Procesando...",
+                "search":         "Buscar: ",
+                "zeroRecords":    "No se obtuvo ninguna coincidencia",
+                oPaginate: {
+                    sNext: '<i class="fa fa-forward"></i>',
+                    sPrevious: '<i class="fa fa-backward"></i>',
+                    sFirst: '<i class="fa fa-step-backward"></i>',
+                    sLast: '<i class="fa fa-step-forward"></i>',
+                },
+            },
+                fixedHeader: true,
             });
         });
-		
     </script>
 
 
 <div class="py-4">
 	<div class="col-md-12">
-		<div class="card">
+		<div class="card-header">
 				<form style="margin: 1em;border-radius: 10px;" enctype="multipart/form-data" id="formCompra" action="#" method="POST" onsubmit="return false"; style="margin: 1em">
 					{% csrf_token %}
-					<div class="card-header" style="padding: 0.5em;">
+					<div class="card" style="padding: 0.5em;">
 						<div style="display: flex; justify-content: space-between; gap: 1em;">
 							<form>
 								<a class="img-responsive mt-2" onclick="history.back()"><img src="{%static 'img/icons/back.png'%}" width="50" height="50"></a>
@@ -126,17 +147,21 @@
 								<input type="date" id="fch_compra" name="fch_compra" class="form-control" required readonly
 									value="{{parameters.fecha_act}}">
 							</div>
-							<div>
-								<label class="float-label">Teléfono Proveedor</label>
-								<label class="form-control mb-3" id="telefono_proveedor" readonly> </label>
-								<input type="text" style="display: none;" id="codigo_proveedor" name="codigo_proveedor">
-							</div>
+						</div>
+						<div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
 							<div>
 								<label class="float-label">Direccion del Proveedor</label>
 								<label class="form-control mb-3" id="direccion_proveedor" readonly> </label>
 								<input type="text" style="display: none;" id="codigo_proveedor" name="codigo_proveedor">
 							</div>
+							<div>
+								<label class="float-label">Teléfono Proveedor</label>
+								<label class="form-control mb-3" id="telefono_proveedor" readonly> </label>
+								<input type="text" style="display: none;" id="codigo_proveedor" name="codigo_proveedor">
+							</div>
 						</div>
+							
+
 					</div>
 					<div class="input-confirmar card">
 						<section class="store">
@@ -232,7 +257,7 @@
 											<div class="card-header">
 												<div class="col-12">
 													<div class="shopping-cart-total d-flex align-items-center">
-														<p class="mb-0">Total IVA Incl.</p>
+														<p class="mb-0">Total IVA</p>
 														<p class="ml-4 mb-0 shoppingCartTotalIva" id="iva10">0 Gs</p>
 														<div class="toast ml-auto bg-info" role="alert" aria-live="assertive" aria-atomic="true" data-delay="2000">
 															<div class="toast-header">
@@ -291,6 +316,14 @@
 <script src="{%static 'js/select2.js'%}"></script>
 <script src="{%static 'js/popper.min.js'%}"></script>
 <script src="{%static 'js/tienda.js'%}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'js/Buttons-2.2.2/css/buttons.bootstrap5.min.css' %}"/>
+<script type="text/javascript" src="{% static 'js/JSZip-2.5.0/jszip.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/pdfmake-0.1.36/pdfmake.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/pdfmake-0.1.36/vfs_fonts.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/dataTables.buttons.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/buttons.bootstrap5.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/buttons.html5.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/buttons.print.min.js' %}"></script>
 
 
 

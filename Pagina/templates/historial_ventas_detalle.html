@@ -83,7 +83,7 @@
                         <form>
                             <a class="img-responsive mt-2" onclick="history.back()"><img src="{%static 'img/icons/back.png'%}" width="50" height="50"></a>
                         </form>
-                        <h1 class="text-center" style="padding: 0.5em;">Detalle Factura Nro. {{parameters.datos_factura.nro_factura_compra}}</h1>
+                        <h1 class="text-center" style="padding: 0.5em;">Detalle Factura Nro. {{parameters.datos_factura.nro_factura_venta}}</h1>
                         
                     </div>
                     <div class="py-4">
@@ -122,7 +122,7 @@
                                     {%endfor%}
                                 </td>
                                 <td>{{ lista.cant_periferico }}</td>
-                                <td><span class="precio">{{ lista.subtotal_periferico }}</span> Gs</td>
+                                <td><span class="precio">{{ lista.subtotal_factura_venta }}</span> Gs</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -130,8 +130,8 @@
                             <th></th>
                             <th></th>
                             <th></th>
-                            <th>IVA = <span class="precio">{{parameters.datos_factura.iva10_factura_compra}}</span> Gs</th>
-                            <th>Total = <span  class="precio">{{parameters.datos_factura.total_factura_compra}}</span> Gs</th>
+                            <th>IVA = <span class="precio">{{parameters.datos_factura.iva10_factura_venta}}</span> Gs</th>
+                            <th>Total = <span  class="precio">{{parameters.datos_factura.total_factura_venta}}</span> Gs</th>
                         </tfoot>
                     </table>
                 </div>
