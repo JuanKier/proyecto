@@ -79,11 +79,17 @@
 <div class="py-4">
 	<div class="col-md-12">
 		<div class="card">
-			<div class="card-header">
 				<form style="margin: 1em;border-radius: 10px;" enctype="multipart/form-data" id="formCompra" action="#" method="POST" onsubmit="return false"; style="margin: 1em">
 					{% csrf_token %}
-					<div class="card" style="padding: 0.5em;">
-						<h1 class="text-center" style="padding: 0.5em;">COMPRA</h1>
+					<div class="card-header" style="padding: 0.5em;">
+						<div style="display: flex; justify-content: space-between; gap: 1em;">
+							<form>
+								<a class="img-responsive mt-2" onclick="history.back()"><img src="{%static 'img/icons/back.png'%}" width="50" height="50"></a>
+							</form>
+							<h1 class="text-center" style="padding: 0.5em;">NUEVA COMPRA</h1>
+							<a href="{% url 'historial_compras' %}"><button type="button" class="btn btn-success btn-round waves-effect waves-light">Historial de Compras</button></a>
+						</div>
+						
 						<div class="input-confirmar" style="grid-template-columns: 1fr 1fr 1fr;">
 							<div>
 								<label class="float-label">RUC del Proveedor</label>
@@ -273,7 +279,6 @@
 								</div>
 							</div>
 				</form>
-			</div>
 			</form>
 		</div>
 	</div>

@@ -209,30 +209,30 @@ class factura_compra_detalle(models.Model):
     subtotal_periferico = models.FloatField()
 
 
-
-
 class timbrado_venta(models.Model):
     nro_timbrado_venta = models.IntegerField(primary_key=True)
     fch_vencimiento_timbrado_venta = models.DateField()
 
-class factura_venta(models.Model):
-    id_factura_venta = models.AutoField(primary_key=True)
+class talonario_ventas(models.Model):
+    id_talonario_venta = models.AutoField(primary_key=True)
     nro_timbrado_venta = models.ForeignKey(timbrado_venta, on_delete=models.CASCADE, null=True)
     nro_inicio_factura_venta = models.IntegerField()
     nro_actual_factura_venta = models.IntegerField()
     nro_fin_factura_venta = models.IntegerField()
 
-class factura_venta_detalle(models.Model):
-    id_factura_venta_detalle = models.AutoField(primary_key=True)
+class factura_venta(models.Model):
+    id_factura_venta = models.AutoField(primary_key=True)
     codigo_cliente = models.ForeignKey(Cliente, on_delete=models.CASCADE)
     nro_timbrado_venta = models.ForeignKey(timbrado_venta, on_delete=models.CASCADE)
-    cod_periferico = models.ForeignKey(Perifericos, on_delete=models.CASCADE)
     nro_factura_venta = models.IntegerField()
-    fch_factura_venta = models.DateField()
+    fch_factura_venta = models.DateField(null=True)
     condicion_factura_venta = models.IntegerField()
-    subtotal_factura_venta = models.FloatField()
-    iva10_factura_venta = models.FloatField()
     total_factura_venta = models.FloatField()
-    fch_cobrado_factura_venta = models.DateField(null=True)
-    monto_cobrado_factura_venta = models.FloatField(null=True)
-    estado_factura_venta = models.IntegerField()
+    iva10_factura_venta = models.FloatField()
+
+class factura_venta_detalle(models.Model):
+    id_factura_venta_detalle = models.AutoField(primary_key=True)
+    id_factura_venta = models.ForeignKey(factura_venta, on_delete=models.CASCADE)
+    id_periferico = models.ForeignKey(Perifericos, on_delete=models.CASCADE)
+    cant_periferico = models.IntegerField()
+    subtotal_factura_venta = models.FloatField()

@@ -1,7 +1,6 @@
-{% extends "base.html" %}
-{% load static %}
-
-{% block barra %}
+{%extends "base.html"%}
+{%block barra%}
+{%load static%}
 
 <body>
     <style>
@@ -63,60 +62,62 @@
         });
     </script>
 
-    <div class="col-md-3 col-xl-2">
-    </div>
-    <div class="card">
-        <div class="card-header">
-            
-            <div class="form-group form-default" style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="margin: 0">Talonarios de EncarPC</h3><a href="{% url 'modtalonario_venta' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nuevo Timbrado</button></a>
-            </div>
-            <div class="py-4">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <table id="example" class="table table-striped" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Nro. Timbrado</th>
-                                        <th>Nro. Inicio</th>
-                                        <th>Nro. Actual</th>
-                                        <th>Nro. Fin</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for lista in parameters.listatabla %}
-                                    <tr>
-                                        <td>{{ lista.nro_timbrado_venta_id }}</td>
-                                        <td>{{ lista.nro_inicio_factura_venta }}</td>
-                                        <td>{{ lista.nro_actual_factura_venta }}</td>
-                                        <td>{{ lista.nro_fin_factura_venta }}</td>
-                                        <td><div class="icon-btn">
-                                                <a href="{% url 'modtalonario_venta' lista.id_talonario_venta %}"
-                                                    class="btn waves-effect waves-light btn-warning btn-icon"
-                                                    style="color: white;" data-toggle="tooltip" data-placement="top"
-                                                    title="" data-original-title="Modificar Registro"><i
-                                                        data-feather="edit"></i></a>
-                                                <a href="{% url 'bortalonario_venta' lista.id_talonario_venta %}"
-                                                    onclick="return confirm('Eliminar el registro?')"
-                                                    class="btn waves-effect waves-light btn-danger btn-icon"
-                                                    style="color: white;" data-toggle="tooltip" data-placement="top"
-                                                    title="" data-original-title="Eliminar Registro"><i
-                                                        data-feather="trash-2"></i></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-
-                            </table>
-                        </div>
+    <div class="py-4">
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header">
+                    
+                    <div style="display: grid; justify-content: space-between; gap: 1em; grid-template-columns: 1fr 1fr 1fr;">
+                        <form>
+                            <a class="img-responsive mt-2" onclick="history.back()"><img src="{%static 'img/icons/back.png'%}" width="50" height="50"></a>
+                        </form>
+                        <h1 class="text-center" style="padding: 0.5em;">Historial de Compras</h1>
+                        
                     </div>
+                    <div class="py-4">
+                        <div class="col-md-12">
+                            <div class="card">
+                <div class="card-body">
+                    <table id="example" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Nro. Factura</th>
+                                <th>Proveedor</th>
+                                <th>Fecha de Compra</th>
+                                <th>Total de Factura</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for lista in parameters.listacompra %}
+                            <tr>
+                                <td>{{ lista.nro_factura_compra }}</td>
+                                <td>
+                                    {%for lista2 in parameters.listaproveedor%}
+                                    {% if lista2.codigo_proveedor == lista.codigo_proveedor_id%}
+                                    {{lista2.razon_social_proveedor}}
+                                    {%endif%}
+                                    {%endfor%}
+                                </td>
+                                <td>{{ lista.fch_factura_compra }}</td>
+                                <td class = "precio">{{ lista.total_factura_compra }}</td>
+                                <td>
+                                    <div class="icon-btn">
+                                        <a href="{% url 'historial_compras_detalle' lista.id_factura_compra %}"
+                                            class="btn waves-effect waves-light btn-info btn-block"
+                                            style="color: white;" data-toggle="tooltip" data-placement="top">Detalle</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+
                 </div>
             </div>
         </div>
     </div>
+
     <script src="{%static 'js/app.js'%}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'js/Buttons-2.2.2/css/buttons.bootstrap5.min.css' %}"/>
     <script type="text/javascript" src="{% static 'js/JSZip-2.5.0/jszip.min.js' %}"></script>
@@ -141,8 +142,21 @@
             }
         }
         window.onload = alerta()
+
+        function formatText(data) {
+            data = document.getElementsByClassName(data)
+            var value
+            for(let i = 0; i < data.length; i++) {
+                value = data[i].innerText
+                value = parseFloat(value).toLocaleString('es')
+                data[i].innerText = value
+            }
+        }       
+        formatText("precio") //formatear numeros
     </script>
-    </main>
 </body>
 
-    {% endblock %}
+</html>
+
+
+{%endblock%}

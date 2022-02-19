@@ -67,7 +67,7 @@ urlpatterns = [
     path('vertalonario_venta', views.vertalonario_venta, name='vertalonario_venta'),
     path('modtalonario_venta/<int:talonario_venta_actual>', views.modtalonario_venta, name='modtalonario_venta'),
     path('bortalonario_venta/<int:talonario_venta_actual>', views.bortalonario_venta, name='bortalonario_venta'),
-
+    
 # ----------------------------------------PRODUCCION---------------------------------------------------
     
     #--Mantenimiento
@@ -122,10 +122,13 @@ urlpatterns = [
 # ----------------------------------------VENTA Y COMPRA---------------------------------------------------
     #--VENTA
     path('venta', views.venta, name='venta'),
+    path('venta_detalle', views.venta_detalle, name='venta_detalle'),
 
     #--COMPRA
     path('compra', views.compra, name='compra'),
-    path('compra_detalle}', views.compra_detalle, name='compra_detalle'),
+    path('compra_detalle', views.compra_detalle, name='compra_detalle'),
+    path('historial_compras', views.historial_compras, name='historial_compras'),
+    path('historial_compras_detalle/<int:id_factura>', views.historial_compras_detalle, name='historial_compras_detalle'),
 
     
     path('ver_productos', views.ver_productos, name='ver_productos'),

@@ -1705,7 +1705,7 @@ def bortimbrado_venta(request, timbrado_venta_actual):
 #--======================================= Talonarios Venta ======================================--
 
 def vertalonario_venta(request):
-    listatabla = factura_venta.objects.all()
+    listatabla = talonario_ventas.objects.all()
     listatimbrado = timbrado_venta.objects.all()
     return validar(request, "maintenance/timbrados/venta/vertalonario_venta.html", 
         {
@@ -1738,7 +1738,7 @@ def modtalonario_venta(request, talonario_venta_actual = 0):
             })
     if request.method == "POST":
         if talonario_venta_actual == 0:
-            talonario_venta_nuevo=factura_venta(
+            talonario_venta_nuevo=talonario_ventas(
                 nro_timbrado_venta_id=request.POST.get('nro_timbrado'),
                 nro_inicio_factura_venta=request.POST.get('nro_inicio_factura_venta'),
                 nro_actual_factura_venta=request.POST.get('nro_actual_factura_venta'),
@@ -1746,7 +1746,7 @@ def modtalonario_venta(request, talonario_venta_actual = 0):
             )
             talonario_venta_nuevo.save()
         else:
-            talonario_venta_actual=factura_venta.objects.get(id_factura_venta=talonario_venta_actual)
+            talonario_venta_actual=talonario_ventas.objects.get(id_factura_venta=talonario_venta_actual)
             talonario_venta_actual.nro_timbrado_venta_id = request.POST.get('nro_timbrado')
             talonario_venta_actual.nro_inicio_factura_venta = request.POST.get('nro_inicio_factura_venta')
             talonario_venta_actual.nro_actual_factura_venta = request.POST.get('nro_actual_factura_venta')
@@ -1813,8 +1813,39 @@ def compra_detalle(request):
     response.status_code = 201
     return response
 
+#--======================================= Historial de Compra ======================================--
+
+def historial_compras(request):
+    listaperiferico = Perifericos.objects.all()
+    listaproveedor = Proveedor.objects.all()
+    listacompra = factura_compra.objects.all()
+    return validar(request, "historial_compras.html", 
+    {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+    "titulo_f":"Nueva Compra", 
+    "listaperiferico":listaperiferico,
+    "listaproveedor":listaproveedor,
+    "listacompra": listacompra,
+    "fecha_act": date.today().isoformat()})
+
+def historial_compras_detalle(request, id_factura):
+    listafactura = factura_compra.objects.all()
+    datos_factura = factura_compra.objects.get(id_factura_compra = id_factura)
+    print(datos_factura.total_factura_compra)
+    listaperiferico = Perifericos.objects.all()
+    listaproveedor = Proveedor.objects.all()
+    listadetalle = factura_compra_detalle.objects.all()
+    return validar(request, "historial_compras_detalle.html", 
+    {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+    "titulo_f":"Nueva Compra", 
+    "listaperiferico":listaperiferico,
+    "listaproveedor":listaproveedor,
+    "listadetalle": listadetalle,
+    "listafactura": listafactura, 
+    "datos_factura":datos_factura,
+    "fecha_act": date.today().isoformat()})
+
 #--======================================= Venta ======================================--
-#      
+
 def venta(request):
 
     if request.method == "GET":
@@ -1822,6 +1853,8 @@ def venta(request):
         listaproveedor = Proveedor.objects.all()
         listacliente = Cliente.objects.all()
         listaciudad = Ciudad.objects.all()
+        listatimbrado_venta = timbrado_venta.objects.all()
+        listatalonarioventa = talonario_ventas.objects.all()
         return validar(request, "venta.html", 
         {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
         "titulo_f":"Nueva Venta", 
@@ -1829,18 +1862,48 @@ def venta(request):
         "listaproveedor":listaproveedor,
         "listacliente":listacliente,
         "listaciudad":listaciudad,
+        "listatimbrado_venta": listatimbrado_venta,
+        "listatalonarioventa": listatalonarioventa,
         "fecha_act": date.today().isoformat()})
 
     elif request.method == "POST":
-        factura_venta_nueva=Usuario(nombre_usuario=request.POST.get('nombre_usuario'), 
-        password_usuario=request.POST.get('password_usuario'), 
-        nombre_completo_usuario=request.POST.get('nombre_completo_usuario'), 
-        tipo_usuario=request.POST.get('tipo_usuario'), 
-        ci_usuario=request.POST.get('ci_usuario'), 
-        telefono_usuario=request.POST.get('telefono_usuario'), 
-        direccion_usuario=request.POST.get('direccion_usuario'))
-        
+        factura_venta_nueva=factura_venta(codigo_cliente_id=request.POST.get('codigo_cliente'), 
+        nro_timbrado_venta_id=request.POST.get('nro_timbrado_venta'), 
+        nro_factura_venta=request.POST.get('nro_factura_venta'), 
+        fch_factura_venta=date.today().isoformat(), 
+        condicion_factura_venta=0, 
+        total_factura_venta=request.POST.get('total_factura_venta'), 
+        iva10_factura_venta=request.POST.get('iva10_factura_venta'))
         factura_venta_nueva.save()
+
+        talonario_venta_actual=talonario_ventas.objects.get(nro_timbrado_venta_id=request.POST.get('nro_timbrado_venta'))
+        talonario_venta_actual.nro_actual_factura_venta = int(request.POST.get('nro_factura_venta')) + 1
+        talonario_venta_actual.save()
+
+    error = 'No hay error!'
+    response = JsonResponse({'error':error})
+    response.status_code = 201
+    return response
+
+def venta_detalle(request):
+    if request.method == "POST":
+        id_ultima_factura=factura_venta.objects.all().last().id_factura_venta
+
+        codiguito_periferico = request.POST.get('id_periferico_id')
+
+        id_periferico=Perifericos.objects.get(cod_periferico = codiguito_periferico).id_periferico
+
+        factura_venta_deta=factura_venta_detalle(id_factura_venta_id=int(id_ultima_factura), 
+        id_periferico_id=id_periferico,
+        cant_periferico=request.POST.get('cant_periferico'),
+        subtotal_factura_venta=request.POST.get('subtotal_factura_venta'))
+        factura_venta_deta.save()
+
+    error = 'No hay error!'
+    response = JsonResponse({'error':error})
+    response.status_code = 201
+    return response
+
 
 #--======================================= Validación ======================================--
 def validar(request, pageSuccess, parameters={}):
