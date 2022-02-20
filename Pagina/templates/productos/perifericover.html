@@ -66,101 +66,103 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
-                    
-                    <div class="form-group form-default" style="display: flex; justify-content: space-between; align-items: center;">
-                        <h3 style="margin: 0">Lista de Periféricos</h3><a href="{% url 'perifericomod' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nuevo Periférico</button></a>
+                    <div style="display: flex; justify-content: space-between; gap: 1em;">
+                        <form>
+                            <a class="img-responsive mt-2" onclick="history.back()"><img src="{%static 'img/icons/back.png'%}" width="50" height="50"></a>
+                        </form>
+                        <h1 class="text-center" style="padding: 0.5em;">Lista de Periféricos</h1>
+                        <a href="{% url 'perifericomod' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light" style="margin: 1em;">Nuevo Periférico</button></a>
                     </div>
-                    <div class="py-4">
-                        <div class="col-md-12">
-                            <div class="card">
-                <div class="card-body">
-                    <table id="example" class="table table-striped" style="width:100%">
-                        <thead>
-                            <tr>
-                                <th>Código</th>
-                                <th>Imagen</th>
-                                <th>Tipo</th>
-                                <th>Marca</th>
-                                <th>Descripción</th>
-                                <th>Proveedor</th>
-                                <th>Precio Compra</th>
-                                <th>Precio Venta</th>
-                                <th>Stock</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for lista in parameters.listatabla %}
-                            <tr>
-                                <td>{{ lista.cod_periferico }}</td>
-                                {% if lista.imagen_periferico != '' %}
-                                        <td><img src="{{ lista.imagen_periferico.url }}" width="100" height="100"></td>
-                                {% else %}
-                                        <td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100" height="100"></td>   
-                                {% endif %}
-                                    {%if lista.tipo_periferico == 1 %}<td>Fuente</td>{% endif %} 
-                                    {%if lista.tipo_periferico == 2 %}<td>Gabinete</td>{% endif %}
-                                    {%if lista.tipo_periferico == 3 %}<td>Almacenamiento</td>{% endif %}
-                                    {%if lista.tipo_periferico == 4 %}<td>Mouse</td>{% endif %}
-                                    {%if lista.tipo_periferico == 5 %}<td>Teclado</td>{% endif %} 
-                                    {%if lista.tipo_periferico == 6 %}<td>Auriculares</td>{% endif %}
-                                    {%if lista.tipo_periferico == 7 %}<td>Monitor</td>{% endif %}
-                                    {%if lista.tipo_periferico == 8 %}<td>Placa de Video</td>{% endif %}
-                                    {%if lista.tipo_periferico == 9 %}<td>Impresora</td>{% endif %}
-                                    {%if lista.tipo_periferico == 10 %}<td>Otros</td>{% endif %}
-                                    {%if lista.tipo_periferico == 11 %}<td>Placa Base</td>{% endif %}
-                                    {%if lista.tipo_periferico == 12 %}<td>Repuesto</td>{% endif %}
-                                    {%if lista.tipo_periferico == 13 %}<td>Memoria RAM</td>{% endif %}
-                                    {%if lista.tipo_periferico == 14 %}<td>Procesador</td>{% endif %}
-                                    {%if lista.tipo_periferico == 15 %}<td>Gabinete</td>{% endif %}
-                                <td>{{ lista.marca_periferico }}</td>
-                                <td>{{ lista.descripcion_periferico }}</td>
-                                <td>
-                                    {%for lista1 in parameters.listaproveedor%}
-                                    {% if lista1.codigo_proveedor == lista.nombre_proveedor_id%}
-                                    {{lista1.nombre_proveedor}}
-                                    {%endif%}
-                                    {%endfor%}
-                                </td>
-                                <td class="precio">{{ lista.precio_compra_periferico }}</td>
-                                <td class="precio">{{ lista.precio_venta_periferico }}</td>
-                                <td>{{ lista.stock_periferico }}</td>
-                                <td>
-                                    <div class="icon-btn">
-                                        <a href="{% url 'perifericomod' lista.id_periferico %}"
-                                            class="btn waves-effect waves-light btn-warning btn-icon"
-                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Modificar Registro"><i data-feather="edit"></i></a>
-                                        <a href="{% url 'perifericobor' lista.id_periferico %}"
-                                            onclick="return confirm('Eliminar el registro?')"
-                                            class="btn waves-effect waves-light btn-danger btn-icon"
-                                            style="color: white;" data-toggle="tooltip" data-placement="top" title=""
-                                            data-original-title="Eliminar Registro"><i data-feather="trash-2"></i></a>
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>Código</th>
-                                <th>Imagen</th>
-                                <th>Tipo</th>
-                                <th>Marca</th>
-                                <th>Descripción</th>
-                                <th>Proveedor</th>
-                                <th>Precio Compra</th>
-                                <th>Precio Venta</th>
-                                <th>Stock</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </tfoot>
-                    </table>
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <table id="example" class="table table-striped" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Imagen</th>
+                                            <th>Tipo</th>
+                                            <th>Marca</th>
+                                            <th>Descripción</th>
+                                            <th>Proveedor</th>
+                                            <th>Precio Compra</th>
+                                            <th>Precio Venta</th>
+                                            <th>Stock</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for lista in parameters.listatabla %}
+                                        <tr>
+                                            <td>{{ lista.cod_periferico }}</td>
+                                            {% if lista.imagen_periferico != '' %}
+                                                    <td><img src="{{ lista.imagen_periferico.url }}" width="100" height="100"></td>
+                                            {% else %}
+                                                    <td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100" height="100"></td>   
+                                            {% endif %}
+                                                {%if lista.tipo_periferico == 1 %}<td>Fuente</td>{% endif %} 
+                                                {%if lista.tipo_periferico == 2 %}<td>Gabinete</td>{% endif %}
+                                                {%if lista.tipo_periferico == 3 %}<td>Almacenamiento</td>{% endif %}
+                                                {%if lista.tipo_periferico == 4 %}<td>Mouse</td>{% endif %}
+                                                {%if lista.tipo_periferico == 5 %}<td>Teclado</td>{% endif %} 
+                                                {%if lista.tipo_periferico == 6 %}<td>Auriculares</td>{% endif %}
+                                                {%if lista.tipo_periferico == 7 %}<td>Monitor</td>{% endif %}
+                                                {%if lista.tipo_periferico == 8 %}<td>Placa de Video</td>{% endif %}
+                                                {%if lista.tipo_periferico == 9 %}<td>Impresora</td>{% endif %}
+                                                {%if lista.tipo_periferico == 10 %}<td>Otros</td>{% endif %}
+                                                {%if lista.tipo_periferico == 11 %}<td>Placa Base</td>{% endif %}
+                                                {%if lista.tipo_periferico == 12 %}<td>Repuesto</td>{% endif %}
+                                                {%if lista.tipo_periferico == 13 %}<td>Memoria RAM</td>{% endif %}
+                                                {%if lista.tipo_periferico == 14 %}<td>Procesador</td>{% endif %}
+                                                {%if lista.tipo_periferico == 15 %}<td>Gabinete</td>{% endif %}
+                                            <td>{{ lista.marca_periferico }}</td>
+                                            <td>{{ lista.descripcion_periferico }}</td>
+                                            <td>
+                                                {%for lista1 in parameters.listaproveedor%}
+                                                {% if lista1.codigo_proveedor == lista.nombre_proveedor_id%}
+                                                {{lista1.nombre_proveedor}}
+                                                {%endif%}
+                                                {%endfor%}
+                                            </td>
+                                            <td class="precio">{{ lista.precio_compra_periferico }}</td>
+                                            <td class="precio">{{ lista.precio_venta_periferico }}</td>
+                                            <td>{{ lista.stock_periferico }}</td>
+                                            <td>
+                                                <div class="icon-btn">
+                                                    <a href="{% url 'perifericomod' lista.id_periferico %}"
+                                                        class="btn waves-effect waves-light btn-warning btn-icon"
+                                                        style="color: white;" data-toggle="tooltip" data-placement="top" title=""
+                                                        data-original-title="Modificar Registro"><i data-feather="edit"></i></a>
+                                                    <a href="{% url 'perifericobor' lista.id_periferico %}"
+                                                        onclick="return confirm('Eliminar el registro?')"
+                                                        class="btn waves-effect waves-light btn-danger btn-icon"
+                                                        style="color: white;" data-toggle="tooltip" data-placement="top" title=""
+                                                        data-original-title="Eliminar Registro"><i data-feather="trash-2"></i></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Código</th>
+                                            <th>Imagen</th>
+                                            <th>Tipo</th>
+                                            <th>Marca</th>
+                                            <th>Descripción</th>
+                                            <th>Proveedor</th>
+                                            <th>Precio Compra</th>
+                                            <th>Precio Venta</th>
+                                            <th>Stock</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </tfoot>
+                                </table>
 
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
 
     <script src="{%static 'js/app.js'%}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'js/Buttons-2.2.2/css/buttons.bootstrap5.min.css' %}"/>

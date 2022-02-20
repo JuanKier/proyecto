@@ -67,85 +67,86 @@
     </div>
     <div class="card">
         <div class="card-header">
-            
-            <div class="form-group form-default" style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="margin: 0">Montajes</h3><a href="javascript:mostrar_modal()" class="btn waves-effect waves-light btn-success btn-icon">Nuevo Montaje</a>
+            <div style="display: flex; justify-content: space-between; gap: 1em;">
+                <form>
+                    <a class="img-responsive mt-2" onclick="history.back()"><img src="{%static 'img/icons/back.png'%}" width="50" height="50"></a>
+                </form>
+                <h1 class="text-center" style="padding: 0.5em;">Lista de Montajes</h1>
+                <a href="javascript:mostrar_modal()" class="btn btn-success btn-round waves-effect waves-light" style="margin: 1.2em;">Nuevo Montaje</a>
             </div>
-            <div class="py-4">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <table id="example" class="table table-striped" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Cod</th>
-                                        <th>Placa Base</th>
-                                        <th>Cliente</th>
-                                        <th>Empleado</th>
-                                        <th>Inicio</th>
-                                        <th>Fin</th>
-                                        <th>Horas</th>
-                                        <th>Actividades</th>
-                                        <th>Estado</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for lista in parameters.listatabla %}
-                                    <tr>
-                                        <td>{{ lista.codigo_montaje }}</td>
-                                        <td>
-                                            {%for lista2 in parameters.listaplaca%}
-                                            {% if lista2.id_placa_base == lista.id_placa_base_id%}
-                                                {{lista2.descripcion_placa_base}}
-                                            {%endif%}
-                                            {%endfor%}
-                                        </td>
-                                        <td>
-                                            {%for lista1 in parameters.listacliente%}
-                                            {% if lista1.codigo_cliente == lista.nombre_cliente_id%}
-                                                {{lista1.nombre_cliente}}
-                                            {%endif%}
-                                            {%endfor%}
-                                        </td>
-                                        <td>
-                                            {%for lista2 in parameters.listausuario%}
-                                            {% if lista2.id_usuario == lista.nombre_completo_usuario_id%}
-                                            {{lista2.nombre_completo_usuario}}
-                                            {%endif%}
-                                            {%endfor%}
-                                        </td>
-                                        <td>{{ lista.inicio_mont }}</td>
-                                        <td>{{ lista.fin_mont }}</td>
-                                        <td>{{ lista.horas_mont }}</td>
-                                        <td>{{ lista.actividades_mont }}</td>
-                                            {%if lista.estado_mont == 1 %}<td><span class="badge bg-danger">Recibido</span></td>{% endif %} 
-                                            {%if lista.estado_mont == 2 %}<td><span class="badge bg-warning">En proceso</span></td>{% endif %}
-                                            {%if lista.estado_mont == 3 %}<td><span class="badge bg-success">Terminado</span></td>{% endif %}
-                                        <td>
-                                            <div class="icon-btn">
-                                                <a href="{% url 'nuevomontaje' lista.id_placa_base_id lista.codigo_montaje %}"
-                                                    class="btn waves-effect waves-light btn-warning btn-icon"
-                                                    style="color: white;" data-toggle="tooltip" data-placement="top"
-                                                    title="" data-original-title="Modificar Registro"><i
-                                                        data-feather="edit"></i></a>
-                                                <a href="{% url 'bormontaje' lista.codigo_montaje %}"
-                                                    onclick="return confirm('Eliminar el registro?')"
-                                                    class="btn waves-effect waves-light btn-danger btn-icon"
-                                                    style="color: white;" data-toggle="tooltip" data-placement="top"
-                                                    title="" data-original-title="Eliminar Registro"><i
-                                                        data-feather="trash-2"></i></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="example" class="table table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Cod</th>
+                                    <th>Placa Base</th>
+                                    <th>Cliente</th>
+                                    <th>Empleado</th>
+                                    <th>Inicio</th>
+                                    <th>Fin</th>
+                                    <th>Horas</th>
+                                    <th>Actividades</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for lista in parameters.listatabla %}
+                                <tr>
+                                    <td>{{ lista.codigo_montaje }}</td>
+                                    <td>
+                                        {%for lista2 in parameters.listaplaca%}
+                                        {% if lista2.id_placa_base == lista.id_placa_base_id%}
+                                            {{lista2.descripcion_placa_base}}
+                                        {%endif%}
+                                        {%endfor%}
+                                    </td>
+                                    <td>
+                                        {%for lista1 in parameters.listacliente%}
+                                        {% if lista1.codigo_cliente == lista.nombre_cliente_id%}
+                                            {{lista1.nombre_cliente}}
+                                        {%endif%}
+                                        {%endfor%}
+                                    </td>
+                                    <td>
+                                        {%for lista2 in parameters.listausuario%}
+                                        {% if lista2.id_usuario == lista.nombre_completo_usuario_id%}
+                                        {{lista2.nombre_completo_usuario}}
+                                        {%endif%}
+                                        {%endfor%}
+                                    </td>
+                                    <td>{{ lista.inicio_mont }}</td>
+                                    <td>{{ lista.fin_mont }}</td>
+                                    <td>{{ lista.horas_mont }}</td>
+                                    <td>{{ lista.actividades_mont }}</td>
+                                        {%if lista.estado_mont == 1 %}<td><span class="badge bg-danger">Recibido</span></td>{% endif %} 
+                                        {%if lista.estado_mont == 2 %}<td><span class="badge bg-warning">En proceso</span></td>{% endif %}
+                                        {%if lista.estado_mont == 3 %}<td><span class="badge bg-success">Terminado</span></td>{% endif %}
+                                    <td>
+                                        <div class="icon-btn">
+                                            <a href="{% url 'nuevomontaje' lista.id_placa_base_id lista.codigo_montaje %}"
+                                                class="btn waves-effect waves-light btn-warning btn-icon"
+                                                style="color: white;" data-toggle="tooltip" data-placement="top"
+                                                title="" data-original-title="Modificar Registro"><i
+                                                    data-feather="edit"></i></a>
+                                            <a href="{% url 'bormontaje' lista.codigo_montaje %}"
+                                                onclick="return confirm('Eliminar el registro?')"
+                                                class="btn waves-effect waves-light btn-danger btn-icon"
+                                                style="color: white;" data-toggle="tooltip" data-placement="top"
+                                                title="" data-original-title="Eliminar Registro"><i
+                                                    data-feather="trash-2"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
 
-                            </table>
-                        </div>
+                        </table>
                     </div>
                 </div>
-            </div>.
+            </div>
             <div class="modal fade" id="modal_placas" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
                     <div class="modal-content">

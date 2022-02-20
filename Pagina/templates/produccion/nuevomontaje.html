@@ -68,7 +68,12 @@
 </style>
 <div class="contenedor">
     <div class="titulo">
-        <h1>{{parameters.titulo_f}} - {{parameters.datosplaca.descripcion_placa_base}}</h1>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em;">
+            <form>
+                <a class="img-responsive mt-2" onclick="history.back()"><img src="{%static 'img/icons/back.png'%}" width="50" height="50"></a>
+            </form>
+            <h1>{{parameters.titulo_f}} - {{parameters.datosplaca.descripcion_placa_base}}</h1>
+        </div>
     </div>
     <div>
             <div>

@@ -67,11 +67,13 @@
     </div>
     <div class="card">
         <div class="card-header">
-            
-            <div class="form-group form-default" style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="margin: 0">Timbrados de EncarPC</h3><a href="{% url 'modtimbrado_venta' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nuevo Timbrado</button></a>
+            <div style="display: flex; justify-content: space-between; gap: 1em;">
+                <form>
+                    <a class="img-responsive mt-2" onclick="history.back()"><img src="{%static 'img/icons/back.png'%}" width="50" height="50"></a>
+                </form>
+                <h1 class="text-center" style="padding: 0.5em;">Timbrados de EncarPC</h1>
+                <a href="{% url 'modtimbrado_venta' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light" style="margin: 1em;">Nuevo Timbrado</button></a>
             </div>
-            <div class="py-4">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-body">

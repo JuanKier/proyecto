@@ -52,7 +52,12 @@
 </style>
 <div class="card">
     <div class="card-header">
-        <h3>{{parameters.titulo_f}}</h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em;">
+            <form>
+                <a class="img-responsive mt-2" onclick="history.back()"><img src="{%static 'img/icons/back.png'%}" width="50" height="50"></a>
+            </form>
+            <h1 class="text-center" style="padding: 0.5em;">{{parameters.titulo_f}}</h1>
+        </div>
     </div>
     <div class="card-block">
         <form class="form-material" action="{% url 'modrep' parameters.rep_actual %}" method="POST" onsubmit="sessionStorage.setItem('1', 1);"

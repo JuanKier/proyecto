@@ -67,54 +67,55 @@
     </div>
     <div class="card">
         <div class="card-header">
-            
-            <div class="form-group form-default" style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="margin: 0">Lista de Proveedores</h3><a href="{% url 'modproveedor' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nuevo Proveedor</button></a>
+            <div style="display: flex; justify-content: space-between; gap: 1em;">
+                <form>
+                    <a class="img-responsive mt-2" onclick="history.back()"><img src="{%static 'img/icons/back.png'%}" width="50" height="50"></a>
+                </form>
+                <h1 class="text-center" style="padding: 0.5em;">Lista de Proveedores</h1>
+                <a href="{% url 'modproveedor' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light" style="margin: 1em;">Nuevo Proveedor</button></a>
             </div>
-            <div class="py-4">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <table id="example" class="table table-striped" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Nombre Comercial</th>
-                                        <th>Razón Social</th>
-                                        <th>RUC</th>
-                                        <th>Teléfono</th>
-                                        <th>Dirección</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for lista in parameters.listatabla %}
-                                    <tr>
-                                        <td>{{ lista.nombre_proveedor }}</td>
-                                        <td>{{ lista.razon_social_proveedor }}</td>
-                                        <td>{{ lista.ruc_proveedor }}</td>
-                                        <td>{{ lista.telefono_proveedor }}</td>
-                                        <td>{{ lista.direccion_proveedor }}</td>
-                                        <td>
-                                            <div class="icon-btn">
-                                                <a href="{% url 'modproveedor' lista.codigo_proveedor %}"
-                                                    class="btn waves-effect waves-light btn-warning btn-icon"
-                                                    style="color: white;" data-toggle="tooltip" data-placement="top"
-                                                    title="" data-original-title="Modificar Registro"><i
-                                                        data-feather="edit"></i></a>
-                                                <a href="{% url 'borproveedor' lista.codigo_proveedor %}"
-                                                    onclick="return confirm('Eliminar el registro?')"
-                                                    class="btn waves-effect waves-light btn-danger btn-icon"
-                                                    style="color: white;" data-toggle="tooltip" data-placement="top"
-                                                    title="" data-original-title="Eliminar Registro"><i
-                                                        data-feather="trash-2"></i></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="example" class="table table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Nombre Comercial</th>
+                                    <th>Razón Social</th>
+                                    <th>RUC</th>
+                                    <th>Teléfono</th>
+                                    <th>Dirección</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for lista in parameters.listatabla %}
+                                <tr>
+                                    <td>{{ lista.nombre_proveedor }}</td>
+                                    <td>{{ lista.razon_social_proveedor }}</td>
+                                    <td>{{ lista.ruc_proveedor }}</td>
+                                    <td>{{ lista.telefono_proveedor }}</td>
+                                    <td>{{ lista.direccion_proveedor }}</td>
+                                    <td>
+                                        <div class="icon-btn">
+                                            <a href="{% url 'modproveedor' lista.codigo_proveedor %}"
+                                                class="btn waves-effect waves-light btn-warning btn-icon"
+                                                style="color: white;" data-toggle="tooltip" data-placement="top"
+                                                title="" data-original-title="Modificar Registro"><i
+                                                    data-feather="edit"></i></a>
+                                            <a href="{% url 'borproveedor' lista.codigo_proveedor %}"
+                                                onclick="return confirm('Eliminar el registro?')"
+                                                class="btn waves-effect waves-light btn-danger btn-icon"
+                                                style="color: white;" data-toggle="tooltip" data-placement="top"
+                                                title="" data-original-title="Eliminar Registro"><i
+                                                    data-feather="trash-2"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
 
-                            </table>
-                        </div>
+                        </table>
                     </div>
                 </div>
             </div>

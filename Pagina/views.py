@@ -548,7 +548,7 @@ def modtipo_gabinete(request,tipo_gabinete_actual=0):
             else:
                 return validar(request, "maintenance/tipo_gabinete/modtipo_gabinete.html", { 
                     "nombre_completo_usuario": request.session.get("nombre_completo_usuario"), 
-                    "titulo_f": "Nuevo Tipo de CPU", 
+                    "titulo_f": "Nuevo Tipo de Gabinete", 
                     "subtitulo_f": "Por favor complete todos los datos solicitados", 
                     "tipo_gabinete_actual": tipo_gabinete_actual})
 
@@ -1217,7 +1217,8 @@ def mod_gab(request, gab_actual=0):
             else:
                 return validar(request, "productos/mod_gab.html", 
                 {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-                "titulo_f":"Nuevo Gabinete", "subtitulo_f":"Por favor complete todos los datos solicitados", 
+                "titulo_f":"Nuevo Gabinete", 
+                "subtitulo_f":"Por favor complete todos los datos solicitados", 
                 "gab_actual":gab_actual,
                 "listagabinete":listagabinete,
                 "listaproveedor": listaproveedor})
@@ -1597,9 +1598,7 @@ def vertimbrado_prov(request):
         listatabla = timbrado.objects.all()
         listaproveedor = Proveedor.objects.all()
         return validar(request, "maintenance/timbrados/compra/vertimbrado_prov.html", {
-            "nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-            "titulo_f":"Ciudades", 
-            "subtitulo_f":"Listado de Ciudades registrados", 
+            "nombre_completo_usuario":request.session.get("nombre_completo_usuario"),  
             "listatabla":listatabla, 
             "listaproveedor": listaproveedor})
     else:
@@ -1618,14 +1617,13 @@ def modtimbrado_prov(request, timbrado_actual=0):
                 datos_timbrado.fch_vencimiento_timbrado=str(datos_timbrado.fch_vencimiento_timbrado)
                 return validar(request, "maintenance/timbrados/compra/modtimbrado_prov.html",
                                {"nombre_completo_usuario": request.session.get("nombre_completo_usuario"),
-                                "titulo_f": "Modificar Ciudad",
-                                "subtitulo_f": "Vuelva a escribir los datos que desea modificar",
+                                "titulo_f": "Modificar Timbrado",
                                 "datos_act": datos_timbrado,
                                 "timbrado_actual": timbrado_actual,
                                 "listaproveedor": listaproveedor})
             else:
                 return validar(request, "maintenance/timbrados/compra/modtimbrado_prov.html", {"nombre_completo_usuario": request.session.get("nombre_completo_usuario"),
-                                                                  "titulo_f": "Nueva Ciudad", "subtitulo_f": "Por favor complete todos los datos solicitados",
+                                                                  "titulo_f": "Nuevo Timbrado",
                                                                   "timbrado_actual": timbrado_actual,
                                                                   "listaproveedor": listaproveedor})
 
@@ -1673,7 +1671,7 @@ def modtimbrado_venta(request, timbrado_venta_actual = 0):
             return validar(request, "maintenance/timbrados/venta/modtimbrado_venta.html", {
                 "listatabla": listatabla,
                 "listafacturaventa": listafacturaventa,
-                "titulo": "Modificar Timbrado Venta",
+                "titulo_f": "Modificar Timbrado Venta",
                 "datos_act": datos_timbrado,
                 "timbrado_venta_actual": timbrado_venta_actual
             })
@@ -1681,7 +1679,7 @@ def modtimbrado_venta(request, timbrado_venta_actual = 0):
             return validar(request, "maintenance/timbrados/venta/modtimbrado_venta.html", {
                 "listatabla": listatabla,
                 "listafacturaventa": listafacturaventa,
-                "titulo": "Carga Timbrado Venta",
+                "titulo_f": "Carga Timbrado Venta",
                 "timbrado_venta_actual": timbrado_venta_actual
             })
     if request.method == "POST":
@@ -1714,18 +1712,18 @@ def vertalonario_venta(request):
         })
 
 def modtalonario_venta(request, talonario_venta_actual = 0):
-    listatabla = factura_venta.objects.all()
-    listatimbrado = timbrado_venta.objects.all()
+    listatabla = talonario_ventas.objects.all()
+    listatimbrado = talonario_ventas.objects.all()
 
     if request.method == "GET":
-        talo_actual=factura_venta.objects.filter(id_factura_venta=talonario_venta_actual).exists()
+        talo_actual=talonario_ventas.objects.filter(id_talonario_venta=talonario_venta_actual).exists()
         if talo_actual:
-            datos_talonario=factura_venta.objects.filter(id_factura_venta=talonario_venta_actual).first()
+            datos_talonario=talonario_ventas.objects.filter(id_talonario_venta=talonario_venta_actual).first()
             # datos_timbrado.fch_vencimiento_timbrado_venta=str(datos_timbrado.fch_vencimiento_timbrado_venta)
-            return validar(request, "maintenance/timbrados/venta/modtalonario_venta.html", {
+            return validar(request, "maintenance/timbrados/venta/modtalonario_venta.html", { 
                 "listatabla": listatabla,
                 "listatimbrado": listatimbrado,
-                "titulo": "Modificar Talonario Venta",
+                "titulo_f": "Modificar Talonario Venta",
                 "datos_act": datos_talonario,
                 "talonario_venta_actual": talonario_venta_actual
             })
@@ -1733,7 +1731,7 @@ def modtalonario_venta(request, talonario_venta_actual = 0):
             return validar(request, "maintenance/timbrados/venta/modtalonario_venta.html", {
                 "listatabla": listatabla,
                 "listatimbrado": listatimbrado,
-                "titulo": "Carga Talonario Venta",
+                "titulo_f": "Carga Talonario Venta",
                 "talonario_venta_actual": talonario_venta_actual
             })
     if request.method == "POST":
@@ -1746,7 +1744,7 @@ def modtalonario_venta(request, talonario_venta_actual = 0):
             )
             talonario_venta_nuevo.save()
         else:
-            talonario_venta_actual=talonario_ventas.objects.get(id_factura_venta=talonario_venta_actual)
+            talonario_venta_actual=talonario_ventas.objects.get(id_talonario_venta=talonario_venta_actual)
             talonario_venta_actual.nro_timbrado_venta_id = request.POST.get('nro_timbrado')
             talonario_venta_actual.nro_inicio_factura_venta = request.POST.get('nro_inicio_factura_venta')
             talonario_venta_actual.nro_actual_factura_venta = request.POST.get('nro_actual_factura_venta')
@@ -1756,7 +1754,7 @@ def modtalonario_venta(request, talonario_venta_actual = 0):
         return redirect('vertalonario_venta')
 
 def bortalonario_venta(request, talonario_venta_actual):
-        factura_venta.objects.filter(id_factura_venta = talonario_venta_actual).delete()
+        factura_venta.objects.filter(id_talonario_venta = talonario_venta_actual).delete()
         return redirect('vertalonario_venta')
  
 #--======================================= Compra ======================================--

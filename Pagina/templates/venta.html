@@ -93,15 +93,15 @@
                 },
             },
                 fixedHeader: true,
+				"lengthMenu": [[5 ,10, 25, 50, -1], [5, 10, 25, 50, "Todo"]]
             });
         });
     </script>
 
 
-<div class="py-4">
 	<div class="col-md-12">
 		<div class="card-header">
-				<form  style="margin: 1em;border-radius: 10px;" enctype="multipart/form-data" action="#" method="POST" onsubmit="sessionStorage.setItem('1', 1)"; style="margin: 1em">
+				<form  style="border-radius: 10px;" enctype="multipart/form-data" action="#" method="POST" onsubmit="sessionStorage.setItem('1', 1)"; style="margin: 1em">
 					{% csrf_token %}
 					<div class="card" style="padding: 0.5em;">
 						<div style="display: flex; justify-content: space-between; gap: 1em;">
@@ -109,7 +109,7 @@
 								<a class="img-responsive mt-2" onclick="history.back()"><img src="{%static 'img/icons/back.png'%}" width="50" height="50"></a>
 							</form>
 							<h1 class="text-center" style="padding: 0.5em;">NUEVA VENTA</h1>
-							<a href="{% url 'historial_ventas' %}"><button type="button" class="btn btn-success btn-round waves-effect waves-light">Historial de Ventas</button></a>
+							<a href="{% url 'historial_ventas' %}"><button type="button" class="btn btn-success btn-round waves-effect waves-light" style="margin: 1em;">Historial de Ventas</button></a>
 						</div>
 						<div class="input-confirmar" style="grid-template-columns: 1fr 1fr 1fr;">
 							<div>
@@ -180,7 +180,6 @@
 							</div>
 						</div>
 							
-						</div>
 					</div>
 					
 
@@ -328,7 +327,6 @@
 			</form>
 		</div>
 	</div>
-</div>
 
 <script src="{%static 'js/bootstrap.min.js'%}"></script>
 <script src="{%static 'js/app.js'%}"></script>

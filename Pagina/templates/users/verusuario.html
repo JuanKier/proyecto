@@ -67,54 +67,55 @@
     </div>
     <div class="card">
         <div class="card-header">
-            
-            <div class="form-group form-default" style="display: flex; justify-content: space-between; align-items: center;">
-                <h3 style="margin: 0">Lista de Usuarios</h3><a href="{% url 'modusuario' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light">Nuevo Usuario</button></a>
+            <div style="display: flex; justify-content: space-between; gap: 1em;">
+                <form>
+                    <a class="img-responsive mt-2" onclick="history.back()"><img src="{%static 'img/icons/back.png'%}" width="50" height="50"></a>
+                </form>
+                <h1 class="text-center" style="padding: 0.5em;">Lista de Usuarios</h1>
+                <a href="{% url 'modusuario' 0 %}"><button class="btn btn-success btn-round waves-effect waves-light" style="margin: 1em;">Nuevo Usuario</button></a>
             </div>
-            <div class="py-4">
-                <div class="col-md-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <table id="example" class="table table-striped" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Usuario</th>
-                                        <th>Nombre Completo</th>
-                                        <th>Tipo de Usuario</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for lista in parameters.listatabla %}
-                                    <tr>
-                                        <td>{{ lista.nombre_usuario }}</td>
-                                        <td>{{ lista.nombre_completo_usuario }}</td>
-                                        {%if lista.tipo_usuario == 1 %}
-                                        <td>Administrador</td>
-                                        {% else %}
-                                        <td>Empleado</td>
-                                        {% endif %}
-                                        <td>
-                                            <div class="icon-btn">
-                                                <a href="{% url 'modusuario' lista.id_usuario %}"
-                                                    class="btn waves-effect waves-light btn-warning btn-icon"
-                                                    style="color: white;" data-toggle="tooltip" data-placement="top"
-                                                    title="" data-original-title="Modificar Registro"><i
-                                                        data-feather="edit"></i></a>
-                                                <a onclick="checker()" href="{% url 'borusuario' lista.id_usuario %}"
-                                                    onclick="return confirm('Eliminar el registro?')"
-                                                    class="btn waves-effect waves-light btn-danger btn-icon"
-                                                    style="color: white;" data-toggle="tooltip" data-placement="top"
-                                                    title="" data-original-title="Eliminar Registro"><i
-                                                        data-feather="trash-2"></i></a>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <table id="example" class="table table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Usuario</th>
+                                    <th>Nombre Completo</th>
+                                    <th>Tipo de Usuario</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for lista in parameters.listatabla %}
+                                <tr>
+                                    <td>{{ lista.nombre_usuario }}</td>
+                                    <td>{{ lista.nombre_completo_usuario }}</td>
+                                    {%if lista.tipo_usuario == 1 %}
+                                    <td>Administrador</td>
+                                    {% else %}
+                                    <td>Empleado</td>
+                                    {% endif %}
+                                    <td>
+                                        <div class="icon-btn">
+                                            <a href="{% url 'modusuario' lista.id_usuario %}"
+                                                class="btn waves-effect waves-light btn-warning btn-icon"
+                                                style="color: white;" data-toggle="tooltip" data-placement="top"
+                                                title="" data-original-title="Modificar Registro"><i
+                                                    data-feather="edit"></i></a>
+                                            <a onclick="checker()" href="{% url 'borusuario' lista.id_usuario %}"
+                                                onclick="return confirm('Eliminar el registro?')"
+                                                class="btn waves-effect waves-light btn-danger btn-icon"
+                                                style="color: white;" data-toggle="tooltip" data-placement="top"
+                                                title="" data-original-title="Eliminar Registro"><i
+                                                    data-feather="trash-2"></i></a>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
 
-                            </table>
-                        </div>
+                        </table>
                     </div>
                 </div>
             </div>
