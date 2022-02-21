@@ -43,19 +43,31 @@
 	        			extend:    'excelHtml5',
 	        			text:      '<i class="fas fa-file-excel"></i> ',
 	        			titleAttr: 'Exportar a Excel',
-	        			className: 'btn btn-success'
-	        		},
+	        			className: 'btn btn-success',
+                        title: 'Historial de Ventas - Encar PC',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4 ]
+                        },
+                    },
 	        		{
 	        			extend:    'pdfHtml5',
 	        			text:      '<i class="fas fa-file-pdf"></i> ',
 	        			titleAttr: 'Exportar a PDF',
-	        			className: 'btn btn-danger'
-	        		},
+	        			className: 'btn btn-danger',
+                        title: 'Historial de Ventas - Encar PC',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4 ]
+                        },
+                    },
                     {
 	        			extend:    'print',
 	        			text:      '<i class="fa fa-print"></i> ',
 	        			titleAttr: 'Imprimir',
-	        			className: 'btn btn-info'
+	        			className: 'btn btn-info',
+                        title: 'Historial de Ventas - Encar PC',
+                        exportOptions: {
+                            columns: [ 0, 1, 2, 3, 4 ]
+                        }
 	        		},
                 ],
             });

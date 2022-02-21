@@ -593,6 +593,7 @@ def modmant(request, mant_actual=0):
         if request.method=="GET":
             listacliente=Cliente.objects.all()
             listausuario = Usuario.objects.all()
+            listatabla = Mantenimiento.objects.all()
             mante_actual=Mantenimiento.objects.filter(codigo_mant=mant_actual).exists()
             if mante_actual:
                 datos_mant=Mantenimiento.objects.filter(codigo_mant=mant_actual).first()
@@ -605,6 +606,7 @@ def modmant(request, mant_actual=0):
                 "datos_act":datos_mant, 
                 "mant_actual":mant_actual,
                 "listacliente": listacliente,
+                "listatabla":listatabla,
                 "listausuario": listausuario})
             else:
                 return validar(request, "produccion/modmant.html", 
@@ -612,7 +614,8 @@ def modmant(request, mant_actual=0):
                 "titulo_f":"Nuevo Mantenimiento", "subtitulo_f":"Por favor complete todos los datos solicitados", 
                 "mant_actual":mant_actual,
                 "listacliente": listacliente,
-                "listausuario": listausuario})
+                "listausuario": listausuario,
+                "fecha_act": date.today().isoformat()})
 
         if request.method=="POST":
             if mant_actual==0:
@@ -621,7 +624,7 @@ def modmant(request, mant_actual=0):
                 desc_equipo_mant=request.POST.get('desc_equipo_mant'),
                 horas_mant=request.POST.get("horas_mant"),
                 actividades_mant=request.POST.get("actividades_mant"),
-                inicio_mant=request.POST.get('inicio_mant'),
+                inicio_mant=date.today().isoformat(),
                 fin_mant=request.POST.get('fin_mant'),
                 estado_mant=request.POST.get('estado_mant'),
                 nombre_cliente_id=request.POST.get('id_cliente'),
@@ -1713,7 +1716,7 @@ def vertalonario_venta(request):
 
 def modtalonario_venta(request, talonario_venta_actual = 0):
     listatabla = talonario_ventas.objects.all()
-    listatimbrado = talonario_ventas.objects.all()
+    listatimbrado = timbrado_venta.objects.all()
 
     if request.method == "GET":
         talo_actual=talonario_ventas.objects.filter(id_talonario_venta=talonario_venta_actual).exists()
