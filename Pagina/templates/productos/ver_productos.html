@@ -43,19 +43,31 @@
 	        			extend:    'excelHtml5',
 	        			text:      '<i class="fas fa-file-excel"></i> ',
 	        			titleAttr: 'Exportar a Excel',
-	        			className: 'btn btn-success'
+	        			className: 'btn btn-success',
+                        title: 'Listado General de Productos',
+                        exportOptions: {
+                            columns: [ 0, 2, 3, 4, 5, 6, 7, 8 ]
+                        }
 	        		},
 	        		{
 	        			extend:    'pdfHtml5',
 	        			text:      '<i class="fas fa-file-pdf"></i> ',
 	        			titleAttr: 'Exportar a PDF',
-	        			className: 'btn btn-danger'
+	        			className: 'btn btn-danger',
+                        title: 'Listado General de Productos',
+                        exportOptions: {
+                            columns: [ 0, 2, 3, 4, 5, 6, 7, 8 ]
+                        }
 	        		},
                     {
 	        			extend:    'print',
 	        			text:      '<i class="fa fa-print"></i> ',
 	        			titleAttr: 'Imprimir',
-	        			className: 'btn btn-info'
+	        			className: 'btn btn-info',
+                        title: 'Listado General de Productos',
+                        exportOptions: {
+                            columns: [ 0, 2, 3, 4, 5, 6, 7, 8 ]
+                        }
 	        		},
                 ],
             });
@@ -70,7 +82,7 @@
                         <form>
                             <a class="img-responsive mt-2" onclick="history.back()"><img src="{%static 'img/icons/back.png'%}" width="50" height="50"></a>
                         </form>
-                        <h1 class="text-center" style="padding: 0.5em;">Lista de Productos</h1>
+                        <h1 class="text-center" style="padding: 0.5em;">Listado General de Productos</h1>
                     </div>
                         <div class="col-md-12">
                             <div class="card">

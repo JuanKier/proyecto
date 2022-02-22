@@ -129,14 +129,7 @@
                 <div class="form-group form-default mb-3">
                     <label class="float-label">Fecha de Inicio</label>
                     <span class="form-bar"></span>
-                    <input type="date" name="inicio_mant" class="form-control" required 
-                        {% for lista1 in parameters.listatabla %}
-                            {% if lista1.mant_actual == '0' %}
-                                value="{{parameters.fecha_act}}"
-                                {% else %}
-                                value="{{parameters.datos_act.inicio_mant}}"
-                            {% endif %}
-                        {% endfor %}>
+                    <input type="date" name="inicio_mant" class="form-control" required {% if parameters.datos_act %} value="{{parameters.datos_act.inicio_mant}}" {% else %} value = "{{parameters.fecha_act}}" {% endif %}>
                 </div>
             
                 <div class="form-group form-default mb-3">

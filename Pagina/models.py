@@ -101,6 +101,7 @@ class Perifericos(models.Model):
     precio_compra_periferico=models.IntegerField()
     precio_venta_periferico=models.IntegerField()
     stock_periferico=models.IntegerField(default=0)
+    stock_min_periferico=models.IntegerField(default=5)
     imagen_periferico = models.ImageField(upload_to="perifericos", null=True)
 
 class Repuestos(models.Model):
@@ -113,6 +114,7 @@ class Repuestos(models.Model):
     precio_compra_repuesto=models.IntegerField()
     precio_venta_repuesto=models.IntegerField()
     stock_repuesto=models.IntegerField(default=0)
+    stock_min_repuesto=models.IntegerField(default=5)
     imagen_repuesto = models.ImageField(upload_to="repuestos", null=True)
 
 class RAM(models.Model):
@@ -125,6 +127,7 @@ class RAM(models.Model):
     precio_compra_ram=models.IntegerField()
     precio_venta_ram=models.IntegerField()
     stock_ram=models.IntegerField(default=0)
+    stock_min_ram=models.IntegerField(default=5)
     imagen_ram = models.ImageField(upload_to="ram", null=True)
 
 class CPU(models.Model):
@@ -137,6 +140,7 @@ class CPU(models.Model):
     precio_compra_cpu=models.IntegerField()
     precio_venta_cpu=models.IntegerField()
     stock_cpu=models.IntegerField(default=0)
+    stock_min_cpu=models.IntegerField(default=5)
     imagen_cpu = models.ImageField(upload_to="cpu", null=True)
 
 class Gabinete(models.Model):
@@ -149,6 +153,7 @@ class Gabinete(models.Model):
     precio_compra_gab=models.IntegerField()
     precio_venta_gab=models.IntegerField()
     stock_gab=models.IntegerField(default=0)
+    stock_min_gab=models.IntegerField(default=5)
     imagen_gab = models.ImageField(upload_to="gab", null=True)
 
 class Placa_base(models.Model):
@@ -160,6 +165,7 @@ class Placa_base(models.Model):
     precio_compra_placa_base=models.IntegerField()
     precio_venta_placa_base=models.IntegerField()
     stock_placa_base=models.IntegerField(default=0)
+    stock_min_placa_base=models.IntegerField(default=5)
     imagen_placa_base = models.ImageField(upload_to="placa_base", null=True)
     tipo_ram_placa_base = models.ForeignKey(Tipo_Ram, on_delete=models.CASCADE, null=True)
     tipo_cpu_placa_base = models.ForeignKey(Tipo_Cpu, on_delete=models.CASCADE, null=True)

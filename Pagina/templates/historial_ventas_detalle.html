@@ -108,6 +108,7 @@
                         </thead>
                         <tbody>
                             {% for lista in parameters.listadetalle %}
+                            {% if parameters.id_factura_ventas == lista.id_factura_venta_id %}
                             <tr>
                                 <td>{%for lista3 in parameters.listaperiferico%}
                                     {% if lista3.id_periferico == lista.id_periferico_id%}
@@ -130,6 +131,7 @@
                                 <td>{{ lista.cant_periferico }}</td>
                                 <td><span class="precio">{{ lista.subtotal_factura_venta }}</span> Gs</td>
                             </tr>
+                            {% endif %}
                             {% endfor %}
                         </tbody>
                         <tfoot>

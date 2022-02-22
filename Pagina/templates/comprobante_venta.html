@@ -1,0 +1,166 @@
+{%extends "base.html"%}
+{%block barra%}
+{%load static%}
+
+<body>
+    <style>
+        .dataTables_length{
+            display: contents;
+        }
+
+        .dt-buttons{
+            display: contents;
+        }
+        
+        @media print {
+        .navbar, .btn{
+            display:none;
+        }
+    </style>
+
+
+
+<main>
+    <div class="container-fluid p-0">
+
+        <h1 class="h3 mb-3">Comprobante de Venta Nro. {{parameters.datos_factura.nro_factura_venta}}</h1>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body m-sm-3 m-md-5">
+
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="text-muted">Fecha de Emision: <strong>{{parameters.datos_factura.fch_factura_venta}}</strong></div>
+                                <div class="text-muted">Nombre o Razón Social: <strong>
+                                    {%for lista1 in parameters.listacliente%}
+                                    {% if lista1.codigo_cliente == parameters.datos_factura.codigo_cliente_id%}
+                                        {{lista1.nombre_cliente}}
+                                    {%endif%}
+                                    {%endfor%}</strong></div>
+                                <div class="text-muted">C.I.N o RUC: <strong>
+                                    {%for lista2 in parameters.listacliente%}
+                                    {% if lista2.codigo_cliente == parameters.datos_factura.codigo_cliente_id%}
+                                        {{lista2.ruc_cliente}}
+                                    {%endif%}
+                                    {%endfor%}</strong></div>
+                                <div class="text-muted">Dirección: <strong>
+                                    {%for lista2 in parameters.listacliente%}
+                                    {% if lista2.codigo_cliente == parameters.datos_factura.codigo_cliente_id%}
+                                        {{lista2.direccion_cliente}}
+                                    {%endif%}
+                                    {%endfor%}</strong></div>
+                                <div class="text-muted">Teléfono: <strong>
+                                    {%for lista2 in parameters.listacliente%}
+                                    {% if lista2.codigo_cliente == parameters.datos_factura.codigo_cliente_id%}
+                                        {{lista2.telefono_cliente}}
+                                    {%endif%}
+                                    {%endfor%}</strong></div>
+                            </div>
+                            <div class="col-md-6 text-md-end">
+                                <div class="text-muted">Fecha de Fin de Vigencia: <strong>
+                                    {%for lista3 in parameters.talonario_venta%}
+                                    {% if lista3.nro_timbrado_venta == parameters.datos_factura.nro_timbrado_venta_id%}
+                                        {{lista3.fch_vencimiento_timbrado_venta}}
+                                    {%endif%}
+                                    {%endfor%}</strong></div>    
+                                <div class="text-muted">Timbrado Nro.: <strong>{{parameters.datos_factura.nro_timbrado_venta_id}}</strong></div>
+                            </div>
+                        
+                        <table id="example" class="table table-sm" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Imágen</th>
+                                    <th>Cod. Periferico</th>
+                                    <th>Descripcion</th>
+                                    <th>Cantidad</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for lista in parameters.listadetalle %}
+                                {% if parameters.id_ultima_factura == lista.id_factura_venta_id %}
+                                <tr>
+                                    <td>{%for lista3 in parameters.listaperiferico%}
+                                        {% if lista3.id_periferico == lista.id_periferico_id%}
+                                        <img src="{{ lista3.imagen_periferico.url }}" width="100" height="100">
+                                        {%endif%}
+                                        {%endfor%}
+                                    </td>
+                                    <td>{%for lista1 in parameters.listaperiferico%}
+                                        {% if lista1.id_periferico == lista.id_periferico_id%}
+                                        {{lista1.cod_periferico}}
+                                        {%endif%}
+                                        {%endfor%}
+                                    </td>
+                                    <td>{%for lista2 in parameters.listaperiferico%}
+                                        {% if lista2.id_periferico == lista.id_periferico_id%}
+                                        {{lista2.descripcion_periferico}}
+                                        {%endif%}
+                                        {%endfor%}
+                                    </td>
+                                    <td>{{ lista.cant_periferico }}</td>
+                                    <td><span class="precio">{{ lista.subtotal_factura_venta }}</span> Gs</td>
+                                </tr>
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <footer class = "footer d-flex justify-content-end gap-3">
+                                <div><th>IVA = <strong class="precio">{{parameters.datos_factura.iva10_factura_venta}}</strong> Gs</th></div>
+                                <div><th>Total = <strong  class="precio">{{parameters.datos_factura.total_factura_venta}}</strong> Gs</th></div>
+                        </footer>
+                        <div class="text-center">
+                            <div><button class="btn btn-primary" onClick="window.print()">Imprimir Comprobante</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<script src="{%static 'js/app.js'%}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'js/Buttons-2.2.2/css/buttons.bootstrap5.min.css' %}"/>
+    <script type="text/javascript" src="{% static 'js/JSZip-2.5.0/jszip.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/pdfmake-0.1.36/pdfmake.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/pdfmake-0.1.36/vfs_fonts.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/dataTables.buttons.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/buttons.bootstrap5.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/buttons.html5.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/buttons.print.min.js' %}"></script>
+    <script>
+        function alerta() {
+            if (sessionStorage.getItem('1') == 1) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Aviso',
+                    text: 'Registro guardado existosamente.',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                })
+                sessionStorage.setItem('1', 0)
+            }
+        }
+        window.onload = alerta()
+
+        function formatText(data) {
+            data = document.getElementsByClassName(data)
+            var value
+            for(let i = 0; i < data.length; i++) {
+                value = data[i].innerText
+                value = parseFloat(value).toLocaleString('es')
+                data[i].innerText = value
+            }
+        }       
+        formatText("precio") //formatear numeros
+    </script>
+</body>
+
+</html>
+
+
+{%endblock%}

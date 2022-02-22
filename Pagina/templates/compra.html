@@ -268,35 +268,13 @@
 																Se aumentó correctamente la cantidad
 															</div>
 														</div>
-														<button class="btn btn-success ml-auto comprarButton" type="button" data-toggle="modal"
-															data-target="#comprarModal" id="btnCargar">Comprar</button>
+														<button class="btn btn-success ml-auto comprarButton" type="button" id="btnCargar">Comprar</button>
 													</div>
 												</div>
 											</div>
 								
 											<!-- END TOTAL -->
 								
-											<!-- START MODAL COMPRA -->
-											<div class="modal fade" id="comprarModal" tabindex="-1" aria-labelledby="comprarModalLabel"
-												aria-hidden="true">
-												<div class="modal-dialog modal-dialog-centered">
-													<div class="modal-content">
-														<div class="modal-header">
-															<h4 class="modal-title" id="comprarModalLabel">Compra Cargada</h4>
-															<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-																<span aria-hidden="true">&times;</span>
-															</button>
-														</div>
-															<div class="modal-body" style="display: flex; justify-content: center; ">
-																<a href="{% url 'historial_compras' %}" class="btn btn-info btn-round waves-effect waves-light">Ver Historial de Compras</a>
-															</div>
-														<div class="modal-footer">
-															<button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-														</div>
-													</div>
-												</div>
-											</div>
-											<!-- END MODAL COMPRA -->
 										</div>
 								
 									</section>
@@ -448,6 +426,7 @@
 			}
 		{% endfor %}
 
+		if (ruc_proveedor != '' && timbrado != '' && nro_factura != '' && unidades.length != 0){
 		$.ajax({
 			url: "{% url 'compra' %}",
 			type: 'POST',
@@ -465,7 +444,6 @@
 
 				console.log(unidades.length)
 				for(let i=0; i < unidades.length; i++) {
-					console.log("HOLA")
 					$.ajax({
 						url: "{% url 'compra_detalle' %}",
 						type: 'POST',
@@ -477,13 +455,21 @@
 						},
 						success: 
 						function(data){
+							if ((unidades.length - 1) == i){
+										location.href = './compra'
+									}
 							console.log("Yuju!")
 						}
 					})
 				}
 			}
 		})
+		}
+		else {
+			alert("Por favor complete todos los campos.") 
+		}
 	})
+	
 
 	function alerta() {
             if (sessionStorage.getItem('1') == 1) {

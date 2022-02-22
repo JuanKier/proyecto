@@ -35,8 +35,8 @@ function addItemToShoppingCart(itemId ,itemTitle, itemPrice, itemImage) {
       );
       elementQuantity.value++;
       $('.toast').toast('show');
-      updateShoppingCartTotal();
-      updateShoppingCartTotalIva();
+      let total = updateShoppingCartTotal();
+      updateShoppingCartTotalIva(total);
       return;
     }
   }
@@ -77,12 +77,13 @@ function addItemToShoppingCart(itemId ,itemTitle, itemPrice, itemImage) {
     .querySelector('.shoppingCartItemQuantity')
     .addEventListener('change', quantityChanged);
 
-  updateShoppingCartTotal();
-  updateShoppingCartTotalIva();
+    let total = updateShoppingCartTotal();
+    updateShoppingCartTotalIva(total);
 }
 
-let total = 0;
 function updateShoppingCartTotal() {
+  debugger
+  let total = 0;
   const shoppingCartTotal = document.querySelector('.shoppingCartTotal');
 
   const shoppingCartItems = document.querySelectorAll('.shoppingCartItem');
@@ -103,9 +104,11 @@ function updateShoppingCartTotal() {
     total = total + shoppingCartItemPrice * shoppingCartItemQuantity;
   });
   shoppingCartTotal.innerHTML = `${total.toFixed()} Gs`;
+  return total
 }
-var totalIva=0
-function updateShoppingCartTotalIva() {
+
+function updateShoppingCartTotalIva(total) {
+  var totalIva=0
   const shoppingCartTotalIva = document.querySelector('.shoppingCartTotalIva');
 
   const shoppingCartItems = document.querySelectorAll('.shoppingCartItem');
@@ -131,15 +134,16 @@ function updateShoppingCartTotalIva() {
 function removeShoppingCartItem(event) {
   const buttonClicked = event.target;
   buttonClicked.closest('.shoppingCartItem').remove();
-  updateShoppingCartTotal();
-  updateShoppingCartTotalIva();
+  let total = updateShoppingCartTotal();
+  updateShoppingCartTotalIva(total);
 }
 
 function quantityChanged(event) {
+  debugger
   const input = event.target;
   input.value <= 0 ? (input.value = 1) : null;
-  updateShoppingCartTotal();
-  updateShoppingCartTotalIva();
+  let total = updateShoppingCartTotal();
+  updateShoppingCartTotalIva(total);
 }
 
 function comprarButtonClicked() {
