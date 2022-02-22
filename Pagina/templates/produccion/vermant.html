@@ -76,6 +76,12 @@
             </div>      
             <div class="col-md-12">
                 <div class="card">
+                    <div class ="col-lg-2 col-md-3" style= "display:flex; justify-content: flex-end;">
+                        <span>Filtrar por: </span>
+                        <button class="btn btn-icon btn-info" target="_blank" type="button" onclick="filtroImpresion()">
+                            <span class="btn-inner--text">Fecha de Inicio</span>
+                        </button>
+                    </div>
                     <div class="card-body">
                         <table id="example" class="table table-striped" style="width:100%">
                             <thead>
@@ -146,6 +152,48 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="filtroImpresion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Registro en Clubes</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" action={% url 'reporte_mant' %} method="POST">
+                    {% csrf_token %}
+                    <h6 class="heading-small text-muted mb-4">Filtro</h6>
+                    <div class="pl-lg-0">
+                        <div class="row">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <span>Filtrar nacimiento desde:</span>
+                                        <input class="form-control" type="date" id="fecha_desde"
+                                            lang="es" name="fecha_desde" value="9999-12-31">
+                                    </div>
+                                    <div class="col">
+                                        <span>Filtrar nacimiento hasta:</span>
+                                        <input class="form-control" type="date" id="fecha_hasta"
+                                            lang="es" name="fecha_hasta" value="9999-12-31">
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <center><button type="submit" class="btn btn-success">Enviar</button></center>
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
     <script src="{%static 'js/app.js'%}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'js/Buttons-2.2.2/css/buttons.bootstrap5.min.css' %}"/>
     <script type="text/javascript" src="{% static 'js/JSZip-2.5.0/jszip.min.js' %}"></script>
@@ -170,6 +218,11 @@
             }
         }
         window.onload = alerta()
+    </script>
+    <script>
+        function filtroImpresion(){
+            $('#filtroImpresion').modal('show');
+        }
     </script>
     </main>
 </body>

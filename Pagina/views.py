@@ -2040,6 +2040,56 @@ def comprobante_venta(request):
     "id_ultima_factura": id_ultima_factura,
     "fecha_act": date.today().isoformat()})
 
+#--======================================= Reportes ======================================--
+
+def reporte_productos(request):
+        listaperiferico = Perifericos.objects.all()
+        listagabinete = Gabinete.objects.all()
+        listacpu = CPU.objects.all()
+        listaram = RAM.objects.all()
+        listaplaca = Placa_base.objects.all()
+        listarepuesto = Repuestos.objects.all()
+        listaproveedor = Proveedor.objects.all()
+        return validar(request, "reportes/reporte_productos.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "titulo_f":"Productos", "subtitulo_f":"Listado de Productos registrados", 
+        "listagabinete":listagabinete,
+        "listaperiferico":listaperiferico,
+        "listacpu":listacpu,
+        "listaram":listaram,
+        "listaplaca":listaplaca,
+        "listaproveedor":listaproveedor,
+        "listarepuesto": listarepuesto})
+
+def reporte_mant(request):
+    if request.session.get("id_usuario"):
+        if request.method == "GET":
+            listatabla=Mantenimiento.objects.all()
+            listacliente=Cliente.objects.all()
+            listausuario = Usuario.objects.all()
+            return validar(request, "reportes/reporte_mant.html", 
+            {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+            "titulo_f":"Mantenimientos", "subtitulo_f":"Listado de Mantenimientos registrados", 
+            "listatabla":listatabla, 
+            "listacliente": listacliente,
+            "listausuario": listausuario})
+        if request.method == "POST":
+            listacliente = Cliente.objects.all()
+            listausuario = Usuario.objects.all()
+            desde = request.POST.get("fecha_desde")
+            hasta = request.POST.get("fecha_hasta")
+            print(str(desde))
+            print(hasta)
+            listatabla = Mantenimiento.objects.raw('SELECT * FROM pagina_Mantenimiento WHERE inicio_mant > "' + '' + str(desde) + '" and inicio_mant < "' + str(hasta) + '"')
+            return validar(request, "reportes/reporte_mant.html", 
+            {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+            "titulo_f":"Mantenimientos", "subtitulo_f":"Listado de Mantenimientos registrados", 
+            "listatabla":listatabla, 
+            "listacliente": listacliente,
+            "listausuario": listausuario})
+        else:
+            return redirect("login")
+
 #--======================================= Validación ======================================--
 def validar(request, pageSuccess, parameters={}):
     if request.session.get("id_usuario"):

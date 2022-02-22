@@ -1,0 +1,109 @@
+{% extends "base.html" %}
+{% block cuerpo%}
+{% load static %}
+
+{% block extracss %}
+
+<style type="text/css">
+    html {page-break-after: avoid;}
+    table { page-break-inside:auto }
+    tr    { page-break-inside:avoid; page-break-after:auto }
+    thead { display:table-header-group }
+    tfoot { display:table-footer-group }
+    div   { page-break-inside:avoid; }
+    html, body { height: auto; }
+</style>
+
+{% endblock %}
+
+
+<style>
+    .img_equipo {
+        width: 7em;
+        height: 7em;
+    }
+
+    .img_equipo img {
+        height: 100%;
+    }
+
+    .img_liga {
+        width: 3em;
+        height: 3em;
+    }
+
+    .img_liga img {
+        height: 100%;
+    }
+</style>
+
+
+<div class="row">
+    <div class="container" style="display: flex; justify-content: center; flex-direction: column; align-items: center; padding-top: 1em; padding-bottom: 1em; border: outset;">
+        <div class="row">
+            <div class="img_liga">
+                <img src="{% static 'assets/img/lapf.png' %}">
+            </div>
+        </div>
+        <div class="row">
+            <strong><span class="text-muted">Liga Alto Paraná de Futbol</span></strong>
+        </div>
+        <div class="row">
+            <strong><span class="text-muted">Hohenau-Itapúa</span></strong>
+        </div>
+    </div>
+</div>
+<br>
+<center><p class="display-3">Listado General de Jugadores Registrados</p></center>
+<!-- Page content -->   
+<section class="col-xl-12 order-xl-1">
+    <section class="card">
+        <section class="card-body">
+            <table class="table table-flush dataTable align-items-center">
+                <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Documento</th>
+                        <th scope="col">Nombres y Apellidos</th>
+                        <th scope="col">Fecha de Nacimiento</th>
+                        <th scope="col">Nacionalidad</th>
+                        <th scope="col">Posicion</th>
+                    </tr>
+                </thead>
+                <tbody class="list">
+                    {% for lista in listajugadores %}
+                    <tr>
+                        <td scope="row" class = "documento">{{lista.documento}}</td>
+                        <td scope="row" class = "nomyape">{{lista.apellidos_jugador}}, {{lista.nombres_jugador}}</td>
+                        <td scope="row" class = "nacimiento">{{lista.fecha_nacimiento_jugador}}</td>
+                        <td scope="row" class = "nacionalidad">
+                            {% for lista3 in listanacionalidades %}
+                                {% if lista3.codigo_nacionalidad == lista.nacionalidad_jugador %}
+                                    {{lista3.descripcion_nacionalidad}}
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td scope="row" class = "posicion">{{lista.posicion_jugador}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </section>
+    </section>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-10 order-xl-1">
+                <div class="card" style="padding-top: 10px;">
+                    <div class="card-body">
+                        <p style="float: left;"><strong>FIRMA POR LAPF:</strong> ______________________________________</p>
+                        <p style="float: right;"><strong>ACLARACION:</strong> ____________________________________________</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+{% endblock %}

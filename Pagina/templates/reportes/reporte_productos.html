@@ -1,0 +1,167 @@
+{%extends "base_reportes.html"%}
+{%block barra%}
+{%load static%}
+
+    <style>
+        html {page-break-after: avoid;}
+        table { page-break-inside:auto; }
+        tr    { page-break-inside:avoid; page-break-after:auto; }
+        thead { display:table-header-group; }
+        tfoot { display:table-footer-group; }
+        div   { page-break-inside:avoid; }
+        html, body { height: auto; }
+    </style>
+
+    <style>
+        .img_equipo {
+            width: 5em;
+            height: 5em;
+        }
+    
+        .img_equipo img {
+            height: 100%;
+        }
+    
+        .img_liga {
+            width: 12em;
+            height: 8em;
+        }
+    
+        .img_liga img {
+            height: 100%;
+        }
+    </style>
+<section class="py-4">
+    <section class="container" style="display: flex; justify-content: center; flex-direction: column; align-items: center; padding-top: 1em; padding-bottom: 1em; border: outset;">
+        <section class="row">
+            <section class="img_liga">
+                <img src="{%static 'img/icons/logo_encarpc.png'%}">
+            </section>
+        </section>
+        <section class="row">
+            <strong><span class="text-muted">Encar PC - Gaming Informática</span></strong>
+        </section>
+        <section class="row">
+            <strong><span class="text-muted">Encarnación-Itapúa</span></strong>
+        </section>
+    </section>
+</section>
+<br>
+<center><p class="display-6">Listado de Productos</p></center>
+<section class="col-xl-12 order-xl-1">
+    <section class="card">
+        <section class="card-body">
+
+                <section class="dataTables_wrapper dt-bootrstrap4">
+                    <table class="table table-flush dataTable align-items-center table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col" >Código</th>
+                                <th scope="col" >Imágen</th>
+                                <th scope="col" >Tipo</th>
+                                <th scope="col" >Marca</th>
+                                <th scope="col" >Descripción</th>
+                                <th scope="col" >Proveedor</th>
+                                <th scope="col" >Precio Compra</th>
+                                <th scope="col" >Precio Venta</th>
+                                <th scope="col" >Stock</th>
+                            </tr>
+                        </thead>
+                        <tfoot class="thead-light">
+                            <tr>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Imágen</th>
+                                    <th>Tipo</th>
+                                    <th>Marca</th>
+                                    <th>Descripción</th>
+                                    <th>Proveedor</th>
+                                    <th>Precio Compra</th>
+                                    <th>Precio Venta</th>
+                                    <th>Stock</th>
+                                </tr>
+                                
+                            </tr>
+                        </thead>
+                        <tbody class="list">
+                            {% for lista in parameters.listaperiferico %}
+                            <tr>
+                                <td class= "nombre">{{ lista.cod_periferico }}</td>
+                                <td>
+                                    <section class="img_equipo" style="display: flex; justify-content: center;">
+                                        {% if lista.imagen_periferico != '' %}
+                                        <img src="{{ lista.imagen_periferico.url }}"></img>
+                                        {% else %}
+                                        <img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" %}>
+                                        {% endif %}
+                                    </section>
+
+                                </td>
+                                {%if lista.tipo_periferico == 1 %}<td>Fuente</td>{% endif %} 
+                                {%if lista.tipo_periferico == 2 %}<td>Gabinete</td>{% endif %}
+                                {%if lista.tipo_periferico == 3 %}<td>Almacenamiento</td>{% endif %}
+                                {%if lista.tipo_periferico == 4 %}<td>Mouse</td>{% endif %}
+                                {%if lista.tipo_periferico == 5 %}<td>Teclado</td>{% endif %} 
+                                {%if lista.tipo_periferico == 6 %}<td>Auriculares</td>{% endif %}
+                                {%if lista.tipo_periferico == 7 %}<td>Monitor</td>{% endif %}
+                                {%if lista.tipo_periferico == 8 %}<td>Placa de Video</td>{% endif %}
+                                {%if lista.tipo_periferico == 9 %}<td>Impresora</td>{% endif %}
+                                {%if lista.tipo_periferico == 10 %}<td>Otros</td>{% endif %}
+                                {%if lista.tipo_periferico == 11 %}<td>Placa Base</td>{% endif %}
+                                {%if lista.tipo_periferico == 12 %}<td>Repuesto</td>{% endif %}
+                                {%if lista.tipo_periferico == 13 %}<td>Memoria RAM</td>{% endif %}
+                                {%if lista.tipo_periferico == 14 %}<td>Procesador</td>{% endif %}
+                                {%if lista.tipo_periferico == 15 %}<td>Gabinete</td>{% endif %}
+                                <td class= "nombre">{{ lista.marca_periferico }}</td>
+                                <td class= "sede">{{ lista.descripcion_periferico }}</td>
+                                <td class= "nombre">
+                                    {%for lista1 in parameters.listaproveedor%}
+                                    {% if lista1.codigo_proveedor == lista.nombre_proveedor_id%}
+                                    {{lista1.nombre_proveedor}}
+                                    {%endif%}
+                                    {%endfor%}
+                                </td>
+                                <td class="nombre precio">{{ lista.precio_compra_periferico }}</td>
+                                <td class="nombre precio">{{ lista.precio_venta_periferico }}</td>
+                                <td class= "nombre">{{ lista.stock_periferico }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </section>
+
+        </section>
+    </section>
+</section>
+
+    <script src="{%static 'js/app.js'%}"></script>
+    <script>
+        function alerta() {
+            if (sessionStorage.getItem('1') == 1) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Aviso',
+                    text: 'Registro guardado existosamente.',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                })
+                sessionStorage.setItem('1', 0)
+            }
+        }
+        window.onload = alerta()
+
+        function formatText(data) {
+            data = document.getElementsByClassName(data)
+            var value
+            for(let i = 0; i < data.length; i++) {
+                value = data[i].innerText
+                value = parseFloat(value).toLocaleString('es')
+                data[i].innerText = value
+            }
+        }       
+        formatText("precio") //formatear numeros
+    </script>
+
+
+{%endblock%}

@@ -133,6 +133,8 @@ urlpatterns = [
     path('historial_compras', views.historial_compras, name='historial_compras'),
     path('historial_compras_detalle/<int:id_factura>', views.historial_compras_detalle, name='historial_compras_detalle'),
 
+    path('reporte_productos', views.reporte_productos, name='reporte_productos'),
+    path('reporte_mant', views.reporte_mant, name='reporte_mant'),
     
     path('ver_productos', views.ver_productos, name='ver_productos'),
     path('inventario', views.inventario, name='inventario')
