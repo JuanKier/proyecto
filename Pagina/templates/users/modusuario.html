@@ -56,25 +56,26 @@
                 <label class="float-label">Nombre Completo</label>
                 <span class="form-bar"></span>
                 <input type="text" name="nombre_completo_usuario" class="form-control" required
-                    value="{{parameters.datos_act.nombre_completo_usuario}}">
+                    value="{{parameters.datos_act.nombre_completo_usuario}}" placeholder="Ingrese el Nombre Completo del Usuario">
             </div>
             <div class="form-group form-default">
                 <label class="float-label">Usuario</label>
                 <span class="form-bar"></span>
                 <input type="text" name="nombre_usuario" class="form-control" required
-                    value="{{parameters.datos_act.nombre_usuario}}">
+                    value="{{parameters.datos_act.nombre_usuario}}" placeholder="Ingrese el Usuario">
             </div>
             <div class="form-group form-default">
                 <label class="float-label">Contraseña</label>
                 <span class="form-bar"></span>
                 <input type="password" name="password_usuario" class="form-control" required
-                    value="{{parameters.datos_act.password_usuario}}">
+                    value="{{parameters.datos_act.password_usuario}}" placeholder="Ingrese la contraseña">
             </div>
             <div class="input-confirmar">
                 <div class="form-group form-default">
                     <label class="float-label">Tipo de Usuario</label>
                     <span class="form-bar"></span>
                     <select class= "form-select mb-3" name="tipo_usuario" id="tipo_usuario" required>
+                        <option value=0 selected>--SELECCIONE UNA OPCIÓN--</option>
                         {% if parameters.datos_act.tipo_usuario == 1 %}
                         <option value="1" id="opcion_select" selected>Administrador</option>
                         <option value="2" id="opcion_select">Empleado</option>
@@ -88,14 +89,14 @@
                     <label class="float-label">C.I.Nº o RUC</label>
                     <span class="form-bar"></span>
                     <input type="text" name="ci_usuario" class="form-control" required
-                    value="{{parameters.datos_act.ci_usuario}}">
+                    value="{{parameters.datos_act.ci_usuario}}" placeholder="Ingrese C.I.Nº o RUC">
                     
                 </div>
                 <div class="form-group form-default">
                     <label class="float-label">Teléfono</label>
                     <span class="form-bar"></span>
                     <input type="text" name="telefono_usuario" class="form-control" required
-                    value="{{parameters.datos_act.telefono_usuario}}">
+                    value="{{parameters.datos_act.telefono_usuario}}" placeholder="Ingrese Nº de Teléfono">
                 </div>
                 
             </div>
@@ -105,7 +106,7 @@
                     <label class="float-label">Dirección</label>
                     <span class="form-bar"></span>
                     <input type="text" name="direccion_usuario" class="form-control" required
-                    value="{{parameters.datos_act.direccion_usuario}}">
+                    value="{{parameters.datos_act.direccion_usuario}}" placeholder="Ingrese la dirección">
                 </div>
                 <!-- <div class="form-group form-default">
                     <label class="float-label">Correo</label>

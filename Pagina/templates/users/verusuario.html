@@ -82,6 +82,8 @@
                                 <tr>
                                     <th>Usuario</th>
                                     <th>Nombre Completo</th>
+                                    <th>Teléfono</th>
+                                    <th>Dirección</th>
                                     <th>Tipo de Usuario</th>
                                     <th>Acciones</th>
                                 </tr>
@@ -91,6 +93,8 @@
                                 <tr>
                                     <td>{{ lista.nombre_usuario }}</td>
                                     <td>{{ lista.nombre_completo_usuario }}</td>
+                                    <td>{{ lista.telefono_usuario }}</td>
+                                    <td>{{ lista.direccion_usuario }}</td>
                                     {%if lista.tipo_usuario == 1 %}
                                     <td>Administrador</td>
                                     {% else %}
@@ -103,7 +107,7 @@
                                                 style="color: white;" data-toggle="tooltip" data-placement="top"
                                                 title="" data-original-title="Modificar Registro"><i
                                                     data-feather="edit"></i></a>
-                                            <a onclick="checker()" href="{% url 'borusuario' lista.id_usuario %}"
+                                            <a href="{% url 'borusuario' lista.id_usuario %}"
                                                 onclick="return confirm('Eliminar el registro?')"
                                                 class="btn waves-effect waves-light btn-danger btn-icon"
                                                 style="color: white;" data-toggle="tooltip" data-placement="top"
