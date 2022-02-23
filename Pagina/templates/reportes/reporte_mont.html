@@ -1,0 +1,134 @@
+{%extends "base_reportes.html"%}
+{%block barra%}
+{%load static%}
+
+    <style>
+        html {page-break-after: avoid;}
+        table { page-break-inside:auto; }
+        tr    { page-break-inside:avoid; page-break-after:auto; }
+        thead { display:table-header-group; }
+        tfoot { display:table-footer-group; }
+        div   { page-break-inside:avoid; }
+        html, body { height: auto; }
+    </style>
+
+    <style>
+        .img_equipo {
+            width: 5em;
+            height: 5em;
+        }
+    
+        .img_equipo img {
+            height: 100%;
+        }
+    
+        .img_liga {
+            width: 12em;
+            height: 8em;
+        }
+    
+        .img_liga img {
+            height: 100%;
+        }
+    </style>
+<section class="py-4">
+    <section class="container" style="display: flex; justify-content: center; flex-direction: column; align-items: center; padding-top: 1em; padding-bottom: 1em; border: outset;">
+        <section class="row">
+            <section class="img_liga">
+                <img src="{%static 'img/icons/logo_encarpc.png'%}">
+            </section>
+        </section>
+        <section class="row">
+            <strong><span class="text-muted">Encar PC - Gaming Informática</span></strong>
+        </section>
+        <section class="row">
+            <strong><span class="text-muted">Encarnación-Itapúa</span></strong>
+        </section>
+    </section>
+</section>
+<br>
+<center><p class="display-6">Listado de Montajes</p></center>
+<section class="col-xl-12 order-xl-1">
+    <section class="card">
+        <section class="card-body">
+
+                <section class="dataTables_wrapper dt-bootrstrap4">
+                    <table class="table table-flush dataTable align-items-center table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Cod</th>
+                                <th>Placa Base</th>
+                                <th>Cliente</th>
+                                <th>Empleado</th>
+                                <th>Inicio</th>
+                                <th>Fin</th>
+                                <th>Horas</th>
+                                <th>Actividades</th>
+                                <th>Estado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for lista in parameters.listatabla %}
+                            <tr>
+                                <td>{{ lista.codigo_montaje }}</td>
+                                <td>
+                                    {%for lista2 in parameters.listaplaca%}
+                                    {% if lista2.id_placa_base == lista.id_placa_base_id%}
+                                        {{lista2.descripcion_placa_base}}
+                                    {%endif%}
+                                    {%endfor%}
+                                </td>
+                                <td>
+                                    {%for lista1 in parameters.listacliente%}
+                                    {% if lista1.codigo_cliente == lista.nombre_cliente_id%}
+                                        {{lista1.nombre_cliente}}
+                                    {%endif%}
+                                    {%endfor%}
+                                </td>
+                                <td>
+                                    {%for lista2 in parameters.listausuario%}
+                                    {% if lista2.id_usuario == lista.nombre_completo_usuario_id%}
+                                    {{lista2.nombre_completo_usuario}}
+                                    {%endif%}
+                                    {%endfor%}
+                                </td>
+                                <td>{{ lista.inicio_mont }}</td>
+                                <td>{{ lista.fin_mont }}</td>
+                                <td>{{ lista.horas_mont }}</td>
+                                <td>{{ lista.actividades_mont }}</td>
+                                    {%if lista.estado_mont == 1 %}<td><span class="badge bg-danger">Recibido</span></td>{% endif %} 
+                                    {%if lista.estado_mont == 2 %}<td><span class="badge bg-warning">En proceso</span></td>{% endif %}
+                                    {%if lista.estado_mont == 3 %}<td><span class="badge bg-success">Terminado</span></td>{% endif %}
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="{%static 'js/app.js'%}"></script>
+    <script>
+        function alerta() {
+            if (sessionStorage.getItem('1') == 1) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Aviso',
+                    text: 'Registro guardado existosamente.',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                })
+                sessionStorage.setItem('1', 0)
+            }
+        }
+        window.onload = alerta()
+    </script>
+    </main>
+</body>
+
+    {% endblock %}

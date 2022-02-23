@@ -83,6 +83,7 @@ urlpatterns = [
      #--Montaje
     path('vermontaje', views.vermontaje, name='vermontaje'),
     path('nuevomontaje/<int:placa_base_actual>/<int:montaje_actual>', views.nuevomontaje, name='nuevomontaje'),
+    path('detalle_mont/<int:placa_base_actual>/<int:montaje_actual>', views.detalle_mont, name='detalle_mont'),
     path('bormontaje/<int:montaje_actual>', views.bormontaje, name='bormontaje'),
     
 
@@ -133,8 +134,11 @@ urlpatterns = [
     path('historial_compras', views.historial_compras, name='historial_compras'),
     path('historial_compras_detalle/<int:id_factura>', views.historial_compras_detalle, name='historial_compras_detalle'),
 
-    path('reporte_productos', views.reporte_productos, name='reporte_productos'),
-    path('reporte_mant', views.reporte_mant, name='reporte_mant'),
+    path('reporte_productos/<int:bandera>', views.reporte_productos, name='reporte_productos'),
+    path('reporte_mant/<int:bandera>', views.reporte_mant, name='reporte_mant'),
+    path('reporte_mont/<int:bandera>', views.reporte_mont, name='reporte_mont'),
+    path('reporte_rep/<int:bandera>', views.reporte_rep, name='reporte_rep'),
+    path('reporte_ventas', views.reporte_ventas, name='reporte_ventas'),
     
     path('ver_productos', views.ver_productos, name='ver_productos'),
     path('inventario', views.inventario, name='inventario')

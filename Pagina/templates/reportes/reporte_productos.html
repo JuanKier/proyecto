@@ -65,6 +65,7 @@
                                 <th scope="col" >Precio Compra</th>
                                 <th scope="col" >Precio Venta</th>
                                 <th scope="col" >Stock</th>
+                                <th scope="col" >Stock Mínimo</th>
                             </tr>
                         </thead>
                         <tfoot class="thead-light">
@@ -124,6 +125,7 @@
                                 <td class="nombre precio">{{ lista.precio_compra_periferico }}</td>
                                 <td class="nombre precio">{{ lista.precio_venta_periferico }}</td>
                                 <td class= "nombre">{{ lista.stock_periferico }}</td>
+                                <td class= "nombre">{{ lista.stock_min_periferico }}</td>
                             </tr>
                             {% endfor %}
                         </tbody>

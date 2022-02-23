@@ -81,7 +81,7 @@
                 
             </div>
         </div>
-        <form class="form-material" style="margin: 1em;border-radius: 10px;" enctype="multipart/form-data" action="{% url 'nuevomontaje' parameters.placa_base_actual parameters.montaje_actual %}" method="POST" onsubmit="sessionStorage.setItem('1', 1);"
+        <form class="form-material" style="margin: 1em;border-radius: 10px;" enctype="multipart/form-data""
             style="margin: 1em">
             {% csrf_token %}
             <input type="number" name="placa_base_actual" id="placa_base_actual" value="{{parameters.datosplaca.id_placa_base}}" style="display: none;" >
@@ -89,7 +89,7 @@
                 <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
                     <div class="form-group form-default">
                     <label class="float-label">Procesadores Compatibles</label>
-                    <select class="form-select mb-3" name="tipo_cpu" id="tipo_cpu">
+                    <select class="form-select mb-3" name="tipo_cpu" id="tipo_cpu" disabled>
                         <option value=0>--SELECCIONE UNA OPCION--</option>
                         {% for lista in parameters.listacpu %}
                         <option value="{{lista.id_cpu}}" {% if lista.id_cpu == parameters.datos_act.tipo_cpu_id%} selected {% endif %}>
@@ -100,7 +100,7 @@
                     </div>
                     <div class="form-group form-default">
                         <label class="float-label">Memorias RAM Compatibles</label>
-                        <select class="form-select mb-3" name="tipo_ram" id="tipo_ram">
+                        <select class="form-select mb-3" name="tipo_ram" id="tipo_ram" disabled>
                             <option value=0>--SELECCIONE UNA OPCION--</option>
                             {% for lista in parameters.listaram %}
                             <option value="{{lista.id_ram}}" {% if lista.id_ram == parameters.datos_act.tipo_ram_id%} selected {% endif %}>
@@ -113,7 +113,7 @@
                 <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
                     <div class="form-group form-default">
                         <label class="float-label">Gabinetes Compatibles</label>
-                        <select class="form-select mb-3" name="tipo_gabinete" id="tipo_gabinete">
+                        <select class="form-select mb-3" name="tipo_gabinete" id="tipo_gabinete" disabled>
                             <option value=0>--SELECCIONE UNA OPCION--</option>
                             {% for lista in parameters.listagabinete %}
                             <option value="{{lista.id_gab}}" {% if lista.id_gab  == parameters.datos_act.tipo_gabinete_id%} selected {% endif %}>
@@ -124,7 +124,7 @@
                     </div>
                     <div class="form-group form-default">
                         <label class="float-label">Placa de Video</label>
-                        <select class="form-select mb-3" name="tipo_placa_video" id="tipo_placa_video">
+                        <select class="form-select mb-3" name="tipo_placa_video" id="tipo_placa_video" disabled>
                             <option value=0>--SELECCIONE UNA OPCION--</option>
                             {% for lista in parameters.listaperiferico %}
                             {% if lista.tipo_periferico == 8 %}
@@ -139,7 +139,7 @@
                 <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
                     <div class="form-group form-default">
                         <label class="float-label">Fuente de Poder</label>
-                        <select class="form-select mb-3" name="tipo_fuente" id="tipo_fuente">
+                        <select class="form-select mb-3" name="tipo_fuente" id="tipo_fuente" disabled>
                             <option value=0>--SELECCIONE UNA OPCION--</option>
                             {% for lista in parameters.listaperiferico %}
                             {% if lista.tipo_periferico == 1 %}
@@ -152,7 +152,7 @@
                     </div>
                     <div class="form-group form-default">
                         <label class="float-label">Almacenamiento</label>
-                        <select class="form-select mb-3" name="tipo_almacenamiento" id="tipo_almacenamiento">
+                        <select class="form-select mb-3" name="tipo_almacenamiento" id="tipo_almacenamiento" disabled>
                             <option value=0>--SELECCIONE UNA OPCION--</option>
                             {% for lista in parameters.listaperiferico %}
                             {% if lista.tipo_periferico == 3 %}
@@ -169,7 +169,7 @@
                 <div class="input-confirmar" style="grid-template-columns: 1fr;">
                     <div class="form-group form-default">
                         <label class="float-label">Perifericos</label>
-                        <select class="form-select mb-3" name="tipo_periferico" id="tipo_periferico">
+                        <select class="form-select mb-3" name="tipo_periferico" id="tipo_periferico" disabled>
                             <option value=0>--SELECCIONE UNA OPCION--</option>
                             {% for lista in parameters.listaperiferico %}
                             {% if lista.tipo_periferico != 8 and lista.tipo_periferico != 1 and lista.tipo_periferico != 3 and lista.tipo_periferico != 11 and lista.tipo_periferico != 12 and lista.tipo_periferico != 13 and lista.tipo_periferico != 14 and lista.tipo_periferico != 15 %}
@@ -185,7 +185,7 @@
                     <div>
                         <label class="float-label">CI o RUC de Cliente</label>
                         <span class="form-bar"></span>
-                        <input class="form-control mb-3" type="text" name="ruc_cliente" id="ruc_cliente" 
+                        <input class="form-control mb-3" type="text" name="ruc_cliente" id="ruc_cliente" disabled
                         {% for cliente in parameters.listacliente %}
                         {% if cliente.codigo_cliente == parameters.datos_act.nombre_cliente_id %} 
                         value="{{cliente.ruc_cliente}}" 
@@ -195,14 +195,14 @@
                     </div>
                     <div>
                         <label class="float-label">Nombre del Cliente</label>
-                        <label class="form-control mb-3" id="nombre_cliente"> </label>
+                        <label class="form-control mb-3" id="nombre_cliente" disabled> </label>
                         <input type="text" style="display: none;" id="id_cliente" name="id_cliente">
                     </div>
                 </div>
                 <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
                     <div class="form-group form-default">
                         <label class="float-label">Empleado</label>
-                        <select class="form-select mb-3" name="empleado" id="empleado">
+                        <select class="form-select mb-3" name="empleado" id="empleado" disabled>
                             <option value=0>--SELECCIONE UNA OPCION--</option>
                             {% for lista in parameters.listausuario %}
                             <option value="{{lista.id_usuario}}" {% if lista.id_usuario == parameters.datos_act.nombre_completo_usuario_id%} selected {% endif %}>
@@ -215,7 +215,7 @@
                     <div class="form-group form-default mb-3">
                         <label class="float-label">Horas Trabajadas</label>
                         <span class="form-bar"></span>
-                        <input type="number" name="horas_mont" class="form-control" required 
+                        <input type="number" name="horas_mont" class="form-control" required disabled
                             value="{{parameters.datos_act.horas_mont}}">
                     </div>
                 </div>
@@ -224,13 +224,13 @@
                     <div class="form-group form-default mb-3">
                         <label class="float-label">Fecha de Inicio</label>
                         <span class="form-bar"></span>
-                        <input type="date" name="inicio_mont" class="form-control" required {% if parameters.datos_act %} value="{{parameters.datos_act.inicio_mont}}" {% else %} value = "{{parameters.fecha_act}}" {% endif %}>
+                        <input type="date" name="inicio_mont" class="form-control" required {% if parameters.datos_act %} value="{{parameters.datos_act.inicio_mont}}" {% else %} value = "{{parameters.fecha_act}}" {% endif %} disabled>
                     </div>
                 
                     <div class="form-group form-default mb-3">
                         <label class="float-label">Fecha de Finalización</label>
                         <span class="form-bar"></span>
-                        <input type="date" name="fin_mont" class="form-control" required
+                        <input type="date" name="fin_mont" class="form-control" required disabled
                             value="{{parameters.datos_act.fin_mont}}">
                     </div>
                 </div>
@@ -239,7 +239,7 @@
                     <div class="form-group form-default">
                         <label class="float-label">Actividades</label>
                         <span class="form-bar"></span>
-                        <input type="text" name="actividades_mont" class="form-control mb-3" required
+                        <input type="text" name="actividades_mont" class="form-control mb-3" required disabled
                             value="{{parameters.datos_act.actividades_mont}}">
                     </div>
                     
@@ -248,15 +248,15 @@
                             <label class="col-form-label col-sm-2 text-sm-end pt-sm-0">Estado</label>
                             <div class="col-sm-10">
                                 <label class="form-check">
-                                    <input name="estado_mont" type="radio" required class="form-check-input" value=1 id="opcion_select" {% if parameters.datos_act.estado_mont == 1 %} checked {% endif %}>
+                                    <input name="estado_mont" type="radio" required class="form-check-input" value=1 id="opcion_select" {% if parameters.datos_act.estado_mont == 1 %} checked {% endif %} disabled>
                                     <span class="form-check-label">Recepcionado</span>
                                 </label>
                                 <label class="form-check">
-                                    <input name="estado_mont" type="radio" required class="form-check-input" value=2 id="opcion_select" {% if parameters.datos_act.estado_mont == 2 %} checked {% endif %}>
+                                    <input name="estado_mont" type="radio" required class="form-check-input" value=2 id="opcion_select" {% if parameters.datos_act.estado_mont == 2 %} checked {% endif %} disabled>
                                     <span class="form-check-label">En proceso</span>
                                 </label>
                                 <label class="form-check">
-                                    <input name="estado_mont" type="radio" class="form-check-input" value=3 id="opcion_select" {% if parameters.datos_act.estado_mont == 3 %} checked {% endif %}>
+                                    <input name="estado_mont" type="radio" class="form-check-input" value=3 id="opcion_select" {% if parameters.datos_act.estado_mont == 3 %} checked {% endif %} disabled>
                                     <span class="form-check-label">Terminado</span>
                                 </label>
                             </div>
@@ -264,9 +264,7 @@
                     </fieldset>    
                 </div>
                 <div class="form-group form-default caja-botones">
-                    <button type="submit" class="btn btn-success btn-round waves-effect waves-light"
-                        onclick="return confirm('Estás seguro de añadir este Montaje?')">Grabar</button>
-                    <a href="{% url 'index' %}" class="btn btn-info btn-round waves-effect waves-light">Cancelar</a>
+                    <a href="{% url 'vermontaje' %}" class="btn btn-info btn-round waves-effect waves-light">Cancelar</a>
                 </div>
             </div>
             

@@ -47,7 +47,7 @@
     </section>
 </section>
 <br>
-<center><p class="display-6">Listado de Productos</p></center>
+<center><p class="display-6">Listado de Mantenimientos</p></center>
 <section class="col-xl-12 order-xl-1">
     <section class="card">
         <section class="card-body">
@@ -61,10 +61,10 @@
                                     <th>Cliente</th>
                                     <th>Empleado</th>
                                     <th>Fecha de Inicio</th>
+                                    <th>Fecha de Fin</th>
                                     <th>Horas</th>
                                     <th>Actividades</th>
                                     <th>Estado</th>
-                                    <th>Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -90,26 +90,12 @@
                                         {%endfor%}
                                     </td>
                                     <td>{{ lista.inicio_mant }}</td>
+                                    <td>{{ lista.fin_mant }}</td>
                                     <td>{{ lista.horas_mant }}</td>
                                     <td>{{ lista.actividades_mant }}</td>
                                         {%if lista.estado_mant == 1 %}<td><span class="badge bg-danger">Recibido</span></td>{% endif %} 
                                         {%if lista.estado_mant == 2 %}<td><span class="badge bg-warning">En proceso</span></td>{% endif %}
                                         {%if lista.estado_mant == 3 %}<td><span class="badge bg-success">Terminado</span></td>{% endif %}
-                                    <td>
-                                        <div class="icon-btn">
-                                            <a href="{% url 'modmant' lista.codigo_mant %}"
-                                                class="btn waves-effect waves-light btn-warning btn-icon"
-                                                style="color: white;" data-toggle="tooltip" data-placement="top"
-                                                title="" data-original-title="Modificar Registro"><i
-                                                    data-feather="edit"></i></a>
-                                            <a href="{% url 'bormant' lista.codigo_mant %}"
-                                                onclick="return confirm('Eliminar el registro?')"
-                                                class="btn waves-effect waves-light btn-danger btn-icon"
-                                                style="color: white;" data-toggle="tooltip" data-placement="top"
-                                                title="" data-original-title="Eliminar Registro"><i
-                                                    data-feather="trash-2"></i></a>
-                                        </div>
-                                    </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>

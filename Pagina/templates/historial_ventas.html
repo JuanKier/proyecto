@@ -89,6 +89,14 @@
                     <div class="py-4">
                         <div class="col-md-12">
                             <div class="card">
+                                <div class ="col-md-6" style= "display:flex; gap: .5em; padding: 1em; justify-items: center;">
+                                    <div><span style="padding: 1em;">Filtrar por:</span></div>
+                                    <div>
+                                        <button class="btn btn-icon btn-info btn-sm" target="_blank" type="button" onclick="filtroImpresion()">
+                                            <span class="btn-inner--text">Fecha de Venta</span>
+                                        </button>
+                                    </div>
+                                </div>
                 <div class="card-body">
                     <table id="example" class="table table-striped" style="width:100%">
                         <thead>
@@ -137,7 +145,47 @@
             </div>
         </div>
     </div>
-
+    <div class="modal fade" id="filtroImpresion" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ventas</h5>
+                <button type="button" onclick="cerrar_modal()" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" action={% url 'reporte_ventas' %} method="POST">
+                    {% csrf_token %}
+                    <h6 class="heading-small text-muted mb-4">Filtro por Fecha de Venta</h6>
+                    <div class="pl-lg-0">
+                        <div class="row">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <span>Desde:</span>
+                                        <input class="form-control" type="date" id="fecha_desde"
+                                            lang="es" name="fecha_desde" value="2022-12-01">
+                                    </div>
+                                    <div class="col">
+                                        <span>Hasta:</span>
+                                        <input class="form-control" type="date" id="fecha_hasta"
+                                            lang="es" name="fecha_hasta" value="2022-12-31">
+                                    </div>
+                                </div>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <center><button type="submit" class="btn btn-success">Enviar</button></center>
+                </form>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
     <script src="{%static 'js/app.js'%}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'js/Buttons-2.2.2/css/buttons.bootstrap5.min.css' %}"/>
     <script type="text/javascript" src="{% static 'js/JSZip-2.5.0/jszip.min.js' %}"></script>
@@ -173,6 +221,20 @@
             }
         }       
         formatText("precio") //formatear numeros
+    </script>
+    <script>
+        function filtroImpresion(){
+            $('#filtroImpresion').modal('show');
+        }
+        function filtroImpresion2(){
+            $('#filtroImpresion2').modal('show');
+        }
+
+        function cerrar_modal() {
+        	$(document).ready(function () {
+            $('#filtroImpresion').modal('hide');
+        	});
+    	}
     </script>
 </body>
 

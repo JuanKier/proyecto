@@ -213,8 +213,11 @@
 </script>
 <script>
   var inputFecha = "inicio_mant"  //COLOCAR ID DEL INPUT DE FECHA
-  window.onload = completarHoraInicio(document.getElementById(inputFecha))
-
+  document.onload = function(){
+    completarHoraInicio(document.getElementById(inputFecha))
+    traerCliente(document.getElementById(ruc_cliente))
+    console.log('Hola')
+    }
   function completarHoraInicio(event){
       var fecha = new Date(); //Fecha actual
       var mes = fecha.getMonth()+1; //obteniendo mes

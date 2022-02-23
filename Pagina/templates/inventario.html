@@ -97,6 +97,24 @@
                     </div>
                         <div class="col-md-12">
                             <div class="card">
+                                <div class ="col-md-6" style= "display:flex; gap: .5em; padding: 1em; justify-items: center;">
+                                    <div><span style="padding: 1em;">Filtrar por:</span></div>
+                                    <div>
+                                        <a class="btn btn-icon btn-info btn-sm" target="_blank" type="button" href="{% url 'reporte_productos' 1 %}">
+                                            <span class="btn-inner--text">Productos Existentes</span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a class="btn btn-icon btn-info btn-sm" target="_blank" type="button" href="{% url 'reporte_productos' 2 %}">
+                                            <span class="btn-inner--text">Productos Agotados/Falta</span>
+                                        </a>
+                                    </div>
+                                    <div>
+                                        <a class="btn btn-icon btn-info btn-sm" target="_blank" type="button" href="{% url 'reporte_productos' 3 %}">
+                                            <span class="btn-inner--text">Productos Bajo el Stock Mínimo</span>
+                                        </a>
+                                    </div>
+                                </div>
                                 <div class="card-body">  
                                     <table id="example" class="table table-striped" style="width:100%">
                                         <thead>
@@ -185,7 +203,7 @@
                             </div>
                         </div>
                     </div>
-
+                    
     <script src="{%static 'js/app.js'%}"></script>
     <link rel="stylesheet" type="text/css" href="{% static 'js/Buttons-2.2.2/css/buttons.bootstrap5.min.css' %}"/>
     <script type="text/javascript" src="{% static 'js/JSZip-2.5.0/jszip.min.js' %}"></script>
@@ -224,6 +242,7 @@
         }
         window.onload = alerta()
     </script>
+    
 </body>
 
 </html>

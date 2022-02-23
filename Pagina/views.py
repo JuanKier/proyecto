@@ -863,6 +863,58 @@ def nuevomontaje (request, placa_base_actual=0, montaje_actual=0):
 def bormontaje(request, montaje_actual):
         Montaje.objects.filter(codigo_montaje = montaje_actual).delete()
         return redirect('vermontaje')
+
+def detalle_mont (request, placa_base_actual=0, montaje_actual=0):
+    if request.session.get("id_usuario"):
+        if request.method == "GET":
+            listamontaje=Montaje.objects.all()
+            datosplaca=Placa_base.objects.get(id_placa_base=placa_base_actual)
+            tipo_ram_placa = datosplaca.tipo_ram_placa_base_id
+            tipo_cpu_placa = datosplaca.tipo_cpu_placa_base_id
+            tipo_gabinete_placa = datosplaca.tipo_gabinete_placa_base_id
+            listaram = RAM.objects.filter(tipo_ram_id=tipo_ram_placa)
+            listacpu = CPU.objects.filter(tipo_cpu_id=tipo_cpu_placa)
+            listagabinete = Gabinete.objects.filter(tipo_gabinete_id=tipo_gabinete_placa)
+            listaperiferico = Perifericos.objects.all()
+            listausuario = Usuario.objects.all()
+            listacliente = Cliente.objects.all()
+            mont_actual=Montaje.objects.filter(codigo_montaje=montaje_actual).exists()
+            if mont_actual:
+                datos_mont=Montaje.objects.filter(codigo_montaje=montaje_actual).first()
+                datos_mont.inicio_mont=str(datos_mont.inicio_mont)
+                datos_mont.fin_mont=str(datos_mont.fin_mont)
+                return validar(request, "produccion/detalle_mont.html", 
+                {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                "titulo_f":"Modificar Montaje", 
+                "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                "datos_act":datos_mont, 
+                "montaje_actual":montaje_actual,
+                "placa_base_actual":placa_base_actual, 
+                "listaram": listaram,
+                "listacpu": listacpu,
+                "listagabinete": listagabinete,
+                "datosplaca":datosplaca,
+                "listacliente": listacliente,
+                "listaperiferico":listaperiferico,
+                "listamontaje":listamontaje,
+                "listausuario": listausuario,
+                "fecha_act": date.today().isoformat()})
+            else:
+                return validar(request, "produccion/detalle_mont.html", 
+                        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+                        "titulo_f":"Nuevo Montaje", 
+                        "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
+                        "montaje_actual":montaje_actual,
+                        "placa_base_actual":placa_base_actual, 
+                        "listamontaje":listamontaje,
+                        "listaram": listaram,
+                        "listacpu": listacpu,
+                        "listagabinete": listagabinete,
+                        "datosplaca":datosplaca,
+                        "listausuario":listausuario,
+                        "listacliente":listacliente,
+                        "listaperiferico":listaperiferico,
+                        "fecha_act": date.today().isoformat()})
         
 #--======================================== PRODUCTOS ======================================--
 #--======================================= Placa_Base ======================================--
@@ -1896,6 +1948,7 @@ def historial_compras_detalle(request, id_factura):
     "listadetalle": listadetalle,
     "listafactura": listafactura, 
     "datos_factura":datos_factura,
+    "id_factura": id_factura,
     "fecha_act": date.today().isoformat()})
     
 
@@ -2042,17 +2095,22 @@ def comprobante_venta(request):
 
 #--======================================= Reportes ======================================--
 
-def reporte_productos(request):
-        listaperiferico = Perifericos.objects.all()
+def reporte_productos(request, bandera=0):
+    if request.method == "GET":
         listagabinete = Gabinete.objects.all()
         listacpu = CPU.objects.all()
         listaram = RAM.objects.all()
         listaplaca = Placa_base.objects.all()
         listarepuesto = Repuestos.objects.all()
         listaproveedor = Proveedor.objects.all()
+        if bandera == 1:
+            listaperiferico = Perifericos.objects.raw('SELECT * FROM pagina_Perifericos WHERE stock_periferico > "' + '' + '0' + '"') 
+        elif bandera == 2:
+            listaperiferico = Perifericos.objects.raw('SELECT * FROM pagina_Perifericos WHERE stock_periferico <= "' + '' + '0' + '"') 
+        else:    
+            listaperiferico = Perifericos.objects.raw('SELECT * FROM pagina_Perifericos WHERE stock_periferico <= stock_min_periferico')
         return validar(request, "reportes/reporte_productos.html", 
         {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-        "titulo_f":"Productos", "subtitulo_f":"Listado de Productos registrados", 
         "listagabinete":listagabinete,
         "listaperiferico":listaperiferico,
         "listacpu":listacpu,
@@ -2060,8 +2118,10 @@ def reporte_productos(request):
         "listaplaca":listaplaca,
         "listaproveedor":listaproveedor,
         "listarepuesto": listarepuesto})
+    else:
+        return redirect("login")
 
-def reporte_mant(request):
+def reporte_mant(request, bandera = 0):
     if request.session.get("id_usuario"):
         if request.method == "GET":
             listatabla=Mantenimiento.objects.all()
@@ -2078,9 +2138,15 @@ def reporte_mant(request):
             listausuario = Usuario.objects.all()
             desde = request.POST.get("fecha_desde")
             hasta = request.POST.get("fecha_hasta")
+            horas = request.POST.get("horas")
             print(str(desde))
             print(hasta)
-            listatabla = Mantenimiento.objects.raw('SELECT * FROM pagina_Mantenimiento WHERE inicio_mant > "' + '' + str(desde) + '" and inicio_mant < "' + str(hasta) + '"')
+            if bandera == 1:
+                listatabla = Mantenimiento.objects.raw('SELECT * FROM pagina_Mantenimiento WHERE inicio_mant > "' + '' + str(desde) + '" and inicio_mant < "' + str(hasta) + '"') 
+            elif bandera == 2:
+                listatabla = Mantenimiento.objects.raw('SELECT * FROM pagina_Mantenimiento WHERE fin_mant > "' + '' + str(desde) + '" and fin_mant < "' + str(hasta) + '"') 
+            else:    
+                listatabla = Mantenimiento.objects.raw('SELECT * FROM pagina_Mantenimiento WHERE horas_mant = ' + str(horas))
             return validar(request, "reportes/reporte_mant.html", 
             {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
             "titulo_f":"Mantenimientos", "subtitulo_f":"Listado de Mantenimientos registrados", 
@@ -2089,6 +2155,119 @@ def reporte_mant(request):
             "listausuario": listausuario})
         else:
             return redirect("login")
+
+def reporte_mont(request, bandera = 0):
+        if request.method == "GET":
+            listaplaca=Placa_base.objects.all()
+            listaram = RAM.objects.all()
+            listacpu = CPU.objects.all()
+            listagabinete = Gabinete.objects.all()
+            listaperiferico = Perifericos.objects.all()
+            listausuario = Usuario.objects.all()
+            listacliente = Cliente.objects.all()
+            listatabla = Montaje.objects.all()
+            return validar(request, "reportes/reporte_mont.html", 
+            {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+            "listatabla":listatabla, 
+            "listaram": listaram,
+            "listacpu": listacpu,
+            "listagabinete": listagabinete,
+            "listaplaca":listaplaca,
+            "listacliente": listacliente,
+            "listaperiferico":listaperiferico,
+            "listausuario": listausuario})
+        if request.method == "POST":
+            listaplaca=Placa_base.objects.all()
+            listaram = RAM.objects.all()
+            listacpu = CPU.objects.all()
+            listagabinete = Gabinete.objects.all()
+            listaperiferico = Perifericos.objects.all()
+            listausuario = Usuario.objects.all()
+            listacliente = Cliente.objects.all()
+            listatabla = Montaje.objects.all()
+            desde = request.POST.get("fecha_desde")
+            hasta = request.POST.get("fecha_hasta")
+            horas = request.POST.get("horas")
+            print(str(desde))
+            print(hasta)
+            print(horas)
+            if bandera == 1:
+                listatabla = Montaje.objects.raw('SELECT * FROM pagina_Montaje WHERE inicio_mont > "' + '' + str(desde) + '" and inicio_mont < "' + str(hasta) + '"') 
+            elif bandera == 2:
+                listatabla = Montaje.objects.raw('SELECT * FROM pagina_Montaje WHERE fin_mont > "' + '' + str(desde) + '" and fin_mont < "' + str(hasta) + '"') 
+            else:    
+                listatabla = Montaje.objects.raw('SELECT * FROM pagina_Montaje WHERE horas_mont = ' + str(horas))
+            return validar(request, "reportes/reporte_mont.html", 
+            {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+            "listatabla":listatabla, 
+            "listaram": listaram,
+            "listacpu": listacpu,
+            "listagabinete": listagabinete,
+            "listaplaca":listaplaca,
+            "listacliente": listacliente,
+            "listaperiferico":listaperiferico,
+            "listausuario": listausuario})
+        else:
+            return redirect("login")
+
+def reporte_rep(request, bandera=0):
+    if request.method == "GET":
+        listatabla=Reparacion.objects.all()
+        listacliente=Cliente.objects.all()
+        listausuario = Usuario.objects.all()
+        return validar(request, "reportes/reporte_rep.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "listatabla":listatabla, 
+        "listacliente": listacliente,
+        "listausuario": listausuario})
+    if request.method == "POST":
+        listacliente=Cliente.objects.all()
+        listausuario = Usuario.objects.all()
+        desde = request.POST.get("fecha_desde")
+        hasta = request.POST.get("fecha_hasta")
+        horas = request.POST.get("horas")
+        print(str(desde))
+        print(hasta)
+        print(horas)
+        if bandera == 1:
+            listatabla = Reparacion.objects.raw('SELECT * FROM pagina_Reparacion WHERE inicio_rep > "' + '' + str(desde) + '" and inicio_rep < "' + str(hasta) + '"') 
+        elif bandera == 2:
+            listatabla = Reparacion.objects.raw('SELECT * FROM pagina_Reparacion WHERE fin_rep > "' + '' + str(desde) + '" and fin_rep < "' + str(hasta) + '"') 
+        else:    
+            listatabla = Reparacion.objects.raw('SELECT * FROM pagina_Reparacion WHERE horas_rep = ' + str(horas))
+        print(listatabla)
+        return validar(request, "reportes/reporte_rep.html",  
+        {"listatabla":listatabla, 
+        "listacliente": listacliente,
+        "listausuario": listausuario})
+    else:
+        return redirect("login")
+
+def reporte_ventas(request):
+    if request.method == "GET":
+        listaperiferico = Perifericos.objects.all()
+        listacliente = Cliente.objects.all()
+        listaventa = factura_venta.objects.all()
+        return validar(request, "reportes/reporte_ventas.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "listaperiferico":listaperiferico,
+        "listacliente":listacliente,
+        "listaventa": listaventa,
+        "fecha_act": date.today().isoformat()})
+    if request.method == "POST":
+        listaperiferico = Perifericos.objects.all()
+        listacliente = Cliente.objects.all()
+        desde = request.POST.get("fecha_desde")
+        hasta = request.POST.get("fecha_hasta")
+        print(str(desde))
+        print(hasta)
+        listaventa = factura_venta.objects.raw('SELECT * FROM pagina_factura_venta WHERE fch_factura_venta > "' + '' + str(desde) + '" and fch_factura_venta < "' + str(hasta) + '"')
+        return validar(request, "reportes/reporte_ventas.html",  
+        {"listaperiferico":listaperiferico,
+        "listacliente":listacliente,
+        "listaventa": listaventa})
+    else:
+        return redirect("login")
 
 #--======================================= Validación ======================================--
 def validar(request, pageSuccess, parameters={}):
