@@ -89,7 +89,7 @@
                 <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
                     <div class="form-group form-default">
                     <label class="float-label">Procesadores Compatibles</label>
-                    <select class="form-select mb-3" name="tipo_cpu" id="tipo_cpu">
+                    <select class="form-select mb-3" name="tipo_cpu" id="tipo_cpu" required>
                         <option value=0>--SELECCIONE UNA OPCION--</option>
                         {% for lista in parameters.listacpu %}
                         <option value="{{lista.id_cpu}}" {% if lista.id_cpu == parameters.datos_act.tipo_cpu_id%} selected {% endif %}>
@@ -100,7 +100,7 @@
                     </div>
                     <div class="form-group form-default">
                         <label class="float-label">Memorias RAM Compatibles</label>
-                        <select class="form-select mb-3" name="tipo_ram" id="tipo_ram">
+                        <select class="form-select mb-3" name="tipo_ram" id="tipo_ram" required>
                             <option value=0>--SELECCIONE UNA OPCION--</option>
                             {% for lista in parameters.listaram %}
                             <option value="{{lista.id_ram}}" {% if lista.id_ram == parameters.datos_act.tipo_ram_id%} selected {% endif %}>
@@ -113,7 +113,7 @@
                 <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
                     <div class="form-group form-default">
                         <label class="float-label">Gabinetes Compatibles</label>
-                        <select class="form-select mb-3" name="tipo_gabinete" id="tipo_gabinete">
+                        <select class="form-select mb-3" name="tipo_gabinete" id="tipo_gabinete" required>
                             <option value=0>--SELECCIONE UNA OPCION--</option>
                             {% for lista in parameters.listagabinete %}
                             <option value="{{lista.id_gab}}" {% if lista.id_gab  == parameters.datos_act.tipo_gabinete_id%} selected {% endif %}>
@@ -124,7 +124,7 @@
                     </div>
                     <div class="form-group form-default">
                         <label class="float-label">Placa de Video</label>
-                        <select class="form-select mb-3" name="tipo_placa_video" id="tipo_placa_video">
+                        <select class="form-select mb-3" name="tipo_placa_video" id="tipo_placa_video" required>
                             <option value=0>--SELECCIONE UNA OPCION--</option>
                             {% for lista in parameters.listaperiferico %}
                             {% if lista.tipo_periferico == 8 %}
@@ -139,7 +139,7 @@
                 <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
                     <div class="form-group form-default">
                         <label class="float-label">Fuente de Poder</label>
-                        <select class="form-select mb-3" name="tipo_fuente" id="tipo_fuente">
+                        <select class="form-select mb-3" name="tipo_fuente" id="tipo_fuente" required>
                             <option value=0>--SELECCIONE UNA OPCION--</option>
                             {% for lista in parameters.listaperiferico %}
                             {% if lista.tipo_periferico == 1 %}
@@ -152,7 +152,7 @@
                     </div>
                     <div class="form-group form-default">
                         <label class="float-label">Almacenamiento</label>
-                        <select class="form-select mb-3" name="tipo_almacenamiento" id="tipo_almacenamiento">
+                        <select class="form-select mb-3" name="tipo_almacenamiento" id="tipo_almacenamiento" required>
                             <option value=0>--SELECCIONE UNA OPCION--</option>
                             {% for lista in parameters.listaperiferico %}
                             {% if lista.tipo_periferico == 3 %}
@@ -168,8 +168,8 @@
             <div class="input-confirmar" style="grid-template-columns: 1fr;">
                 <div class="input-confirmar" style="grid-template-columns: 1fr;">
                     <div class="form-group form-default">
-                        <label class="float-label">Perifericos</label>
-                        <select class="form-select mb-3" name="tipo_periferico" id="tipo_periferico">
+                        <label class="float-label">Periferico</label>
+                        <select class="form-select mb-3" name="tipo_periferico" id="tipo_periferico" required>
                             <option value=0>--SELECCIONE UNA OPCION--</option>
                             {% for lista in parameters.listaperiferico %}
                             {% if lista.tipo_periferico != 8 and lista.tipo_periferico != 1 and lista.tipo_periferico != 3 and lista.tipo_periferico != 11 and lista.tipo_periferico != 12 and lista.tipo_periferico != 13 and lista.tipo_periferico != 14 and lista.tipo_periferico != 15 %}
@@ -202,7 +202,7 @@
                 <div class="input-confirmar" style="grid-template-columns: 1fr 1fr;">
                     <div class="form-group form-default">
                         <label class="float-label">Empleado</label>
-                        <select class="form-select mb-3" name="empleado" id="empleado">
+                        <select class="form-select mb-3" name="empleado" id="empleado" required>
                             <option value=0>--SELECCIONE UNA OPCION--</option>
                             {% for lista in parameters.listausuario %}
                             <option value="{{lista.id_usuario}}" {% if lista.id_usuario == parameters.datos_act.nombre_completo_usuario_id%} selected {% endif %}>

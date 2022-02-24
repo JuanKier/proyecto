@@ -80,12 +80,14 @@
                                     <th>Precio Compra</th>
                                     <th>Precio Venta</th>
                                     <th>Stock</th>
+                                    <th>Stock Minimo</th>
                                 </tr>
                                 
                             </tr>
                         </thead>
                         <tbody class="list">
                             {% for lista in parameters.listaperiferico %}
+                            {% if lista.tipo_periferico != NULL %}
                             <tr>
                                 <td class= "nombre">{{ lista.cod_periferico }}</td>
                                 <td>
@@ -127,6 +129,7 @@
                                 <td class= "nombre">{{ lista.stock_periferico }}</td>
                                 <td class= "nombre">{{ lista.stock_min_periferico }}</td>
                             </tr>
+                            {% endif %}
                             {% endfor %}
                         </tbody>
                     </table>

@@ -103,41 +103,42 @@
                                         </thead>
                                         <tbody>
                                             {% for lista in parameters.listaperiferico %}
-                                            <tr>
-                                                <td>{{ lista.cod_periferico }}</td>
-                                                {% if lista.imagen_periferico != '' %}
-                                                        <td><img src="{{ lista.imagen_periferico.url }}" width="100" height="100"></td>
-                                                {% else %}
-                                                        <td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100" height="100"></td>   
+                                                {% if lista.tipo_periferico != NULL %}
+                                                    <tr>
+                                                        <td>{{ lista.cod_periferico }}</td>
+                                                        {% if lista.imagen_periferico != '' %}
+                                                                <td><img src="{{ lista.imagen_periferico.url }}" width="100" height="100"></td>
+                                                        {% else %}
+                                                                <td><img src="{% static 'img\photos\producto-sin-imagen.jpg'%}" width="100" height="100"></td>   
+                                                        {% endif %}
+                                                            {%if lista.tipo_periferico == 1 %}<td>Fuente</td>{% endif %} 
+                                                            {%if lista.tipo_periferico == 2 %}<td>Gabinete</td>{% endif %}
+                                                            {%if lista.tipo_periferico == 3 %}<td>Almacenamiento</td>{% endif %}
+                                                            {%if lista.tipo_periferico == 4 %}<td>Mouse</td>{% endif %}
+                                                            {%if lista.tipo_periferico == 5 %}<td>Teclado</td>{% endif %} 
+                                                            {%if lista.tipo_periferico == 6 %}<td>Auriculares</td>{% endif %}
+                                                            {%if lista.tipo_periferico == 7 %}<td>Monitor</td>{% endif %}
+                                                            {%if lista.tipo_periferico == 8 %}<td>Placa de Video</td>{% endif %}
+                                                            {%if lista.tipo_periferico == 9 %}<td>Impresora</td>{% endif %}
+                                                            {%if lista.tipo_periferico == 10 %}<td>Otros</td>{% endif %}
+                                                            {%if lista.tipo_periferico == 11 %}<td>Placa Base</td>{% endif %}
+                                                            {%if lista.tipo_periferico == 12 %}<td>Repuesto</td>{% endif %}
+                                                            {%if lista.tipo_periferico == 13 %}<td>Memoria RAM</td>{% endif %}
+                                                            {%if lista.tipo_periferico == 14 %}<td>Procesador</td>{% endif %}
+                                                            {%if lista.tipo_periferico == 15 %}<td>Gabinete</td>{% endif %}
+                                                        <td>{{ lista.marca_periferico }}</td>
+                                                        <td>{{ lista.descripcion_periferico }}</td>
+                                                        <td>
+                                                            {%for lista1 in parameters.listaproveedor%}
+                                                            {% if lista1.codigo_proveedor == lista.nombre_proveedor_id%}
+                                                            {{lista1.nombre_proveedor}}
+                                                            {%endif%}
+                                                            {%endfor%}
+                                                        </td>
+                                                        <td class="precio">{{ lista.precio_compra_periferico }}</td>
+                                                        <td class="precio">{{ lista.precio_venta_periferico }}</td>
+                                                        <td>{{ lista.stock_periferico }}</td>
                                                 {% endif %}
-                                                    {%if lista.tipo_periferico == 1 %}<td>Fuente</td>{% endif %} 
-                                                    {%if lista.tipo_periferico == 2 %}<td>Gabinete</td>{% endif %}
-                                                    {%if lista.tipo_periferico == 3 %}<td>Almacenamiento</td>{% endif %}
-                                                    {%if lista.tipo_periferico == 4 %}<td>Mouse</td>{% endif %}
-                                                    {%if lista.tipo_periferico == 5 %}<td>Teclado</td>{% endif %} 
-                                                    {%if lista.tipo_periferico == 6 %}<td>Auriculares</td>{% endif %}
-                                                    {%if lista.tipo_periferico == 7 %}<td>Monitor</td>{% endif %}
-                                                    {%if lista.tipo_periferico == 8 %}<td>Placa de Video</td>{% endif %}
-                                                    {%if lista.tipo_periferico == 9 %}<td>Impresora</td>{% endif %}
-                                                    {%if lista.tipo_periferico == 10 %}<td>Otros</td>{% endif %}
-                                                    {%if lista.tipo_periferico == 11 %}<td>Placa Base</td>{% endif %}
-                                                    {%if lista.tipo_periferico == 12 %}<td>Repuesto</td>{% endif %}
-                                                    {%if lista.tipo_periferico == 13 %}<td>Memoria RAM</td>{% endif %}
-                                                    {%if lista.tipo_periferico == 14 %}<td>Procesador</td>{% endif %}
-                                                    {%if lista.tipo_periferico == 15 %}<td>Gabinete</td>{% endif %}
-                                                <td>{{ lista.marca_periferico }}</td>
-                                                <td>{{ lista.descripcion_periferico }}</td>
-                                                <td>
-                                                    {%for lista1 in parameters.listaproveedor%}
-                                                    {% if lista1.codigo_proveedor == lista.nombre_proveedor_id%}
-                                                    {{lista1.nombre_proveedor}}
-                                                    {%endif%}
-                                                    {%endfor%}
-                                                </td>
-                                                <td class="precio">{{ lista.precio_compra_periferico }}</td>
-                                                <td class="precio">{{ lista.precio_venta_periferico }}</td>
-                                                <td>{{ lista.stock_periferico }}</td>
-                                                
                                             {% endfor %}
                                             
                                             </tr>

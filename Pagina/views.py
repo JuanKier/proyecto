@@ -170,7 +170,7 @@ def modusuario(request,usu_actual=0):
                 usuario_actual.tipo_usuario=request.POST.get('tipo_usuario')
                 usuario_actual.ci_usuario=request.POST.get('ci_usuario')
                 usuario_actual.telefono_usuario=request.POST.get('telefono_usuario')
-                usuario_actual.direccion_usuario=request.POST.get('direccion_usuario')
+                usuario_actual.direccion_usuario=request.get('direccion_usuario')
                 usuario_actual.save()
                 añadir_auditoria(request, "Usuario", usuario_actual.id_usuario)
 
@@ -405,7 +405,7 @@ def modciudad(request, ciudad_actual=0):
             else:
                 ciudad_actual = Ciudad.objects.get(codigo_ciudad=ciudad_actual)
                 ciudad_actual.nombre_ciudad = request.POST.get('nombre_ciudad')
-                ciudad_actual.nombre_departamento_id = request.POST.get('departamento')
+                ciudad_actual.nombre_departamento_id = request.get('departamento')
                 ciudad_actual.save()
                 añadir_auditoria(request, "Ciudad", ciudad_actual.codigo_ciudad)
                 

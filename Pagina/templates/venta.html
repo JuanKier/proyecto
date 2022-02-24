@@ -215,6 +215,7 @@
 								</thead>
 								<tbody>
 									{% for lista in parameters.listaperiferico %}
+									{% if lista.tipo_periferico != NULL %}
 									<tr class="item">
 										<td class="item-id">{{ lista.cod_periferico }}</td>
 										{% if lista.imagen_periferico != '' %}
@@ -243,6 +244,7 @@
 										<td class="item-price precio">{{ lista.precio_venta_periferico }}</td>
 										<td>{{ lista.stock_periferico }}</td>
 										<td><button type="button" class = "item-button btn btn-primary addToCart">Agregar</button></td>
+										{% endif %}
 										{% endfor %}
 									</tr>
 								</tbody>

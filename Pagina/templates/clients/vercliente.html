@@ -155,3 +155,8 @@
 
 
     {% endblock %}
+        {% for nacionalidad in parameters.listanacionalidad %}
+            {% if nacionalidad.codigo_nacionalidad == lista.descripcion_nacionalidad_id %}
+                {{nacionalidad.descripcion_nacionalidad}}
+            {% endif %}
+        {% endfor %}

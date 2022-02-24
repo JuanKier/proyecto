@@ -130,6 +130,7 @@
                                         </thead>
                                         <tbody>
                                             {% for lista in parameters.listaperiferico %}
+                                            {% if lista.tipo_periferico != NULL %}
                                             <tr>
                                                 <td>{{ lista.cod_periferico }}</td>
                                                 {% if lista.imagen_periferico != '' %}
@@ -177,6 +178,7 @@
                                                             data-original-title="Eliminar Registro"><i data-feather="trash-2"></i></a>
                                                     </div>
                                                 </td>
+                                            {% endif %}
                                             {% endfor %}
                                             </tr>
                                         </tbody>
