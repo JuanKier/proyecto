@@ -1,0 +1,297 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block barra %}
+
+<body>
+    <style>
+        .dataTables_length{
+            display: contents;
+        }
+
+        .dt-buttons{
+            display: contents;
+        }
+        
+    </style>
+    <script>
+        $(document).ready(function () {
+            var table = $('#example').DataTable({
+                "language": {
+                "emptyTable":     "La tabla se encuentra vacia.",
+                "info":           "Mostrando _END_ de _MAX_ registros",
+                "infoEmpty":      "",
+                "infoFiltered":   "",
+                "infoPostFix":    "",
+                "thousands":      ",",
+                "lengthMenu":     "Mostrar _MENU_ registrosㅤㅤㅤㅤㅤㅤAcciones:",
+                "loadingRecords": "Cargando...",
+                "processing":     "Procesando...",
+                "search":         "Buscar: ",
+                "zeroRecords":    "No se obtuvo ninguna coincidencia",
+                oPaginate: {
+                    sNext: '<i class="fa fa-forward"></i>',
+                    sPrevious: '<i class="fa fa-backward"></i>',
+                    sFirst: '<i class="fa fa-step-backward"></i>',
+                    sLast: '<i class="fa fa-step-forward"></i>',
+                },
+            },
+                fixedHeader: true,
+                responsive: true,
+                dom: 'lBfrtip',
+                buttons: [
+                    {
+	        			extend:    'excelHtml5',
+	        			text:      '<i class="fas fa-file-excel"></i> ',
+	        			titleAttr: 'Exportar a Excel',
+	        			className: 'btn btn-success'
+	        		},
+	        		{
+	        			extend:    'pdfHtml5',
+	        			text:      '<i class="fas fa-file-pdf"></i> ',
+	        			titleAttr: 'Exportar a PDF',
+	        			className: 'btn btn-danger'
+	        		},
+                    {
+	        			extend:    'print',
+	        			text:      '<i class="fa fa-print"></i> ',
+	        			titleAttr: 'Imprimir',
+	        			className: 'btn btn-info'
+	        		},
+                ],
+            });
+        });
+    </script>
+
+<div class="py-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1em;">
+                    <form>
+                        <a class="img-responsive mt-2" onclick="history.back()"><img src="{%static 'img/icons/back.png'%}" width="50" height="50"></a>
+                    </form>
+                    <h1 class="text-center" style="padding: 0.5em;">Auditoria PC Rig Soft</h1>
+                </div>
+            </div>
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-body">
+                        <table id="example" class="table table-striped" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="sort" data-sort="id">ID</th>
+                                    <th scope="col" class="sort" data-sort="nombre">Tabla Modificada</th>
+                                    <th scope="col" class="sort" data-sort="edicion">Objeto Modificado</th>
+                                    <th scope="col" class="sort" data-sort="inscripcion">Modificado Por</th>
+                                    <th scope="col" class="sort" data-sort="estado">Fecha de Modificacion</th>
+                                </tr>
+                            </thead>
+                            <tfoot class = "thead-light">
+                                <th>ID</th>
+                                <th>Tabla Modificada</th>
+                                <th>Objeto Modificado</th>
+                                <th>Modificado Por</th>
+                                <th>Fecha de Modificacion</th>
+                            </tfoot>
+                            <tbody class="list">
+                                {% for auditoria in parameters.listaauditoria %}
+                                    <tr>
+                                        <td>{{auditoria.id_auditoria_modificar}}</td>
+                                        <td>{{auditoria.tabla_modificada}}</td>
+                                        
+                                        
+                                        {% if auditoria.tabla_modificada == "Usuario" %}
+                                            {% for usuario in parameters.listausuarios %}
+                                                {% if auditoria.id_modificado == usuario.id_usuario %}
+                                                    <td>{{usuario.nombre_completo_usuario}}({{auditoria.id_modificado}})</td>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        {% elif auditoria.tabla_modificada == "Cliente" %}
+                                            {% for cliente in parameters.listacliente %}
+                                                {% if auditoria.id_modificado == cliente.codigo_cliente %}
+                                                    <td>{{cliente.nombre_cliente}}({{auditoria.id_modificado}})</td>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        {% elif auditoria.tabla_modificada == "Proveedor" %}
+                                            {% for proveedor in parameters.listaproveedor %}
+                                                {% if auditoria.id_modificado == proveedor.codigo_proveedor %}
+                                                    <td>{{proveedor.nombre_proveedor}}({{auditoria.id_modificado}})</td>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        {% elif auditoria.tabla_modificada == "Departamento" %}
+                                            {% for departamento in parameters.listadepartamento %}
+                                                {% if auditoria.id_modificado == departamento.codigo_departamento %}
+                                                    <td>{{departamento.nombre_departamento}}({{auditoria.id_modificado}})</td>
+                                                {% endif %}
+                                            {% endfor %}
+                                        
+                                        {% elif auditoria.tabla_modificada == "Ciudad" %}
+                                            {% for ciudad in parameters.listaciudad %}
+                                                {% if auditoria.id_modificado == ciudad.codigo_ciudad %}
+                                                    <td>{{ciudad.nombre_ciudad}}({{auditoria.id_modificado}})</td>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        {% elif auditoria.tabla_modificada == "Nacionalidad" %}
+                                            {% for nacionalidad in parameters.listanacionalidad %}
+                                                {% if auditoria.id_modificado == nacionalidad.codigo_nacionalidad %}
+                                                    <td>{{nacionalidad.descripcion_nacionalidad}}({{auditoria.id_modificado}})</td>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        {% elif auditoria.tabla_modificada == "Tipo_Ram" %}
+                                            {% for tiporam in parameters.listatiporam %}
+                                                {% if auditoria.id_modificado == tiporam.id_tipo_ram %}
+                                                    <td>{{tiporam.desc_tipo_ram}}({{auditoria.id_modificado}})</td>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        {% elif auditoria.tabla_modificada == "Tipo_Cpu" %}
+                                            {% for tipocpu in parameters.listatipocpu %}
+                                                {% if auditoria.id_modificado == tipocpu.id_tipo_cpu %}
+                                                    <td>{{tipocpu.desc_tipo_cpu}}({{auditoria.id_modificado}})</td>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        {% elif auditoria.tabla_modificada == "Tipo_Gabinete" %}
+                                            {% for tipogabinete in parameters.listatipogabinete %}
+                                                {% if auditoria.id_modificado == tipogabinete.id_tipo_gabinete %}
+                                                    <td>{{tipogabinete.desc_tipo_gabinete}}({{auditoria.id_modificado}})</td>
+                                                {% endif %}
+                                            {% endfor %}    
+
+                                        {% elif auditoria.tabla_modificada == "Mantenimiento" %}
+                                            {% for mante in parameters.listamante %}
+                                                {% for cliente in parameters.listacliente %}
+                                                    {% if auditoria.id_modificado == mante.codigo_mant %}
+                                                        {% if cliente.codigo_cliente == mante.nombre_cliente_id %}
+                                                            <td>Mantenimiento a:{{cliente.nombre_cliente}}({{auditoria.id_modificado}})</td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endfor %} 
+
+                                        {% elif auditoria.tabla_modificada == "Reparacion" %}
+                                            {% for rep in parameters.listarep %}
+                                                {% for cliente in parameters.listacliente %}
+                                                    {% if cliente.codigo_cliente == rep.nombre_cliente_id %}    
+                                                        {% if auditoria.id_modificado == rep.codigo_rep %}
+                                                            <td>Reparacion a:{{cliente.nombre_cliente}}({{auditoria.id_modificado}})</td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %} 
+                                            {% endfor %} 
+
+                                        {% elif auditoria.tabla_modificada == "Montaje" %}
+                                            {% for mont in parameters.listamont %}
+                                                {% for cliente in parameters.listacliente %}
+                                                    {% if cliente.codigo_cliente == mont.nombre_cliente_id %}      
+                                                        {% if auditoria.id_modificado == mont.codigo_montaje %}
+                                                            <td>Montaje a:{{cliente.nombre_cliente}}({{auditoria.id_modificado}})</td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}    
+                                            {% endfor %}
+                                        
+                                        {% elif auditoria.tabla_modificada == "Placa_base" %}
+                                            {% for placa in parameters.listaplaca %}      
+                                                {% if auditoria.id_modificado == placa.id_placa_base %}
+                                                    <td>{{placa.descripcion_placa_base}}({{auditoria.id_modificado}})</td>
+                                                {% endif %}   
+                                            {% endfor %} 
+
+                                        {% elif auditoria.tabla_modificada == "RAM" %}
+                                            {% for ram in parameters.listaram %}      
+                                                {% if auditoria.id_modificado == ram.id_ram %}
+                                                    <td>{{ram.descripcion_ram}}({{auditoria.id_modificado}})</td>
+                                                {% endif %}   
+                                            {% endfor %}     
+
+                                        {% elif auditoria.tabla_modificada == "CPU" %}
+                                            {% for cpu in parameters.listacpu %}      
+                                                {% if auditoria.id_modificado == cpu.id_cpu %}
+                                                    <td>{{cpu.descripcion_cpu}}({{auditoria.id_modificado}})</td>
+                                                {% endif %}   
+                                            {% endfor %} 
+
+                                        {% elif auditoria.tabla_modificada == "Gabinete" %}
+                                            {% for gab in parameters.listagabinete %}      
+                                                {% if auditoria.id_modificado == gab.id_gab %}
+                                                    <td>{{gab.descripcion_gab}}({{auditoria.id_modificado}})</td>
+                                                {% endif %}   
+                                            {% endfor %} 
+
+                                        {% elif auditoria.tabla_modificada == "Repuestos" %}
+                                            {% for repuesto in parameters.listarepuesto %}      
+                                                {% if auditoria.id_modificado == repuesto.id_repuesto %}
+                                                    <td>{{repuesto.descripcion_repuesto}}({{auditoria.id_modificado}})</td>
+                                                {% endif %}   
+                                            {% endfor %} 
+                                                
+                                        {% elif auditoria.tabla_modificada == "Perifericos" %}
+                                            {% for periferico in parameters.listaperiferico %}
+                                                {% if auditoria.id_modificado == periferico.id_periferico %}
+                                                    <td> {{periferico.descripcion_periferico}}({{auditoria.id_modificado}}) </td>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        {% elif auditoria.tabla_modificada == "timbrado" %}
+                                            {% for timbrado in parameters.listatimbrado %}
+                                                {% for proveedor in parameters.listaproveedor %}
+                                                    {% if proveedor.codigo_proveedor == timbrado.codigo_proveedor_id %} 
+                                                        {% if auditoria.id_modificado == timbrado.nro_timbrado %}
+                                                            <td> {{proveedor.razon_social_proveedor}}({{auditoria.id_modificado}}) </td>
+                                                        {% endif %}
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endfor %}
+
+                                        {% elif auditoria.tabla_modificada == "timbrado_venta" %}
+                                            {% for timbrado_venta in parameters.listatimbrado_venta %}
+                                                {% if auditoria.id_modificado == timbrado_venta.nro_timbrado_venta %}
+                                                    <td> Timbrado EncarPC:{{timbrado_venta.nro_timbrado_venta}}({{auditoria.id_modificado}}) </td>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        {% elif auditoria.tabla_modificada == "talonario_ventas" %}
+                                            {% for talonario_ventas in parameters.listatalonario_ventas %}
+                                                {% if auditoria.id_modificado == talonario_ventas.id_talonario_venta %}
+                                                    <td> Talonario EncarPC:{{talonario_ventas.id_talonario_venta}}({{auditoria.id_modificado}}) </td>
+                                                {% endif %}
+                                            {% endfor %}
+
+                                        {% endif %}
+                                        <td>
+                                        {% for usuario in parameters.listausuarios %}
+                                            {% if auditoria.usuario_modificador == usuario.id_usuario %}
+                                                {{usuario.nombre_completo_usuario}}
+                                            {% endif %}
+                                        {% endfor %}
+                                        </td>
+
+                                        <td>{{auditoria.fecha_modificacion}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="{%static 'js/app.js'%}"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'js/Buttons-2.2.2/css/buttons.bootstrap5.min.css' %}"/>
+    <script type="text/javascript" src="{% static 'js/JSZip-2.5.0/jszip.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/pdfmake-0.1.36/pdfmake.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/pdfmake-0.1.36/vfs_fonts.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/dataTables.buttons.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/buttons.bootstrap5.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/buttons.html5.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/Buttons-2.2.2/js/buttons.print.min.js' %}"></script>
+</body>
+{% endblock %}

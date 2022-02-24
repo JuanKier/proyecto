@@ -81,7 +81,7 @@
                     <label class="float-label">Descripción del Equipo</label>
                     <span class="form-bar"></span>
                     <input type="text" name="desc_equipo_rep" class="form-control mb-3" required
-                        value="{{parameters.datos_act.desc_equipo_rep}}">
+                        value="{{parameters.datos_act.desc_equipo_rep}}" placeholder="Ingrese Descripción del Equipo">
                 </div>
 
             </div>
@@ -95,7 +95,7 @@
                      value="{{cliente.ruc_cliente}}" 
                      {% endif %}
                      {% endfor %} 
-                     onfocusout="traerCliente(this)" required>
+                     onfocusout="traerCliente(this)" required placeholder="Ingrese CI o RUC del Cliente">
                 </div>
 
                 <div>
@@ -122,7 +122,7 @@
                     <label class="float-label">Horas Trabajadas</label>
                     <span class="form-bar"></span>
                     <input type="number" name="horas_rep" class="form-control" required 
-                        value="{{parameters.datos_act.horas_rep}}">
+                        value="{{parameters.datos_act.horas_rep}}" placeholder="Ingrese Horas Trabajadas">
                 </div>
             </div>
             
@@ -130,14 +130,14 @@
                 <div class="form-group form-default mb-3">
                     <label class="float-label">Fecha de Inicio</label>
                     <span class="form-bar"></span>
-                    <input type="date" name="inicio_rep" class="form-control" required {% if parameters.datos_act %} value="{{parameters.datos_act.inicio_rep}}" {% else %} value = "{{parameters.fecha_act}}" {% endif %}>
+                    <input type="date" name="inicio_rep" class="form-control" required {% if parameters.datos_act %} value="{{parameters.datos_act.inicio_rep}}" {% else %} value = "{{parameters.fecha_act}}" {% endif %} placeholder="Ingrese Fecha de Inicio">
                 </div>
             
                 <div class="form-group form-default mb-3">
                     <label class="float-label">Fecha de Finalización</label>
                     <span class="form-bar"></span>
                     <input type="date" name="fin_rep" class="form-control" required
-                        value="{{parameters.datos_act.fin_rep}}">
+                        value="{{parameters.datos_act.fin_rep}}" placeholder="Ingrese Fecha de Finalización">
                 </div>
             </div>
 
@@ -146,7 +146,7 @@
                     <label class="float-label">Actividades</label>
                     <span class="form-bar"></span>
                     <input type="text" name="actividades_rep" class="form-control mb-3" required
-                        value="{{parameters.datos_act.actividades_rep}}">
+                        value="{{parameters.datos_act.actividades_rep}}" placeholder="Ingrese Actividades">
                 </div>
                 
                 <fieldset class="mb-3">

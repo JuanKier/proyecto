@@ -5,6 +5,62 @@ from django.http import HttpResponse, JsonResponse, response
 
 # Create your views here.
 
+
+#Auditar actualizaciones
+def añadir_auditoria(request, tabla, clave_primaria):
+    nueva_auditoria = Auditoria_Modificar(tabla_modificada = tabla, id_modificado = clave_primaria, usuario_modificador = request.session.get("id_usuario"))
+    nueva_auditoria.save()
+
+
+def ver_auditoria(request):
+    listaauditoria = Auditoria_Modificar.objects.all()
+    listausuarios = Usuario.objects.all()
+    listacliente = Cliente.objects.all()
+    listaproveedor = Proveedor.objects.all()
+    listadepartamento = Departamento.objects.all()
+    listaciudad = Ciudad.objects.all()
+    listanacionalidad = Nacionalidad.objects.all()
+    listatiporam = Tipo_Ram.objects.all()
+    listatipocpu = Tipo_Cpu.objects.all()
+    listatipogabinete = Tipo_Gabinete.objects.all()
+    listamante = Mantenimiento.objects.all()
+    listarep = Reparacion.objects.all()
+    listamont = Montaje.objects.all()
+    listaplaca = Placa_base.objects.all()
+    listaram = RAM.objects.all()
+    listaperiferico = Perifericos.objects.all()
+    listacpu = CPU.objects.all()
+    listagabinete = Gabinete.objects.all()
+    listarepuesto = Repuestos.objects.all()
+    listatimbrado = timbrado.objects.all()
+    listatimbrado_venta = timbrado_venta.objects.all()
+    listatalonario_ventas = talonario_ventas.objects.all()
+    return validar(request, "auditoria.html", {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "listaauditoria":listaauditoria, 
+        "listausuarios":listausuarios,
+        "listacliente": listacliente,
+        "listaproveedor": listaproveedor,
+        "listadepartamento":listadepartamento,
+        "listaciudad":listaciudad,
+        "listanacionalidad":listanacionalidad,
+        "listatiporam":listatiporam,
+        "listatipocpu":listatipocpu,
+        "listatipogabinete":listatipogabinete,
+        "listamante":listamante,
+        "listarep":listarep,
+        "listamont":listamont,
+        "listaplaca":listaplaca,
+        "listaram":listaram,
+        "listacpu":listacpu,
+        "listagabinete":listagabinete,
+        "listarepuesto":listarepuesto,
+        "listaperiferico":listaperiferico,
+        "listatimbrado":listatimbrado, 
+        "listatimbrado_venta":listatimbrado_venta,
+        "listatalonario_ventas":listatalonario_ventas})
+
+
+
 def login(request):
     if request.method == "GET":
         if request.session.get("id_usuario"):
@@ -28,7 +84,6 @@ def login(request):
             return render(request, 'login.html', {"mensaje_error":"Usuario ingresado no existe."})
 
 def index(request):
-    if request.session.get("id_usuario"):
         listatabla=Placa_base.objects.all()
         listagabinete = Tipo_Gabinete.objects.all()
         listaproveedor = Proveedor.objects.all()
@@ -44,8 +99,6 @@ def index(request):
         "contador_rep":contador_rep,
         "contador_mont":contador_mont,
         "listaproveedor": listaproveedor})
-    else:
-        return redirect("login")
 
 def ajustes(request):
     if request.session.get("id_usuario"):
@@ -106,8 +159,9 @@ def modusuario(request,usu_actual=0):
                 ci_usuario=request.POST.get('ci_usuario'), 
                 telefono_usuario=request.POST.get('telefono_usuario'), 
                 direccion_usuario=request.POST.get('direccion_usuario'))
-                
                 usuario_nuevo.save()
+
+                
             else:
                 usuario_actual=Usuario.objects.get(id_usuario=usu_actual)
                 usuario_actual.nombre_completo_usuario=request.POST.get('nombre_completo_usuario')
@@ -118,6 +172,7 @@ def modusuario(request,usu_actual=0):
                 usuario_actual.telefono_usuario=request.POST.get('telefono_usuario')
                 usuario_actual.direccion_usuario=request.POST.get('direccion_usuario')
                 usuario_actual.save()
+                añadir_auditoria(request, "Usuario", usuario_actual.id_usuario)
 
             return redirect('verusuario')
     else:
@@ -197,6 +252,7 @@ def modcliente(request, cliente_actual=0):
                 cliente_actual.nombre_ciudad_id = request.POST.get('ciudad')
                 cliente_actual.descripcion_nacionalidad_id = request.POST.get('nacionalidad')
                 cliente_actual.save() 
+                añadir_auditoria(request, "Cliente", cliente_actual.codigo_cliente)
 
         return redirect('vercliente')
     
@@ -249,6 +305,7 @@ def modproveedor(request,proveedor_actual=0):
                 proveedor_actual.telefono_proveedor=request.POST.get('telefono_proveedor')
                 proveedor_actual.direccion_proveedor=request.POST.get("direccion_proveedor")
                 proveedor_actual.save() 
+                añadir_auditoria(request, "Proveedor", proveedor_actual.codigo_proveedor)
 
         return redirect('verproveedor')
     
@@ -294,6 +351,7 @@ def moddepartamento(request,departamento_actual=0):
                 departamento_actual=Departamento.objects.get(codigo_departamento=departamento_actual)
                 departamento_actual.nombre_departamento=request.POST.get('nombre_departamento')
                 departamento_actual.save() 
+                añadir_auditoria(request, "Departamento", departamento_actual.codigo_departamento)
 
         return redirect('verdepartamento')
     
@@ -347,8 +405,9 @@ def modciudad(request, ciudad_actual=0):
             else:
                 ciudad_actual = Ciudad.objects.get(codigo_ciudad=ciudad_actual)
                 ciudad_actual.nombre_ciudad = request.POST.get('nombre_ciudad')
-                ciudad_actual.nombre_departamento_id = request.get('departamento')
+                ciudad_actual.nombre_departamento_id = request.POST.get('departamento')
                 ciudad_actual.save()
+                añadir_auditoria(request, "Ciudad", ciudad_actual.codigo_ciudad)
                 
 
         return redirect('verciudad')
@@ -406,6 +465,7 @@ def modnacionalidad(request, nacionalidad_actual=0):
                     codigo_nacionalidad=nacionalidad_actual)
                 nacionalidad_actual.descripcion_nacionalidad = request.POST.get('descripcion_nacionalidad')
                 nacionalidad_actual.save()
+                añadir_auditoria(request, "Nacionalidad", nacionalidad_actual.codigo_nacionalidad)
 
         return redirect('vernacionalidad')
 
@@ -459,6 +519,7 @@ def modtipo_ram(request,tipo_ram_actual=0):
                 tipo_ram_actual=Tipo_Ram.objects.get(id_tipo_ram=tipo_ram_actual)
                 tipo_ram_actual.desc_tipo_ram=request.POST.get('desc_tipo_ram')
                 tipo_ram_actual.save() 
+                añadir_auditoria(request, "Tipo_Ram", tipo_ram_actual.id_tipo_ram)
 
         return redirect('vertipo_ram')
     
@@ -510,6 +571,7 @@ def modtipo_cpu(request,tipo_cpu_actual=0):
                 tipo_cpu_actual=Tipo_Cpu.objects.get(id_tipo_cpu=tipo_cpu_actual)
                 tipo_cpu_actual.desc_tipo_cpu=request.POST.get('desc_tipo_cpu')
                 tipo_cpu_actual.save() 
+                añadir_auditoria(request, "Tipo_Cpu", tipo_cpu_actual.id_tipo_cpu)
 
         return redirect('vertipo_cpu')
     
@@ -560,7 +622,8 @@ def modtipo_gabinete(request,tipo_gabinete_actual=0):
             else:
                 tipo_gabinete_actual=Tipo_Gabinete.objects.get(id_tipo_gabinete=tipo_gabinete_actual)
                 tipo_gabinete_actual.desc_tipo_gabinete=request.POST.get('desc_tipo_gabinete')
-                tipo_gabinete_actual.save() 
+                tipo_gabinete_actual.save()
+                añadir_auditoria(request, "Tipo_Gabinete", tipo_gabinete_actual.id_tipo_gabinete) 
 
         return redirect('vertipo_gabinete')
     
@@ -643,7 +706,8 @@ def modmant(request, mant_actual=0):
                 mant_actual.nombre_cliente_id = request.POST.get('id_cliente')
                 mant_actual.nombre_completo_usuario_id = request.POST.get('empleado')
 
-                mant_actual.save() 
+                mant_actual.save()
+                añadir_auditoria(request, "Mantenimiento", mant_actual.codigo_mant) 
 
         return redirect('vermant')
     
@@ -724,7 +788,7 @@ def modrep(request, rep_actual=0):
                 rep_actual.nombre_completo_usuario_id = request.POST.get('empleado')
 
                 rep_actual.save() 
-
+                añadir_auditoria(request, "Reparacion", rep_actual.codigo_rep) 
         return redirect('verrep')
     
     else:
@@ -854,6 +918,7 @@ def nuevomontaje (request, placa_base_actual=0, montaje_actual=0):
                 montaje_actual.tipo_almacenamiento=request.POST.get('tipo_almacenamiento')
 
                 montaje_actual.save() 
+                añadir_auditoria(request, "Montaje", montaje_actual.codigo_montaje)
 
         return redirect('vermontaje')
     
@@ -1012,6 +1077,8 @@ def mod_placa_base(request, placa_base_actual=0):
                     placa_base_actual.imagen_placa_base = placa_base_actual.imagen_placa_base
 
                 placa_base_actual.save()
+                añadir_auditoria(request, "Placa_base", placa_base_actual.id_placa_base)
+
 
 
                 periferico_modificar = Perifericos.objects.get(cod_periferico = int(placa_base_actual.cod_placa_base))
@@ -1027,6 +1094,7 @@ def mod_placa_base(request, placa_base_actual=0):
                 else: 
                     periferico_modificar.imagen_periferico = periferico_modificar.imagen_periferico
                 periferico_modificar.save()
+                añadir_auditoria(request, "Perifericos", periferico_modificar.id_periferico)
 
         return redirect('ver_placa_base')
     
@@ -1119,7 +1187,8 @@ def mod_ram(request, ram_actual=0):
                 ram_actual.stock_ram=request.POST.get('stock_ram')
                 ram_actual.stock_min_ram=request.POST.get('stock_min_ram')
 
-                ram_actual.save() 
+                ram_actual.save()
+                añadir_auditoria(request, "RAM", ram_actual.id_ram) 
 
                 periferico_modificar = Perifericos.objects.get(cod_periferico = int(ram_actual.cod_ram))
                 periferico_modificar.marca_periferico=request.POST.get('marca_ram')
@@ -1134,6 +1203,7 @@ def mod_ram(request, ram_actual=0):
                 else: 
                     periferico_modificar.imagen_periferico = periferico_modificar.imagen_periferico
                 periferico_modificar.save()
+                añadir_auditoria(request, "Perifericos", periferico_modificar.id_periferico)
 
         return redirect('ver_ram')
     
@@ -1226,7 +1296,9 @@ def mod_cpu(request, cpu_actual=0):
                 cpu_actual.stock_cpu=request.POST.get('stock_cpu')
                 cpu_actual.stock_min_cpu=request.POST.get('stock_min_cpu')
 
-                cpu_actual.save() 
+                cpu_actual.save()
+                añadir_auditoria(request, "CPU", cpu_actual.id_cpu)
+
 
                 periferico_modificar = Perifericos.objects.get(cod_periferico = int(cpu_actual.cod_cpu))
                 periferico_modificar.marca_periferico=request.POST.get('marca_cpu')
@@ -1241,6 +1313,7 @@ def mod_cpu(request, cpu_actual=0):
                 else: 
                     periferico_modificar.imagen_periferico = periferico_modificar.imagen_periferico
                 periferico_modificar.save()
+                añadir_auditoria(request, "Perifericos", periferico_modificar.id_periferico)
 
         return redirect('ver_cpu')
     
@@ -1334,7 +1407,8 @@ def mod_gab(request, gab_actual=0):
                 gab_actual.stock_gab=request.POST.get('stock_gab')
                 gab_actual.stock_min_gab=request.POST.get('stock_min_gab')
 
-                gab_actual.save() 
+                gab_actual.save()
+                añadir_auditoria(request, "Gabinete", gab_actual.id_gab) 
 
 
                 periferico_modificar = Perifericos.objects.get(cod_periferico = int(gab_actual.cod_gab))
@@ -1350,6 +1424,7 @@ def mod_gab(request, gab_actual=0):
                 else: 
                     periferico_modificar.imagen_periferico = periferico_modificar.imagen_periferico
                 periferico_modificar.save()
+                añadir_auditoria(request, "Perifericos", periferico_modificar.id_periferico)
 
         return redirect('ver_gab')
     
@@ -1385,7 +1460,7 @@ def repuestomod(request, repuesto_actual=0):
                 datos_repuesto=Repuestos.objects.filter(id_repuesto=repuesto_actual).first()
                 return validar(request, "productos/repuestomod.html", 
                 {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-                "titulo_f":"Modificar Reparación", 
+                "titulo_f":"Modificar Repuesto", 
                 "subtitulo_f":"Vuelva a escribir los datos que desea modificar", 
                 "datos_act":datos_repuesto, 
                 "repuesto_actual":repuesto_actual,
@@ -1393,7 +1468,7 @@ def repuestomod(request, repuesto_actual=0):
             else:
                 return validar(request, "productos/repuestomod.html", 
                 {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
-                "titulo_f":"Nuevo Repueso", "subtitulo_f":"Por favor complete todos los datos solicitados", 
+                "titulo_f":"Nuevo Repuesto", "subtitulo_f":"Por favor complete todos los datos solicitados", 
                 "repuesto_actual":repuesto_actual,
                 "listaproveedor": listaproveedor})
 
@@ -1440,7 +1515,8 @@ def repuestomod(request, repuesto_actual=0):
                 repuesto_actual.stock_repuesto = request.POST.get('stock_repuesto')
                 repuesto_actual.stock_min_repuesto = request.POST.get('stock_min_repuesto')
 
-                repuesto_actual.save() 
+                repuesto_actual.save()
+                añadir_auditoria(request, "Repuestos", repuesto_actual.id_repuesto) 
 
                 periferico_modificar = Perifericos.objects.get(cod_periferico = int(repuesto_actual.cod_repuesto))
                 periferico_modificar.marca_periferico=request.POST.get('marca_repuesto')
@@ -1455,6 +1531,7 @@ def repuestomod(request, repuesto_actual=0):
                 else: 
                     periferico_modificar.imagen_periferico = periferico_modificar.imagen_periferico
                 periferico_modificar.save()
+                añadir_auditoria(request, "Perifericos", periferico_modificar.id_periferico)
 
         return redirect('repuestover')
     
@@ -1534,6 +1611,7 @@ def perifericomod(request, periferico_actual=0):
                 periferico_actual.stock_min_periferico = request.POST.get('stock_min_periferico')
 
                 periferico_actual.save() 
+                añadir_auditoria(request, "Perifericos", periferico_actual.id_periferico)
 
                 if (int(periferico_actual.tipo_periferico) == 11):
                     placa_base_modificar = Placa_base.objects.get(cod_placa_base = periferico_actual.cod_periferico)
@@ -1549,6 +1627,7 @@ def perifericomod(request, periferico_actual=0):
                     else: 
                         placa_base_modificar.imagen_placa_base = placa_base_modificar.imagen_placa_base
                     placa_base_modificar.save()
+                    añadir_auditoria(request, "Placa_base", placa_base_modificar.id_placa_base)
 
                 if (int(periferico_actual.tipo_periferico) == 12):
                     repuesto_modificar = Repuestos.objects.get(cod_repuesto = periferico_actual.cod_periferico)
@@ -1564,6 +1643,7 @@ def perifericomod(request, periferico_actual=0):
                     else: 
                         repuesto_modificar.imagen_repuesto = repuesto_modificar.imagen_repuesto
                     repuesto_modificar.save()
+                    añadir_auditoria(request, "Repuestos", repuesto_modificar.id_repuesto)
 
                 if (int(periferico_actual.tipo_periferico) == 13):
                     ram_modificar = RAM.objects.get(cod_ram = periferico_actual.cod_periferico)
@@ -1579,6 +1659,7 @@ def perifericomod(request, periferico_actual=0):
                     else: 
                         ram_modificar.imagen_ram = ram_modificar.imagen_ram
                     ram_modificar.save()
+                    añadir_auditoria(request, "RAM", ram_modificar.id_ram)
 
                 if (int(periferico_actual.tipo_periferico) == 14):
                     cpu_modificar = CPU.objects.get(cod_cpu = periferico_actual.cod_periferico)
@@ -1594,6 +1675,7 @@ def perifericomod(request, periferico_actual=0):
                     else: 
                         cpu_modificar.imagen_cpu = cpu_modificar.imagen_cpu
                     cpu_modificar.save()
+                    añadir_auditoria(request, "CPU", cpu_modificar.id_cpu)
                 
                 if (int(periferico_actual.tipo_periferico) == 15):
                     gab_modificar = Gabinete.objects.get(cod_gab = periferico_actual.cod_periferico)
@@ -1609,6 +1691,7 @@ def perifericomod(request, periferico_actual=0):
                     else: 
                         gab_modificar.imagen_gab = gab_modificar.imagen_gab
                     gab_modificar.save()
+                    añadir_auditoria(request, "Gabinete", gab_modificar.id_gab)
 
 
         return redirect('perifericover')
@@ -1722,6 +1805,7 @@ def modtimbrado_prov(request, timbrado_actual=0):
                 timbrado_actual.codigo_proveedor_id = request.POST.get('proveedor')
                 timbrado_actual.fch_vencimiento_timbrado = request.POST.get('fch_vencimiento')
                 timbrado_actual.save()
+                añadir_auditoria(request, "timbrado", timbrado_actual.nro_timbrado)
                 
 
         return redirect('vertimbrado_prov')
@@ -1776,6 +1860,7 @@ def modtimbrado_venta(request, timbrado_venta_actual = 0):
             timbrado_venta_actual=timbrado_venta.objects.get(nro_timbrado_venta=timbrado_venta_actual)
             timbrado_venta_actual.fch_vencimiento_timbrado_venta = request.POST.get('fch_vencimiento')
             timbrado_venta_actual.save()
+            añadir_auditoria(request, "timbrado_venta", timbrado_venta_actual.nro_timbrado_venta)
 
         return redirect('vertimbrado_venta')
 
@@ -1833,6 +1918,8 @@ def modtalonario_venta(request, talonario_venta_actual = 0):
             talonario_venta_actual.nro_actual_factura_venta = request.POST.get('nro_actual_factura_venta')
             talonario_venta_actual.nro_fin_factura_venta = request.POST.get('nro_fin_factura_venta')
             talonario_venta_actual.save()
+            añadir_auditoria(request, "talonario_ventas", talonario_venta_actual.id_talonario_venta)
+
 
         return redirect('vertalonario_venta')
 
@@ -2269,10 +2356,51 @@ def reporte_ventas(request):
     else:
         return redirect("login")
 
+def reporte_compras(request):
+    if request.method == "GET":
+        listaperiferico = Perifericos.objects.all()
+        listacliente = Cliente.objects.all()
+        listacompra = factura_compra.objects.all()
+        return validar(request, "reportes/reporte_compras.html", 
+        {"nombre_completo_usuario":request.session.get("nombre_completo_usuario"), 
+        "listaperiferico":listaperiferico,
+        "listacliente":listacliente,
+        "listacompra": listacompra,
+        "fecha_act": date.today().isoformat()})
+    if request.method == "POST":
+        listaperiferico = Perifericos.objects.all()
+        listacliente = Cliente.objects.all()
+        desde = request.POST.get("fecha_desde")
+        hasta = request.POST.get("fecha_hasta")
+        print(str(desde))
+        print(hasta)
+        listacompra = factura_compra.objects.raw('SELECT * FROM pagina_factura_compra WHERE fch_factura_compra > "' + '' + str(desde) + '" and fch_factura_compra < "' + str(hasta) + '"')
+        return validar(request, "reportes/reporte_compras.html",  
+        {"listaperiferico":listaperiferico,
+        "listacliente":listacliente,
+        "listacompra": listacompra})
+    else:
+        return redirect("login")
+
 #--======================================= Validación ======================================--
 def validar(request, pageSuccess, parameters={}):
     if request.session.get("id_usuario"):
-        if (request.session.get("tipo_usuario") == 2) and ((pageSuccess == 'users/verusuario.html') or (pageSuccess == 'maintenance/tipo_cpu/vertipo_cpu.html') or (pageSuccess == 'maintenance/tipo_ram/vertipo_ram.html') or (pageSuccess == 'maintenance/tipo_gabinete/vertipo_gabinete.html') or (pageSuccess == 'compra.html')):
+        if (request.session.get("tipo_usuario") == 2) and ((pageSuccess == 'users/verusuario.html') 
+        or (pageSuccess == 'maintenance/tipo_cpu/vertipo_cpu.html') 
+        or (pageSuccess == 'maintenance/tipo_cpu/modtipo_cpu.html') 
+        or (pageSuccess == 'maintenance/tipo_ram/vertipo_ram.html')
+        or (pageSuccess == 'maintenance/tipo_ram/modtipo_ram.html') 
+        or (pageSuccess == 'maintenance/tipo_gabinete/vertipo_gabinete.html')
+        or (pageSuccess == 'maintenance/tipo_gabinete/modtipo_gabinete.html') 
+        or (pageSuccess == 'maintenance/departamentos/verdepartamento.html')
+        or (pageSuccess == 'maintenance/departamentos/moddepartamento.html')
+        or (pageSuccess == 'maintenance/ciudad/verciudad.html')
+        or (pageSuccess == 'maintenance/ciudad/modciudad.html')
+        or (pageSuccess == 'maintenance/nacionalidades/vernacionalidades.html')
+        or (pageSuccess == 'maintenance/nacionalidades/modnacionalidades.html')
+        or (pageSuccess == 'compra.html') 
+        or (pageSuccess == 'ver_auditoria.html')
+        or (pageSuccess == 'ajustes.html')):
             return render(request, "index.html", {"nombre_usuario": request.session.get("nombre_completo_usuario"),"tipo_usuario": request.session.get("tipo_usuario"), "mensaje": "Este usuario no cuenta con los privilegios suficientes"})
         else: 
             return render(request, pageSuccess, {"nombre_usuario": request.session.get("nombre_completo_usuario"),"tipo_usuario": request.session.get("tipo_usuario"), "parameters": parameters})

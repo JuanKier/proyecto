@@ -191,7 +191,7 @@
                         value="{{cliente.ruc_cliente}}" 
                         {% endif %}
                         {% endfor %} 
-                        onfocusout="traerCliente(this)" onload="traerCliente(this)" required>
+                        onfocusout="traerCliente(this)" onload="traerCliente(this)" required placeholder="Ingrese CI o RUC del Cliente">
                     </div>
                     <div>
                         <label class="float-label">Nombre del Cliente</label>
@@ -216,7 +216,7 @@
                         <label class="float-label">Horas Trabajadas</label>
                         <span class="form-bar"></span>
                         <input type="number" name="horas_mont" class="form-control" required 
-                            value="{{parameters.datos_act.horas_mont}}">
+                            value="{{parameters.datos_act.horas_mont}}" placeholder="Ingrese Horas Trabajadas">
                     </div>
                 </div>
                 
@@ -240,7 +240,7 @@
                         <label class="float-label">Actividades</label>
                         <span class="form-bar"></span>
                         <input type="text" name="actividades_mont" class="form-control mb-3" required
-                            value="{{parameters.datos_act.actividades_mont}}">
+                            value="{{parameters.datos_act.actividades_mont}}" placeholder="Ingrese Actividades">
                     </div>
                     
                     <fieldset class="mb-3">

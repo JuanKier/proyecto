@@ -133,7 +133,7 @@
 						<div class="input-confirmar" style="grid-template-columns: 1fr 1fr 1fr;">
 							<div>
 								<label class="float-label">Nro. Factura</label>
-								<input type="number" id="nro_factura" class="form-control mb-3" name="nro_factura" required> 
+								<input type="number" id="nro_factura" class="form-control mb-3" name="nro_factura" required placeholder="Ingrese Nro. de Factura de Compra"> 
 							</div>
 							<div>
 								<label class="float-label">Razón Social del Proveedor</label>
@@ -207,7 +207,7 @@
 										<td class="item-title">{{ lista.descripcion_periferico }}</td>
 										<td class="item-price precio">{{ lista.precio_venta_periferico }}</td>
 										<td>{{ lista.stock_periferico }}</td>
-										<td><button type="button" class = "item-button btn btn-primary addToCart">Carrito</button></td>
+										<td><button type="button" class = "item-button btn btn-primary addToCart">Agregar</button></td>
 										{% endfor %}
 									</tr>
 								</tbody>

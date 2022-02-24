@@ -242,3 +242,10 @@ class factura_venta_detalle(models.Model):
     id_periferico = models.ForeignKey(Perifericos, on_delete=models.CASCADE)
     cant_periferico = models.IntegerField()
     subtotal_factura_venta = models.FloatField()
+
+class Auditoria_Modificar(models.Model):
+    id_auditoria_modificar = models.AutoField(primary_key=True)
+    tabla_modificada = models.CharField(max_length=80, null=True)
+    id_modificado = models.IntegerField(null=True)
+    usuario_modificador = models.IntegerField(null=True)
+    fecha_modificacion = models.DateTimeField(auto_now=True)

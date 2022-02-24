@@ -55,6 +55,7 @@
             <div class="form-group form-default">
                 <label class="float-label">Departamento</label>
                     <select class= "form-select mb-3" name="departamento">
+                        <option value=0>--SELECCIONE UN DEPARTAMENTO--</option>
                         {% for lista in parameters.listadepartamento %}
                         <option value="{{lista.codigo_departamento}}" {% if lista.codigo_departamento == parameters.datos_act.nombre_departamento_id %} selected {% endif %}>
                             {{lista.nombre_departamento}}
@@ -66,7 +67,7 @@
                 <label class="float-label">Nombre Ciudad</label>
                 <span class="form-bar"></span>
                 <input type="text" name="nombre_ciudad" class="form-control" required
-                    value="{{parameters.datos_act.nombre_ciudad}}">
+                    value="{{parameters.datos_act.nombre_ciudad}}" placeholder="Ingrese el Nombre de la Ciudad">
             </div>
 
                 <div class="form-group form-default caja-botones">

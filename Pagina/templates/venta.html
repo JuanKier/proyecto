@@ -134,7 +134,7 @@
 								value="{{cliente.ruc_cliente}}" 
 								{% endif %}
 								{% endfor %} 
-								onfocusout="traerCliente(this)" required>
+								onfocusout="traerCliente(this)" required placeholder="Ingrese CI o RUC del Cliente">
 								<a href="{% url 'modcliente' 0 %}"><button type="button" class="clear"> ✚ </button></a>
 							</div>
 
@@ -242,7 +242,7 @@
 										<td class="item-title">{{ lista.descripcion_periferico }}</td>
 										<td class="item-price precio">{{ lista.precio_venta_periferico }}</td>
 										<td>{{ lista.stock_periferico }}</td>
-										<td><button type="button" class = "item-button btn btn-primary addToCart">Carrito</button></td>
+										<td><button type="button" class = "item-button btn btn-primary addToCart">Agregar</button></td>
 										{% endfor %}
 									</tr>
 								</tbody>

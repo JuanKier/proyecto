@@ -1,0 +1,116 @@
+{%extends "base_reportes.html"%}
+{%block barra%}
+{%load static%}
+
+    <style>
+        html {page-break-after: avoid;}
+        table { page-break-inside:auto; }
+        tr    { page-break-inside:avoid; page-break-after:auto; }
+        thead { display:table-header-group; }
+        tfoot { display:table-footer-group; }
+        div   { page-break-inside:avoid; }
+        html, body { height: auto; }
+    </style>
+
+    <style>
+        .img_equipo {
+            width: 5em;
+            height: 5em;
+        }
+    
+        .img_equipo img {
+            height: 100%;
+        }
+    
+        .img_liga {
+            width: 12em;
+            height: 8em;
+        }
+    
+        .img_liga img {
+            height: 100%;
+        }
+    </style>
+<section class="py-4">
+    <section class="container" style="display: flex; justify-content: center; flex-direction: column; align-items: center; padding-top: 1em; padding-bottom: 1em; border: outset;">
+        <section class="row">
+            <section class="img_liga">
+                <img src="{%static 'img/icons/logo_encarpc.png'%}">
+            </section>
+        </section>
+        <section class="row">
+            <strong><span class="text-muted">Encar PC - Gaming Informática</span></strong>
+        </section>
+        <section class="row">
+            <strong><span class="text-muted">Encarnación-Itapúa</span></strong>
+        </section>
+    </section>
+</section>
+<br>
+<center><p class="display-6">Listado de Compras</p></center>
+<section class="col-xl-12 order-xl-1">
+    <section class="card">
+        <section class="card-body">
+
+                <section class="dataTables_wrapper dt-bootrstrap4">
+                    <table class="table table-flush dataTable align-items-center table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th>Nro. Factura</th>
+                                <th>Proveedor</th>
+                                <th>Fecha de Compra</th>
+                                <th>Total de Factura</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for lista in parameters.listacompra %}
+                            <tr>
+                                <td>{{ lista.nro_factura_compra }}</td>
+                                <td>
+                                    {%for lista2 in parameters.listaproveedor%}
+                                    {% if lista2.codigo_proveedor == lista.codigo_proveedor_id%}
+                                    {{lista2.razon_social_proveedor}}
+                                    {%endif%}
+                                    {%endfor%}
+                                </td>
+                                <td>{{ lista.fch_factura_compra }}</td>
+                                <td class = "precio">{{ lista.total_factura_compra }}</td>
+                                <td>
+                                    <div class="icon-btn">
+                                        <a href="{% url 'historial_compras_detalle' lista.id_factura_compra %}"
+                                            class="btn waves-effect waves-light btn-info btn-block"
+                                            style="color: white;" data-toggle="tooltip" data-placement="top">Detalle</a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+    <script src="{%static 'js/app.js'%}"></script>
+    <script>
+        function alerta() {
+            if (sessionStorage.getItem('1') == 1) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Aviso',
+                    text: 'Registro guardado existosamente.',
+                    showConfirmButton: false,
+                    timer: 1500
+                }).then(() => {
+                })
+                sessionStorage.setItem('1', 0)
+            }
+        }
+        window.onload = alerta()
+    </script>
+    </main>
+</body>
+
+    {% endblock %}

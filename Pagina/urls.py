@@ -20,6 +20,9 @@ urlpatterns = [
     path('verproveedor', views.verproveedor, name='verproveedor'),
     path('modproveedor/<int:proveedor_actual>', views.modproveedor, name='modproveedor'),
     path('borproveedor/<int:proveedor_actual>', views.borproveedor, name='borproveedor'),
+    
+    # ----------------------------------------Auditoria---------------------------------------------------
+    path('ver_auditoria', views.ver_auditoria, name='ver_auditoria'),
 
     # ----------------------------------------MAINTENACE---------------------------------------------------
     
@@ -139,6 +142,7 @@ urlpatterns = [
     path('reporte_mont/<int:bandera>', views.reporte_mont, name='reporte_mont'),
     path('reporte_rep/<int:bandera>', views.reporte_rep, name='reporte_rep'),
     path('reporte_ventas', views.reporte_ventas, name='reporte_ventas'),
+    path('reporte_compras', views.reporte_compras, name='reporte_compras'),
     
     path('ver_productos', views.ver_productos, name='ver_productos'),
     path('inventario', views.inventario, name='inventario')
